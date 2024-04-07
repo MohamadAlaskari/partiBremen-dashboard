@@ -11,7 +11,6 @@ import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { UserManagementModule } from './modules/user-management/user-management.module';
-import { TestModule } from './modules/test/test.module';
 
 @NgModule({
   declarations: [AppComponent],
