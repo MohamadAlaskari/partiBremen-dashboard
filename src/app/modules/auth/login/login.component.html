@@ -1,37 +1,38 @@
+<div class="box-form">
+  <div class="left">
+    <div class="overlay">
+      <h1>Parti Bremen</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Curabitur et est sed felis aliquet sollicitudin</p>
 
-  <div class="box-form">
-    <div class="left">
-      <div class="overlay">
-        <h1>Parti Bremen</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Curabitur et est sed felis aliquet sollicitudin</p>
-
-      </div>
     </div>
-
-    <div class="right">
-      <h5>Login</h5>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic, repellat!</p>
-      <div class="inputs">
-        <input type="text" placeholder="user name">
-        <br>
-        <input type="password" placeholder="password">
-      </div>
-
-      <br><br>
-
-      <div class="remember-me--forget-password">
-        <!-- Angular -->
-        <label>
-          <input type="checkbox" name="item" checked />
-          <span class="text-checkbox">Remember me</span>
-        </label>
-        <p>forget password?</p>
-      </div>
-
-      <br>
-      <button>Login</button>
-    </div>
-
   </div>
 
+  <form (ngSubmit)="onLogin()" class="right">
+    <h5>Login</h5>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic, repellat!</p>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+    <div class="inputs">
+      <input type="email" id="email" [(ngModel)]="user.email" name="email" placeholder="user name" required>
+      <br>
+      <input type="password" id="password" [(ngModel)]="user.password" name="password" placeholder="password" required>
+    </div>
+
+    <br><br>
+
+    <div class="remember-me--forget-password">
+      <label>
+        <input type="checkbox" name="item" checked />
+        <span class="text-checkbox">Remember me</span>
+      </label>
+      <p>forget password?</p>
+    </div>
+
+    <br>
+    <button type="submit" class="btn btn-primary">Login</button>
+
+  </form>
+
+</div>
