@@ -1,0 +1,301 @@
+
+.app {
+
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   // width: 100%;
+    padding: 16px 24px;
+    position: relative;
+
+    &-left, &-right {
+      display: flex;
+      align-items: center;
+    }
+
+    &-left { flex-grow: 1; }
+
+    &-right button {
+      margin-left: 10px;
+    }
+  }
+
+  &-icon {
+    width: 26px;
+    height: 2px;
+    border-radius: 4px;
+    background-color: var(--main-color);
+    position: relative;
+
+    &:before, &:after {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 2px;
+      border-radius: 4px;
+      background-color: var(--main-color);
+      left: 50%;
+      transform: translatex(-50%);
+    }
+
+    &:before { top: -6px; }
+    &:after { bottom: -6px; }
+  }
+
+  &-name {
+    color: var(--main-color);
+    margin: 0;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 700;
+    margin: 0 32px;
+  }
+}
+
+.mode-switch {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  color: var(--main-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-wrapper {
+  border-radius: 20px;
+  background-color: var(--search-area-bg);
+  padding-right: 12px;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 480px;
+  color: var(--light-font);
+  box-shadow: 0 2px 6px 0 rgba(136,148,171,.2),0 24px 20px -24px rgba(71,82,107,.1);
+  overflow: hidden;
+
+  .dark & { box-shadow: none; }
+}
+
+.search-input {
+  border: none;
+  flex: 1;
+  outline: none;
+  height: 100%;
+  padding: 0 20px;
+  font-size: 16px;
+  background-color: var(--search-area-bg);
+  color: var(--main-color);
+
+  &:placeholder {
+    color: var(--main-color);
+    opacity: .6;
+  }
+}
+
+.add-btn {
+  color: #fff;
+  background-color: var(--button-bg);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-btn {
+  color: var(--main-color);
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-btn {
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  border-left: 2px solid #ddd;
+
+  img {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 4px;
+  }
+
+  span {
+    color: var(--main-color);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+  }
+}
+
+
+
+
+
+@media screen and (max-width: 980px) {
+  .project-boxes.jsGridView .project-box-wrapper {
+    width: 50%;
+  }
+
+  .status-number, .status-type {
+    font-size: 14px;
+  }
+
+  .status-type:after {
+    width: 4px;
+    height: 4px;
+  }
+
+  .item-status { margin-right: 0; }
+}
+
+@media screen and (max-width: 880px) {
+  .messages-section {
+    transform: translateX(100%);
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    z-index: 2;
+    height: 100%;
+    width: 100%;
+
+    .messages-close { display: block; }
+  }
+
+  .messages-btn { display: flex; }
+}
+
+@media screen and (max-width: 720px) {
+  .app-name, .profile-btn span { display: none; }
+
+  .add-btn, .notification-btn, .mode-switch {
+    width: 20px;
+    height: 20px;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .app-header-right button {
+    margin-left: 4px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .projects-section { overflow: auto; }
+  .project-boxes { overflow-y: visible; }
+
+  .app-sidebar, .app-icon { display: none; }
+
+  .app-content { padding: 16px 12px 24px 12px;}
+
+  .status-number, .status-type {
+    font-size: 10px;
+  }
+
+  .view-btn {
+    width: 24px;
+    height: 24px;
+  }
+
+  .app-header {
+    padding: 16px 10px;
+  }
+
+  .search-input {
+    max-width: 120px;
+  }
+
+  .project-boxes.jsGridView .project-box-wrapper {
+    width: 100%;
+  }
+
+  .projects-section {
+    padding: 24px 16px 0 16px;
+  }
+
+  .profile-btn img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .app-header {
+    padding: 10px;
+  }
+
+  .projects-section-header p,
+  .projects-section-header .time{
+    font-size: 18px;
+  }
+
+  .status-type {
+    padding-right: 4px;
+
+    &:after {
+      display: none;
+    }
+  }
+
+  .search-input {
+    font-size: 14px;
+  }
+
+  .messages-btn { top: 48px; }
+
+  .box-content-header {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .box-content-subheader {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .project-boxes.jsListView .project-box-header > span {
+    font-size: 10px;
+  }
+
+  .box-progress-header {
+    font-size: 12px;
+  }
+
+  .box-progress-percentage {
+    font-size: 10px;
+  }
+
+  .days-left {
+    font-size: 8px;
+    padding: 6px 6px;
+    text-align: center;
+  }
+
+  .project-boxes.jsListView .project-box > * {
+    margin-right: 10px;
+  }
+
+  .project-boxes.jsListView .more-wrapper {
+    right: 2px;
+    top: 10px;
+  }
+}
