@@ -9,7 +9,6 @@ import { User } from '../../../shared/models/user.model';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-
   user: User = new User('', '');
   errorMessage: string | undefined;
 
@@ -18,17 +17,18 @@ export class LoginComponent {
   ngOnInit() {
     // Automatische Umleitung zur Startseite, wenn bereits angemeldet
     if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/dashboard']);
+     // this.router.navigate(['/dashboard']);
     }
   }
   onLogin(): void {
     this.authService.login(this.user).subscribe(
-      (success) => {
-        console.log('Login erfolgreich', success);
+      (data) => {
+        console.log('Login erfolgreich', data);
         this.router.navigate(['/dashboard']);
       },
       (error) => {
-        this.errorMessage = 'Login fehlgeschlagen. Bitte überprüfe deine Eingaben.'; 
+        this.errorMessage =
+          'Login fehlgeschlagen. Bitte überprüfe deine Eingaben.';
         console.error('Login fehlgeschlagen', error);
       }
     );

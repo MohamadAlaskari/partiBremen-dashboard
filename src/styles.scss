@@ -1,3 +1,26 @@
+// Importiere Basis-Variablen
+@import "styles/abstracts/variabeles";
+
+// Importiere Basis-Styles
+@import "styles/base/reset";
+@import "styles/base/typography";
+@import "styles/base/base";
+
+// Importiere Themes
+@import "styles/themes/dark";
+
+// Optional: Importiere Mixins, Funktionen und Platzhalter, falls nötig
+@import "styles/abstracts/mixins";
+@import "styles/abstracts/functions";
+@import "styles/abstracts/placeholders";
+
+// Weitere globale Stile
+body {
+  margin: 0;
+  font-family: "DM Sans", sans-serif;
+  background-color: var(--app-container);
+  color: var(--text-color);
+}
 
 button,
 a {
@@ -5,4 +28,27 @@ a {
 }
 * {
   box-sizing: border-box;
+}
+
+// Variablen für Alerts
+$alert-padding-y: 0.75rem;
+$alert-padding-x: 1.25rem;
+$alert-margin-bottom: 1rem;
+$alert-border-radius: 5px;
+
+// Alert-Klassen
+
+.alert {
+  position: relative;
+  padding: $alert-padding-y $alert-padding-x;
+  margin-bottom: $alert-margin-bottom;
+  border: 1px solid transparent;
+  border-radius: $alert-border-radius;
+}
+
+// Alert-Farbvarianten
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
 }
