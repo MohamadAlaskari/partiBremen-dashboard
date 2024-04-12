@@ -4,12 +4,14 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { User } from '../../../shared/models/user.model';
+import {environment} from "../../../../environment";
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private authUrl = 'http://your-backend-api/login'; // Der URL-Pfad zu deinem Authentifizierungs-Endpoint
+  public baseUrl = environment.baseUrl
+  private authUrl = `${this.baseUrl}login`; // Der URL-Pfad zu deinem Authentifizierungs-Endpoint
 
   constructor(private http: HttpClient) {}
   login(user: User): Observable<any> {
