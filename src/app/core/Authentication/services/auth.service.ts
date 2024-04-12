@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { User } from '../../../shared/models/user.model';
+import {environment} from "../../../../environment";
 
 @Injectable({
   providedIn: 'root',
