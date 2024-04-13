@@ -11,7 +11,8 @@ import { environment } from '../../../../environment';
 })
 export class AuthService {
   private baseUrl = environment.baseUrl;
-  private authUrl = `${this.baseUrl}login`;
+  //private authUrl = `${this.baseUrl}login`;
+  private authUrl = 'https://reqres.in/api/login';
 
   constructor(private http: HttpClient) {}
   login(user: User): Observable<any> {
@@ -36,8 +37,7 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     if (typeof window !== 'undefined') {
-      //return !!localStorage.getItem('token');
-      return true;
+      return !!localStorage.getItem('token');
     }
     return false;
   }

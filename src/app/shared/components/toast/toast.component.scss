@@ -16,7 +16,7 @@ $transition-base: all 0.5s ease 0s;
   justify-content: flex-start;
   transition: var(--tr);
   padding: 0 1rem;
-  height: 100%;
+  // height: 100%;
 
   position: absolute;
   top: 10vh;
@@ -118,16 +118,13 @@ $transition-base: all 0.5s ease 0s;
 }
 
 @keyframes show-toast {
-  0%,
-  50%,
-  100% {
-    max-height: 0;
+  0% {
     opacity: 0;
+    transform: translateY(20px);
   }
-  10%,
-  25% {
-    max-height: 15rem;
+  100% {
     opacity: 1;
+    transform: translateY(0px);
   }
 }
 
