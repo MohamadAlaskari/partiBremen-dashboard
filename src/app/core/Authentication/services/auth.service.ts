@@ -5,40 +5,53 @@ import { catchError, map } from 'rxjs/operators';
 
 import { User } from '../../../shared/models/user.model';
 import { environment } from '../../../../environment';
+import { ApiService } from '../../Services/api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = environment.baseUrl;
-  //private authUrl = `${this.baseUrl}login`;
-  private authUrl = 'https://reqres.in/api/login';
+  private authUrl = 'login'; // Use an appropriate API endpoint
 
-  constructor(private http: HttpClient) {}
+  constructor(private apiService: ApiService) {}
+
   login(user: User): Observable<any> {
-    return this.http.post(this.authUrl, user).pipe(
+    return this.apiService.post(this.authUrl, user).pipe(
       map((response: any) => {
-        // Speichere den Token, wenn der Login erfolgreich war
+        // Store the token when login is successful
         if (response && response.token) {
-          localStorage.setItem('token', response.token);
+          this.setToken(response.token);
           return response;
         }
       }),
-      catchError((error) => {
-        // Implementiere eine Fehlerbehandlung
-        return throwError(error);
-      })
+      catchError((error) => throwError(error))
     );
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    this.removeToken();
   }
 
   isAuthenticated(): boolean {
+    return !!this.getToken();
+  }
+
+  private setToken(token: string): void {
     if (typeof window !== 'undefined') {
-      return !!localStorage.getItem('token');
+      localStorage.setItem('token', token);
     }
-    return false;
+  }
+
+  private getToken(): string | null {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('token');
+    }
+    return null;
+  }
+
+  private removeToken(): void {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('token');
+    }
   }
 }
