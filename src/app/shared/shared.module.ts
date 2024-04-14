@@ -6,6 +6,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { RouterModule } from '@angular/router';
 import { ToastComponent } from './components/toast/toast.component';
 import { ToastService } from './services/toast.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { ToastService } from './services/toast.service';
     HeaderComponent,
     ToastComponent,
   ],
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatIconModule],
   exports: [SidenavComponent, HeaderComponent, FooterComponent, ToastComponent],
   providers: [ToastService],
 })

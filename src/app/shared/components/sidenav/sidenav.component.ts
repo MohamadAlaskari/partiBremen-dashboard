@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Inject } from '@angular/core';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-sidenav',
@@ -7,11 +8,5 @@ import { Router } from '@angular/router';
   styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent {
-  constructor(private router: Router) {}
-  navigateToDashboard() {
-    this.router.navigate(['/dashboard'])
-  }
-  navigateToUserManagement() {
-    this.router.navigate(['/user-management'])
-  }
+  constructor() {}
 }

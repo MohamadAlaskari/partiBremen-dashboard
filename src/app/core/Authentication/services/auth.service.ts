@@ -1,10 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-
 import { User } from '../../../shared/models/user.model';
-import { environment } from '../../../../environment';
 import { ApiService } from '../../Services/api.service';
 
 @Injectable({
@@ -15,43 +12,46 @@ export class AuthService {
 
   constructor(private apiService: ApiService) {}
 
-  login(user: User): Observable<any> {
-    return this.apiService.post(this.authUrl, user).pipe(
-      map((response: any) => {
-        // Store the token when login is successful
-        if (response && response.token) {
-          this.setToken(response.token);
-          return response;
+  login(email: string, password: string): Observable<User> {
+    return this.apiService.post<User>(this.authUrl, { email, password }).pipe(
+      map((user) => {
+        if (user) {
+          this.storeUser(user);
+          return user;
         }
+        throw new Error('No user data received');
       }),
-      catchError((error) => throwError(error))
+      catchError((error) =>
+        throwError(() => new Error('Login failed: ' + error.message))
+      )
     );
   }
 
   logout(): void {
-    this.removeToken();
+    this.removeUser();
   }
 
   isAuthenticated(): boolean {
-    return !!this.getToken();
+    return this.getUser() != null; // Überprüft, ob Benutzerdaten gespeichert sind
   }
 
-  private setToken(token: string): void {
+  private storeUser(user: User): void {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user)); // Speichere den Benutzer als String
     }
   }
 
-  private getToken(): string | null {
+  private getUser(): User | null {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('token');
+      const userStr = localStorage.getItem('user');
+      return userStr ? (JSON.parse(userStr) as User) : null;
     }
     return null;
   }
 
-  private removeToken(): void {
+  private removeUser(): void {
     if (typeof window !== 'undefined') {
-      localStorage.removeItem('token');
+      localStorage.removeItem('user');
     }
   }
 }

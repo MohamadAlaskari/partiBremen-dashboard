@@ -4,16 +4,13 @@
       <h1>Parti Bremen Dashboard</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Curabitur et est sed felis aliquet sollicitudin</p>
-
     </div>
   </div>
 
   <form (ngSubmit)="onLogin()" class="right">
     <h5>Login</h5>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic, repellat!</p>
-    <div *ngIf="errorMessage" class="alert alert-danger">
-      {{ errorMessage }}
-    </div>
+
     <div class="inputs">
       <input type="email" id="email" [(ngModel)]="user.email" name="email" placeholder="user name" required>
       <br>

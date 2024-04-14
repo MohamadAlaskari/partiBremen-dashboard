@@ -10,8 +10,8 @@ import { ToastService } from '../../../shared/services/toast.service';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  user: User = new User('', '');
-  errorMessage: string | undefined;
+  user: User = new User('', '', '', '', '', null, '', '', false);
+
 
   constructor(
     private router: Router,
@@ -26,7 +26,7 @@ export class LoginComponent {
     }
   }
   onLogin(): void {
-    this.authService.login(this.user).subscribe(
+    this.authService.login(this.user.email, this.user.password).subscribe(
       (data) => {
         console.log('Login erfolgreich', data);
         this.toastService.show('success', 'Login Successful', 'Welcome back!');
@@ -39,10 +39,6 @@ export class LoginComponent {
           'Login Failed',
           'Invalid email or password.'
         );
-
-        this.errorMessage =
-          'Login fehlgeschlagen. Bitte überprüfe deine Eingaben.';
-        console.error('Login fehlgeschlagen', error);
       }
     );
   }

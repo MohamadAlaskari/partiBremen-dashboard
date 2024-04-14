@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
   title = ' Dashboard';
   darkMode: boolean = false;
-  
+
   constructor(private authService: AuthService, private _router: Router) {}
 
   logout(): void {

@@ -11,7 +11,8 @@ import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { UserManagementModule } from './modules/user-management/user-management.module';
-
+import { MatIconModule } from '@angular/material/icon';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -21,10 +22,10 @@ import { UserManagementModule } from './modules/user-management/user-management.
     SharedModule,
     DashboardModule,
     UserManagementModule,
+    MatIconModule,
     AppRoutingModule,
-
   ],
-  providers: [provideClientHydration()],
+  providers: [provideClientHydration(), provideAnimationsAsync()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
