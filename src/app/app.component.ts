@@ -1,10 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { AuthService } from './core/Authentication/services/auth.service';
+import { ToastService } from './shared/services/toast.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'partiBremen-dashboard';
+  constructor(private authService: AuthService) {}
+  isAuthenticated(): boolean {
+    return this.authService.isAuthenticated();
+  }
 }

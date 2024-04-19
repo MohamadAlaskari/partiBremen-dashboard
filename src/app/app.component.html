@@ -1,4 +1,20 @@
-<app-table></app-table>
+@if(isAuthenticated()){
+<div class="app-container">
+  <app-header></app-header>
+
+  <div class="app-content">
+    <app-sidenav></app-sidenav>
+
+    <router-outlet />
+
+  </div>
+</div>
+<app-footer></app-footer>
+}@else {
+<div class="container-login">
+  <app-login></app-login>
+</div>
+}
 
 
-<router-outlet />
+<app-toast></app-toast>

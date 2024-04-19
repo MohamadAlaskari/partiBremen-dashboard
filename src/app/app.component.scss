@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap");
+
+body {
+  height: auto;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  background-color: var(--app-container);
+}
+
+.app {
+  &-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: var(--app-container);
+    transition: 0.2s;
+    //  max-width: 1800px;
+
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+      font-family: "DM Sans", sans-serif;
+    }
+  }
+
+  &-content {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+    padding: 16px 24px 24px 0;
+  }
+}
+
+.container-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 16px);
+  background-color: var(--app-container);
+}
