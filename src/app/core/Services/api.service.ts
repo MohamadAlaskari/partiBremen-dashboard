@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environment';
@@ -7,12 +7,17 @@ import { environment } from '../../../environment';
   providedIn: 'root',
 })
 export class ApiService {
-   private baseUrl = environment.baseUrl;
- // private baseUrl = 'https://reqres.in/api';
+  private baseUrl = environment.baseUrl;
+  // private baseUrl = 'https://reqres.in/api';
 
   constructor(private http: HttpClient) {}
-
-  get<T>(endpoint: string): Observable<T> {
+  login<T>(email: string, password: string): Observable<T> {
+    const loginPath = `user/login/${encodeURIComponent(
+      email
+    )}/${encodeURIComponent(password)}`;
+    return this.http.get<T>(`${this.baseUrl}/${loginPath}`);
+  }
+  get<T>(endpoint: string, params?: any): Observable<T> {
     return this.http.get<T>(`${this.baseUrl}/${endpoint}`);
   }
 
