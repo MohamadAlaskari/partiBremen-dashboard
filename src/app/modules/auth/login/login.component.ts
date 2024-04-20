@@ -26,20 +26,23 @@ export class LoginComponent {
     }
   }
   onLogin(): void {
-    this.authService.login(this.user.email, this.user.password).subscribe(
-      (data) => {
-        console.log('Login erfolgreich', data);
-        this.toastService.show('success', 'Login Successful', 'Welcome back!');
-
+    this.authService.login(this.user.email, this.user.password).subscribe({
+      next: (user) => {
         this.router.navigate(['/dashboard']);
+        this.toastService.show(
+          'success',
+          'Login Successful',
+          `Welcome back ${user.name}!`
+        );
       },
-      (error) => {
+      error: (error) => {
         this.toastService.show(
           'error',
           'Login Failed',
           'Invalid email or password.'
         );
-      }
-    );
+        console.error('Login fehlgeschlagen', error);
+      },
+    });
   }
 }

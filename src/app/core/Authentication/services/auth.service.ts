@@ -8,56 +8,47 @@ import { ApiService } from '../../Services/api.service';
   providedIn: 'root',
 })
 export class AuthService {
-  private authUrl = 'login'; // Use an appropriate API endpoint
+  private loginEndpoint = 'user/login'; // Use an appropriate API endpoint
 
   constructor(private apiService: ApiService) {}
-
   login(email: string, password: string): Observable<User> {
-    return this.apiService.login<User>(email, password)
+    return this.apiService
+      .post<User>(this.loginEndpoint, { email, password })
       .pipe(
-        map(user => {
+        map((user) => {
           if (user) {
-            this.storeUser(user);
+            if (typeof localStorage !== 'undefined') {
+              localStorage.setItem('user', JSON.stringify(user));
+            }
             return user;
           }
           throw new Error('No user data received');
         }),
-        catchError(error => throwError(() => new Error('Login failed: ' + error.message)))
+        catchError((error) =>
+          throwError(() => new Error('Login failed: ' + error.message))
+        )
       );
   }
 
   logout(): void {
-    this.removeUser();
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('user');
+    }
   }
 
   isAuthenticated(): boolean {
-    return true
-    return this.getUser() != null; // Überprüft, ob Benutzerdaten gespeichert sind
+    return true;
+    if (typeof localStorage !== 'undefined') {
+      return !!localStorage.getItem('user');
+    }
+    return false;
   }
+
   getCurrentUser(): User | null {
-    const userJson = localStorage.getItem('user');
-    if (userJson) {
-      return JSON.parse(userJson) as User;
+    if (typeof localStorage !== 'undefined') {
+      const userJson = localStorage.getItem('user');
+      return userJson ? JSON.parse(userJson) : null;
     }
     return null;
-  }
-  private storeUser(user: User): void {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('user', JSON.stringify(user)); // Speichere den Benutzer als String
-    }
-  }
-
-  private getUser(): User | null {
-    if (typeof window !== 'undefined') {
-      const userStr = localStorage.getItem('user');
-      return userStr ? (JSON.parse(userStr) as User) : null;
-    }
-    return null;
-  }
-
-  private removeUser(): void {
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('user');
-    }
   }
 }

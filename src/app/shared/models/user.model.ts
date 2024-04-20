@@ -4,7 +4,7 @@ export class User {
     public createdAt: string,
     public updatedAt: string,
     public name: string,
-    public surname: string,
+    public username: string,
     public dob: Date | null,
     public email: string,
     public password: string,
