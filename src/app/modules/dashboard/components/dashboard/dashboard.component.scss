@@ -1,5 +1,3 @@
-
-
 .app {
   &-container {
     width: 100%;
@@ -7,11 +5,15 @@
     flex-direction: column;
     height: 100%;
     background-color: var(--app-container);
-    transition: .2s;
+    transition: 0.2s;
     max-width: 1800px;
 
-    button, input, optgroup, select, textarea {
-      font-family: 'DM Sans', sans-serif;
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+      font-family: "DM Sans", sans-serif;
     }
   }
 
@@ -30,12 +32,15 @@
     padding: 16px 24px;
     position: relative;
 
-    &-left, &-right {
+    &-left,
+    &-right {
       display: flex;
       align-items: center;
     }
 
-    &-left { flex-grow: 1; }
+    &-left {
+      flex-grow: 1;
+    }
 
     &-right button {
       margin-left: 10px;
@@ -49,8 +54,9 @@
     background-color: var(--main-color);
     position: relative;
 
-    &:before, &:after {
-      content: '';
+    &:before,
+    &:after {
+      content: "";
       position: absolute;
       width: 12px;
       height: 2px;
@@ -60,8 +66,12 @@
       transform: translatex(-50%);
     }
 
-    &:before { top: -6px; }
-    &:after { bottom: -6px; }
+    &:before {
+      top: -6px;
+    }
+    &:after {
+      bottom: -6px;
+    }
   }
 
   &-name {
@@ -95,10 +105,13 @@
   width: 100%;
   max-width: 480px;
   color: var(--light-font);
-  box-shadow: 0 2px 6px 0 rgba(136,148,171,.2),0 24px 20px -24px rgba(71,82,107,.1);
+  box-shadow: 0 2px 6px 0 rgba(136, 148, 171, 0.2),
+    0 24px 20px -24px rgba(71, 82, 107, 0.1);
   overflow: hidden;
 
-  .dark & { box-shadow: none; }
+  .dark & {
+    box-shadow: none;
+  }
 }
 
 .search-input {
@@ -113,7 +126,7 @@
 
   &:placeholder {
     color: var(--main-color);
-    opacity: .6;
+    opacity: 0.6;
   }
 }
 
@@ -166,20 +179,12 @@
   }
 }
 
-.page-content {
+.page-content  {
   flex: 1;
   width: 100%;
 }
 
-
-
 .projects-section {
-  flex: 2;
-  background-color: var(--projects-section);
-  border-radius: 32px;
-  padding: 32px 32px 0 32px;
-  overflow: hidden;
-  height: 100%;
   display: flex;
   flex-direction: column;
 
@@ -201,7 +206,7 @@
       font-size: 24px;
       line-height: 32px;
       font-weight: 700;
-      opacity: .9;
+      opacity: 0.9;
       margin: 0;
       color: var(--main-color);
     }
@@ -222,7 +227,7 @@
   margin-right: 16px;
 
   &:not(:last-child) .status-type:after {
-    content: '';
+    content: "";
     position: absolute;
     right: 8px;
     top: 50%;
@@ -252,7 +257,6 @@
   align-items: center;
 }
 
-
 .view-btn {
   width: 36px;
   height: 36px;
@@ -265,7 +269,7 @@
   border: none;
   color: var(--main-color);
   margin-left: 8px;
-  transition: .2s;
+  transition: 0.2s;
 
   &.active {
     background-color: var(--link-color-active-bg);
@@ -273,11 +277,10 @@
   }
 
   &:not(.active):hover {
-    background-color:  var(--link-color-hover);
+    background-color: var(--link-color-hover);
     color: var(--link-color-active);
   }
 }
-
 
 .messages-section {
   flex-shrink: 0;
@@ -313,7 +316,7 @@
     top: 0;
     z-index: 1;
     padding: 32px 24px 0 24px;
-    background-color:  var(--projects-section);
+    background-color: var(--projects-section);
   }
 }
 
@@ -347,12 +350,12 @@
   justify-content: space-between;
   width: 100%;
 
-   .name {
+  .name {
     font-size: 16px;
     line-height: 24px;
     font-weight: 700;
     color: var(--main-color);
-     margin: 0;
+    margin: 0;
   }
 }
 
@@ -381,8 +384,6 @@
   .dark & {
     color: var(--secondary-color);
 
-
-
     input:checked + label {
       color: var(--star);
     }
@@ -390,7 +391,7 @@
 
   input:checked + label svg {
     fill: var(--star);
-    transition: .2s;
+    transition: 0.2s;
   }
 }
 
@@ -399,7 +400,7 @@
   line-height: 20px;
   margin: 8px 0;
   color: var(--secondary-color);
-  opacity: .7;
+  opacity: 0.7;
 
   &.time {
     text-align: right;
@@ -495,8 +496,8 @@
     color: var(--main-color);
 
     span {
-      color: #4A4A4A;
-      opacity: .7;
+      color: #4a4a4a;
+      opacity: 0.7;
       font-size: 14px;
       line-height: 16px;
     }
@@ -506,12 +507,14 @@
     text-align: center;
     margin-bottom: 16px;
 
-    p { margin: 0; }
+    p {
+      margin: 0;
+    }
   }
 
   &-wrapper {
     padding: 8px;
-    transition: .2s;
+    transition: 0.2s;
   }
 }
 
@@ -549,13 +552,13 @@
   font-size: 16px;
   line-height: 24px;
   font-weight: 700;
-  opacity: .7;
+  opacity: 0.7;
 }
 
 .box-content-subheader {
   font-size: 14px;
   line-height: 24px;
-  opacity: .7;
+  opacity: 0.7;
 }
 
 .box-progress {
@@ -580,7 +583,6 @@
   }
 
   &-wrapper {
-
   }
 
   &-percentage {
@@ -599,9 +601,9 @@
   position: relative;
 
   &:after {
-    content: '';
+    content: "";
     position: absolute;
-    background-color: rgba(255,255,255,0.6);;
+    background-color: rgba(255, 255, 255, 0.6);
     width: calc(100% + 32px);
     top: 0;
     left: -16px;
@@ -631,7 +633,7 @@
   height: 20px;
   border-radius: 50%;
   border: none;
-  background-color: rgba(255,255,255,0.6);
+  background-color: rgba(255, 255, 255, 0.6);
   margin-left: 6px;
   display: flex;
   justify-content: center;
@@ -640,7 +642,7 @@
 }
 
 .days-left {
-  background-color: rgba(255,255,255,0.6);
+  background-color: rgba(255, 255, 255, 0.6);
   font-size: 12px;
   border-radius: 20px;
   flex-shrink: 0;
@@ -672,7 +674,8 @@
     width: 50%;
   }
 
-  .status-number, .status-type {
+  .status-number,
+  .status-type {
     font-size: 14px;
   }
 
@@ -681,7 +684,9 @@
     height: 4px;
   }
 
-  .item-status { margin-right: 0; }
+  .item-status {
+    margin-right: 0;
+  }
 }
 
 @media screen and (max-width: 880px) {
@@ -694,16 +699,25 @@
     height: 100%;
     width: 100%;
 
-    .messages-close { display: block; }
+    .messages-close {
+      display: block;
+    }
   }
 
-  .messages-btn { display: flex; }
+  .messages-btn {
+    display: flex;
+  }
 }
 
 @media screen and (max-width: 720px) {
-  .app-name, .profile-btn span { display: none; }
+  .app-name,
+  .profile-btn span {
+    display: none;
+  }
 
-  .add-btn, .notification-btn, .mode-switch {
+  .add-btn,
+  .notification-btn,
+  .mode-switch {
     width: 20px;
     height: 20px;
 
@@ -719,14 +733,24 @@
 }
 
 @media screen and (max-width: 520px) {
-  .projects-section { overflow: auto; }
-  .project-boxes { overflow-y: visible; }
+  .projects-section {
+    overflow: auto;
+  }
+  .project-boxes {
+    overflow-y: visible;
+  }
 
-  .app-sidebar, .app-icon { display: none; }
+  .app-sidebar,
+  .app-icon {
+    display: none;
+  }
 
-  .app-content { padding: 16px 12px 24px 12px;}
+  .app-content {
+    padding: 16px 12px 24px 12px;
+  }
 
-  .status-number, .status-type {
+  .status-number,
+  .status-type {
     font-size: 10px;
   }
 
@@ -761,7 +785,7 @@
   }
 
   .projects-section-header p,
-  .projects-section-header .time{
+  .projects-section-header .time {
     font-size: 18px;
   }
 
@@ -777,7 +801,9 @@
     font-size: 14px;
   }
 
-  .messages-btn { top: 48px; }
+  .messages-btn {
+    top: 48px;
+  }
 
   .box-content-header {
     font-size: 12px;

@@ -1,3 +1,5 @@
+<app-toast></app-toast>
+
 @if(isAuthenticated()){
 
 <app-sidenav></app-sidenav>
@@ -7,15 +9,18 @@
   <app-header></app-header>
 
   <div class="app-content">
-  <router-outlet />
-  <app-footer></app-footer>
+    <div class="main-section">
+
+      <router-outlet />
+
+    </div>
+    <app-footer></app-footer>
   </div>
 </div>
 }@else {
-<div class="container-login">
+
+<div class="login-container">
   <app-login></app-login>
 </div>
+
 }
-
-
-<app-toast></app-toast>
