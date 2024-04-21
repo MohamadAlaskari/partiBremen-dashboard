@@ -16,7 +16,7 @@ body {
     height: 100%;
     background-color: var(--app-container);
     transition: 0.2s;
-    padding-left:80px ;
+    padding: 0 16px 0 70px;
     //  max-width: 1800px;
 
     button,
@@ -33,7 +33,7 @@ body {
     flex-direction: column;
     height: 100%;
     overflow: hidden;
-    padding: 16px 24px 24px 0;
+    padding: 16px 0 24px 16px;
   }
 }
 
