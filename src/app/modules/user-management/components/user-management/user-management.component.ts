@@ -39,7 +39,9 @@ export class UserManagementComponent {
       })
     );
   }
-
+  countUsers(): number {
+    return this.users.length;
+  }
   loadUserById(userId: string): void {
     this.subscriptions.add(
       this.userManagementService.getUserById(userId).subscribe({

@@ -12,7 +12,6 @@ export class HeaderComponent {
   title = ' Dashboard';
   currentUser: User | null = null;
   darkMode: boolean = false;
-
   constructor(private authService: AuthService, private _router: Router) {}
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();

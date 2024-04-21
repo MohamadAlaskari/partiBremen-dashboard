@@ -1,15 +1,16 @@
 @if(isAuthenticated()){
+
+<app-sidenav></app-sidenav>
+
 <div class="app-container">
+
   <app-header></app-header>
 
   <div class="app-content">
-    <app-sidenav></app-sidenav>
-
-    <router-outlet />
-
+  <router-outlet />
+  <app-footer></app-footer>
   </div>
 </div>
-<app-footer></app-footer>
 }@else {
 <div class="container-login">
   <app-login></app-login>

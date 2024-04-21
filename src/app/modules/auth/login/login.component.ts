@@ -12,7 +12,6 @@ import { ToastService } from '../../../shared/services/toast.service';
 export class LoginComponent {
   user: User = new User('', '', '', '', '', null, '', '', false);
 
-
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -20,9 +19,10 @@ export class LoginComponent {
   ) {}
 
   ngOnInit() {
+    this.authService.logout();
     // Automatische Umleitung zur Startseite, wenn bereits angemeldet
     if (this.authService.isAuthenticated()) {
-      // this.router.navigate(['/dashboard']);
+       this.router.navigate(['/dashboard']);
     }
   }
   onLogin(): void {

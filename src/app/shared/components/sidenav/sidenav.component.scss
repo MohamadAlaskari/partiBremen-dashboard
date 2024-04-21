@@ -1,6 +1,49 @@
-
 .app-sidebar {
-  padding: 40px 16px;
+  width: 70px;
+  position: absolute;
+  left: 0px;
+  background-color: var(--app-container);
+  height: 100%;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+}
+
+.icon-menu {
+  height: 73px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.app-icon {
+  width: 26px;
+  height: 2px;
+  border-radius: 4px;
+  background-color: var(--main-color);
+  position: relative;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 2px;
+    border-radius: 4px;
+    background-color: var(--main-color);
+    left: 50%;
+    transform: translatex(-50%);
+  }
+
+  &:before {
+    top: -6px;
+  }
+  &:after {
+    bottom: -6px;
+  }
+}
+
+.sidebar-content {
+  padding: 55px 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,7 +72,6 @@
   background-color: var(--link-color-active-bg);
   color: var(--link-color-active);
 }
-
 
 @media screen and (max-width: 720px) {
   .app-name,
@@ -61,12 +103,17 @@
   .project-boxes {
     overflow-y: visible;
   }
-
-  .app-sidebar,
+  .app-sidebar {
+    width: 100%;
+    top: 61px;
+    left: -100%;
+  }
+  /*
+  .sidebar-content,
   .app-icon {
     display: none;
   }
-
+*/
   .app-content {
     padding: 16px 12px 24px 12px;
   }
