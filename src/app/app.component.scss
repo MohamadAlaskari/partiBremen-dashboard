@@ -7,6 +7,13 @@ body {
   justify-content: center;
   background-color: var(--app-container);
 }
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: "DM Sans", sans-serif;
+}
 
 .app {
   &-container {
@@ -18,14 +25,6 @@ body {
     transition: 0.2s;
     padding: 0 16px 0 70px;
     //  max-width: 1800px;
-
-    button,
-    input,
-    optgroup,
-    select,
-    textarea {
-      font-family: "DM Sans", sans-serif;
-    }
   }
 
   &-content {
@@ -40,7 +39,7 @@ body {
   height: 100%;
   padding: 32px 32px 0 32px;
   border-radius: 32px;
-  background-color: var(--projects-section);
+  background-color: var(--main-section);
   overflow: hidden;
 }
 .login-container {
