@@ -5,7 +5,7 @@ body {
   overflow: hidden;
   display: flex;
   justify-content: center;
-  background-color: var(--app-container);
+  background-color: var(--bg-color-primary);
 }
 button,
 input,
@@ -21,7 +21,7 @@ textarea {
     display: flex;
     flex-direction: column;
     height: 100%;
-    background-color: var(--app-container);
+    background-color: var(--bg-color-primary);
     transition: 0.2s;
     padding: 0 16px 0 70px;
     //  max-width: 1800px;
@@ -39,7 +39,7 @@ textarea {
   height: 100%;
   padding: 32px 32px 0 32px;
   border-radius: 32px;
-  background-color: var(--main-section);
+  background-color: var( --bg-color-secondary);
   overflow: hidden;
 }
 .login-container {
@@ -48,5 +48,5 @@ textarea {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--app-container);
+  background-color: var(--bg-color-primary);
 }

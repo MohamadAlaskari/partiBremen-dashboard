@@ -1,7 +1,4 @@
-
-
 .projects-section {
-
   display: flex;
   flex-direction: column;
 
@@ -18,7 +15,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
-    color: var(--main-color);
+    color: var(--font-color-primary);
 
     p {
       font-size: 24px;
@@ -26,7 +23,7 @@
       font-weight: 700;
       opacity: 0.9;
       margin: 0;
-      color: var(--main-color);
+      color: var(--font-color-primary);
     }
 
     .time {
@@ -53,7 +50,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    border: 1px solid var(--secondary-color);
+    border: 1px solid var(--font-color-secondary);
   }
 }
 
@@ -61,13 +58,13 @@
   font-size: 24px;
   line-height: 32px;
   font-weight: 700;
-  color: var(--main-color);
+  color: var(--font-color-primary);
 }
 
 .status-type {
   position: relative;
   padding-right: 24px;
-  color: var(--secondary-color);
+  color: var(--font-color-secondary);
 }
 
 .view-actions {
@@ -85,7 +82,7 @@
   border-radius: 4px;
   background-color: transparent;
   border: none;
-  color: var(--main-color);
+  color: var(--font-color-primary);
   margin-left: 8px;
   transition: 0.2s;
 
@@ -98,15 +95,14 @@
     background-color: var(--link-color-hover);
     color: var(--link-color-active);
   }
-  span{
+  span {
     padding-inline: 10px;
   }
-
 }
 .search-wrapper {
   border-radius: 4px;
   background-color: var(--search-area-bg);
-  border:1px solid var(--link-color-active-bg);
+  border: 1px solid var(--link-color-active-bg);
   padding-right: 12px;
   height: 36px;
   display: flex;
@@ -132,47 +128,45 @@
   padding: 0 20px;
   font-size: 16px;
   background-color: var(--search-area-bg);
-  color: var(--main-color);
+  color: var(--font-color-primary);
 
   &:placeholder {
-    color: var(--main-color);
+    color: var(--font-color-primary);
     opacity: 0.6;
   }
 }
 
-
-.scroll-window table{
-  margin-bottom:0;
+.scroll-window table {
+  margin-bottom: 0;
 }
-	/*fixed header background*/
-.scroll-window:before{
-	content:"";
-	position: absolute;
-	width:100%;
-	height:2.5rem;
-	display: table;
-	z-index: 10;
-	background:rgba(170,170,170,0.8);
+/*fixed header background*/
+.scroll-window:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2.5rem;
+  display: table;
+  z-index: 10;
+  background: rgba(170, 170, 170, 0.8);
 }
-
 
 /*the actual fixed header*/
-table.fixed-header th div{
+table.fixed-header th div {
   position: absolute;
-  margin-top: -.5rem;
+  margin-top: -0.5rem;
   z-index: 11;
-  color:#333;
+  color: #333;
 }
-table.fixed-header  thead tr{
-  height:2.5rem;
-}
-
-.user-list{
-	width:100%;
+table.fixed-header thead tr {
+  height: 2.5rem;
 }
 
-.user-list	td.text-right{
-	width:16rem;
+.user-list {
+  width: 100%;
+}
+
+.user-list td.text-right {
+  width: 16rem;
 }
 
 /*-----experimental scrollbar styles-----*/
@@ -283,7 +277,7 @@ table.fixed-header  thead tr{
     align-items: center;
     justify-content: space-between;
     margin-bottom: 16px;
-    color: var(--main-color);
+    color: var(--font-color-primary);
 
     span {
       color: #4a4a4a;
@@ -441,28 +435,10 @@ table.fixed-header  thead tr{
 }
 
 .mode-switch.active .moon {
-  fill: var(--main-color);
+  fill: var(--font-color-primary);
 }
-
-.messages-btn {
-  border-radius: 4px 0 0 4px;
-  position: absolute;
-  right: 0;
-  top: 58px;
-  background-color: var(--message-btn);
-  border: none;
-  color: var(--main-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 4px;
-  display: none;
-}
-
 
 @media screen and (max-width: 980px) {
-
-
   .status-number,
   .status-type {
     font-size: 14px;
@@ -555,7 +531,6 @@ table.fixed-header  thead tr{
   .search-input {
     max-width: 120px;
   }
-
 
   .projects-section {
     padding: 24px 16px 0 16px;

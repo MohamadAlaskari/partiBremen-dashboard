@@ -51,7 +51,7 @@
     width: 26px;
     height: 2px;
     border-radius: 4px;
-    background-color: var(--main-color);
+    background-color: var(--font-color-primary);
     position: relative;
 
     &:before,
@@ -61,7 +61,7 @@
       width: 12px;
       height: 2px;
       border-radius: 4px;
-      background-color: var(--main-color);
+      background-color: var(--font-color-primary);
       left: 50%;
       transform: translatex(-50%);
     }
@@ -75,7 +75,7 @@
   }
 
   &-name {
-    color: var(--main-color);
+    color: var(--font-color-primary);
     margin: 0;
     font-size: 20px;
     line-height: 24px;
@@ -88,7 +88,7 @@
   background-color: transparent;
   border: none;
   padding: 0;
-  color: var(--main-color);
+  color: var(--font-color-primary);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -108,7 +108,7 @@
 }
 
 .notification-btn {
-  color: var(--main-color);
+  color: var(--font-color-primary);
   padding: 0;
   border: 0;
   background-color: transparent;
@@ -136,7 +136,7 @@
   }
 
   span {
-    color: var(--main-color);
+    color: var(--font-color-primary);
     font-size: 16px;
     line-height: 24px;
     font-weight: 700;
@@ -166,7 +166,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
-    color: var(--main-color);
+    color: var(--font-color-primary);
 
     p {
       font-size: 24px;
@@ -174,7 +174,7 @@
       font-weight: 700;
       opacity: 0.9;
       margin: 0;
-      color: var(--main-color);
+      color: var(--font-color-primary);
     }
 
     .time {
@@ -201,7 +201,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    border: 1px solid var(--secondary-color);
+    border: 1px solid var(--font-color-secondary);
   }
 }
 
@@ -209,13 +209,13 @@
   font-size: 24px;
   line-height: 32px;
   font-weight: 700;
-  color: var(--main-color);
+  color: var(--font-color-primary);
 }
 
 .status-type {
   position: relative;
   padding-right: 24px;
-  color: var(--secondary-color);
+  color: var(--font-color-secondary);
 }
 
 .view-actions {
@@ -233,7 +233,7 @@
   border-radius: 4px;
   background-color: transparent;
   border: none;
-  color: var(--main-color);
+  color: var(--font-color-primary);
   margin-left: 8px;
   transition: 0.2s;
 
@@ -267,7 +267,7 @@
     z-index: 3;
     border: none;
     background-color: transparent;
-    color: var(--main-color);
+    color: var(--font-color-primary);
     display: none;
   }
 
@@ -320,7 +320,7 @@
     font-size: 16px;
     line-height: 24px;
     font-weight: 700;
-    color: var(--main-color);
+    color: var(--font-color-primary);
     margin: 0;
   }
 }
@@ -348,7 +348,7 @@
   }
 
   .dark & {
-    color: var(--secondary-color);
+    color: var(--font-color-secondary);
 
     input:checked + label {
       color: var(--star);
@@ -365,7 +365,7 @@
   font-size: 14px;
   line-height: 20px;
   margin: 8px 0;
-  color: var(--secondary-color);
+  color: var(--font-color-secondary);
   opacity: 0.7;
 
   &.time {
@@ -459,7 +459,7 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 16px;
-    color: var(--main-color);
+    color: var(--font-color-primary);
 
     span {
       color: #4a4a4a;
@@ -617,7 +617,7 @@
 }
 
 .mode-switch.active .moon {
-  fill: var(--main-color);
+  fill: var(--font-color-primary);
 }
 
 .messages-btn {
@@ -627,7 +627,7 @@
   top: 58px;
   background-color: var(--message-btn);
   border: none;
-  color: var(--main-color);
+  color: var(--font-color-primary);
   display: flex;
   justify-content: center;
   align-items: center;
