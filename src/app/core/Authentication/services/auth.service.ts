@@ -22,7 +22,6 @@ export class AuthService {
       map((response) => {
         if (response) {
           this.storeUser(response);
-          console.info(response.surname);
           return response;
         }
         throw new Error('No user data received');
