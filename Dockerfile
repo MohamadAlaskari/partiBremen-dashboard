@@ -5,7 +5,7 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . ./
-RUN npm run build --configuration production
+RUN npm run confbuild
 
 FROM nginx:stable-alpine
 

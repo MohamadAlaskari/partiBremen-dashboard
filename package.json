@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "confbuild": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:partiBremen-dashboard": "node dist/parti-bremen-dashboard/server/server.mjs"
