@@ -10,8 +10,8 @@ RUN npm run confbuild
 FROM node:18-alpine
 
 WORKDIR /usr/app
-COPY --from=builder /app/dist/parti-bremen-dashboard/server ./
-CMD node server.mjs
+COPY --from=builder /app/dist/parti-bremen-dashboard ./
+CMD node server/server.mjs
 
 EXPOSE 80
 
