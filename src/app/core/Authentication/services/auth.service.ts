@@ -3,52 +3,66 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { User } from '../../../shared/models/user.model';
 import { ApiService } from '../../Services/api.service';
+import { environment } from '../../../../enviroments/environment';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private loginEndpoint = 'user/login'; // Use an appropriate API endpoint
+  private loginEndpoint = environment.endpoints.users.login; // Endpoint from environment settings
 
   constructor(private apiService: ApiService) {}
+
   login(email: string, password: string): Observable<User> {
-    return this.apiService
-      .post<User>(this.loginEndpoint, { email, password })
-      .pipe(
-        map((user) => {
-          if (user) {
-            if (typeof localStorage !== 'undefined') {
-              localStorage.setItem('user', JSON.stringify(user));
-            }
-            return user;
-          }
-          throw new Error('No user data received');
-        }),
-        catchError((error) =>
-          throwError(() => new Error('Login failed: ' + error.message))
-        )
-      );
+    const params = new HttpParams()
+      .set('email', email)
+      .set('password', password);
+    return this.apiService.post<User>(this.loginEndpoint, params).pipe(
+      map((response) => {
+        if (response) {
+          this.storeUser(response);
+          console.info(response.surname);
+          return response;
+        }
+        throw new Error('No user data received');
+      }),
+      catchError((error) => {
+        console.error('Login error:', error);
+        return throwError(() => new Error(`Login failed: ${error.message}`));
+      })
+    );
   }
 
   logout(): void {
-    if (typeof localStorage !== 'undefined') {
-      localStorage.removeItem('user');
-    }
+    this.clearUser();
   }
 
   isAuthenticated(): boolean {
-    return true;
-    if (typeof localStorage !== 'undefined') {
-      return !!localStorage.getItem('user');
-    }
-    return false;
+    return !!this.getCurrentUser();
   }
 
   getCurrentUser(): User | null {
-    if (typeof localStorage !== 'undefined') {
-      const userJson = localStorage.getItem('user');
-      return userJson ? JSON.parse(userJson) : null;
+    const userJson = this.getUserData();
+    return userJson ? JSON.parse(userJson) : null;
+  }
+
+  private storeUser(user: User): void {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('user', JSON.stringify(user));
+    }
+  }
+
+  private getUserData(): string | null {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('user');
     }
     return null;
+  }
+
+  private clearUser(): void {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('user');
+    }
   }
 }

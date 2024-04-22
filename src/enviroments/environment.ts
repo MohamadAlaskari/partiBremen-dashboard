@@ -9,8 +9,9 @@ export const environment = {
   apiBaseUrl: 'https://api.partibremen.student.28apps-software.de',
   endpoints: {
     users: {
+      login: '/user/login',
       findAll: '/user/find-all',
-      findById: '/user/find-by-id',
+      findById: '/user/findById',
       create: '/user/create',
       update: '/user/update',
       delete: '/user/delete',
