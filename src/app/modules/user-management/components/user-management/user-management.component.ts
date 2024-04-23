@@ -16,7 +16,6 @@ export class UserManagementComponent {
     private userManagementService: UserManagementService,
     private toastService: ToastService
   ) {
-    this.loadUsers();
   }
 
   ngOnInit() {

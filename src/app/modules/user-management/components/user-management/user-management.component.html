@@ -4,12 +4,11 @@
     <p>User Management</p>
 
   </div>
-
   <div class="projects-section-line">
     <div class="projects-status">
       <div class="item-status">
         <span class="status-number">45</span>
-        <span class="status-type">gemeldet</span>
+        <span class="status-type">Aktiv</span>
       </div>
       <div class="item-status">
         <span class="status-number">24</span>
@@ -20,6 +19,9 @@
         <span class="status-type">Total Users</span>
       </div>
     </div>
+  </div>
+  <div class="projects-section-line">
+
     <div class="view-actions active">
       <div class="search-wrapper">
         <input class="search-input" type="text" placeholder="Search">
@@ -55,11 +57,8 @@
           <th>Surname</th>
           <th>Date of Birth</th>
           <th>Email</th>
-          <th>password</th>
-          <th>Verified</th>
-          <th>Created at</th>
-          <th>Updated at</th>
-          <th></th>
+
+          <th>settings</th>
 
 
         </thead>
@@ -72,10 +71,7 @@
             <td>{{user.surname}}</td>
             <td>{{user.dob}}</td>
             <td>{{user.email}}</td>
-            <td>{{user.password}}</td>
-            <td>{{user.verified}}</td>
-            <td>{{user.createdAt}}</td>
-            <td>{{user.updatedAt}}</td>
+
             <td class="text-right">
               <button class="button tiny">View User</button>
               <button class="button alert tiny">Delete</button>

@@ -136,6 +136,9 @@
   }
 }
 
+
+//table
+
 .scroll-window table {
   margin-bottom: 0;
 }
@@ -156,6 +159,9 @@ table.fixed-header th div {
   margin-top: -0.5rem;
   z-index: 11;
   color: #333;
+}
+.table.fixed-header th{
+  text-align: left;
 }
 table.fixed-header thead tr {
   height: 2.5rem;

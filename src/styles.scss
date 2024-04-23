@@ -70,6 +70,7 @@ body {
 body {
   background-color: var(--app-container);
   color: var(--text-color);
+  min-height: 100vh;
 }
 
 button,
