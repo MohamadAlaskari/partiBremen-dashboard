@@ -1,20 +1,11 @@
 //toast style
-$color-help1: #05478a;
-$color-help2: #0070e0;
-$color-success1: #005e38;
-$color-success2: #03a65a;
-$color-warning1: #c24914;
-$color-warning2: #fc8621;
-$color-error1: #851d41;
-$color-error2: #db3056;
-$transition-base: all 0.5s ease 0s;
 
 .toast-panel {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  transition: var(--tr);
+  transition: var(--transition-base);
   padding: 0 1rem;
   // height: 100%;
 
@@ -25,13 +16,13 @@ $transition-base: all 0.5s ease 0s;
 }
 
 .toast-item {
-  transition: $transition-base;
+  transition: var(--transition-base);
   position: relative;
   animation: show-toast 1s ease 3s 1;
 
   .toast {
-    background: #fff;
-    color: #f5f5f5;
+    background-color: var(--bg-color-secondary);
+    color: var(--font-color-secondary);
     padding: 1rem 2rem 1rem 3rem;
     text-align: center;
     border-radius: 1rem;
@@ -40,7 +31,7 @@ $transition-base: all 0.5s ease 0s;
     margin: 1rem 0;
     text-align: left;
     max-width: 16rem;
-    transition: $transition-base;
+    transition: var(--transition-base);
     opacity: 1;
     border: 0.15rem solid #fff2;
     box-shadow: 0 0 1.5rem 0 #1a1f4360;
@@ -70,7 +61,7 @@ $transition-base: all 0.5s ease 0s;
       font-size: 0.95rem;
       z-index: 1;
       margin: 0.25rem 0 0;
-      color: #595959;
+      color: var(--font-color-secondary);
       line-height: 1.3rem;
     }
     .close {
@@ -88,19 +79,19 @@ $transition-base: all 0.5s ease 0s;
     }
   }
   &.success .toast {
-    color: $color-success2;
+    color: var(--color-success2);
     //  --bg: var(--cs1);
     //--clr: var(--cs2);
     //--brd: var(--cs3);
   }
   &.warning .toast {
-    color: $color-warning2;
+    color: var(--color-warning2);
     //   --bg: var(--cw1);
     // --clr: var(--cw2);
     //--brd: var(--cw3);
   }
   &.error .toast {
-    color: $color-error2;
+    color: var(--color-error2);
     /*
     --bg: var(--ce1);
     --clr: var(--ce2);
@@ -108,7 +99,7 @@ $transition-base: all 0.5s ease 0s;
     */
   }
   &.info .toast {
-    color: $color-help2;
+    color: var(--color-help2);
     /*
     --bg: var(--ch1);
     --clr: var(--ch2);

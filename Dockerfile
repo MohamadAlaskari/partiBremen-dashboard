@@ -1,11 +1,16 @@
-FROM node:alpine
+FROM node:18-alpine AS builder
+WORKDIR /app
 
-WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm ci
 
-COPY . /usr/src/app
+COPY . ./
+RUN npm run confbuild
 
-RUN npm install -g @angular/cli
+FROM node:18-alpine
 
-RUN npm install
+WORKDIR /usr/app
+COPY --from=builder /app/dist/parti-bremen-dashboard ./
+CMD node server/server.mjs
 
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+EXPOSE 80

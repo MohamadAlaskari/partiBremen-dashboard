@@ -61,10 +61,11 @@ $partiBremen-dashboard-theme: mat.define-light-theme(
 @import "styles/abstracts/placeholders";
 
 // Weitere globale Stile
+
 html,
 body {
   margin: 0;
-  font-family: "DM Sans", sans-serif;
+  font-family: var(--font-primary);
 }
 body {
   background-color: var(--app-container);
@@ -101,4 +102,3 @@ $alert-border-radius: 5px;
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }
-

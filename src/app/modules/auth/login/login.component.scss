@@ -1,7 +1,7 @@
 .login-section {
   margin: 0 auto;
   width: 80%;
-  background-color: var(--projects-section);
+  background-color: var(--bg-color-primary);
   border-radius: 10px;
   overflow: hidden;
 
@@ -60,6 +60,7 @@
     h5 {
       font-size: 4vmax;
       line-height: 0;
+      columns: var(--main-color);
       // margin-bottom: 30px;
     }
 
@@ -96,7 +97,7 @@
 
     button {
       float: right;
-      color: #fff;
+      color: var(--button-font-color);
       font-size: 16px;
       padding: 12px 35px;
       border-radius: 5px;
@@ -104,7 +105,7 @@
       border: 0;
       outline: 0;
       box-shadow: 0 0 10px 1px #414141a6;
-      background: #000000;
+      background: var(--button-bg);
     }
   }
 }

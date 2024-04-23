@@ -12,7 +12,7 @@
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic, repellat!</p>
 
     <div class="inputs">
-      <input type="email" id="email" [(ngModel)]="user.email" name="email" placeholder="user name" required>
+      <input type="email" id="email" [(ngModel)]="user.email" name="email" placeholder="email" autocomplete="current-username"  required>
       <br>
       <input type="password" id="password" [(ngModel)]="user.password" name="password" placeholder="password"
         autocomplete="current-password" required>

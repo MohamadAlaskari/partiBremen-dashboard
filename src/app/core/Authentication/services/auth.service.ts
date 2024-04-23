@@ -3,59 +3,63 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { User } from '../../../shared/models/user.model';
 import { ApiService } from '../../Services/api.service';
+import { environment } from '../../../../enviroments/environment';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private authUrl = 'login'; // Use an appropriate API endpoint
+  private loginEndpoint = environment.endpoints.users.login; // Endpoint from environment settings
 
   constructor(private apiService: ApiService) {}
 
   login(email: string, password: string): Observable<User> {
-    return this.apiService.login<User>(email, password)
-      .pipe(
-        map(user => {
-          if (user) {
-            this.storeUser(user);
-            return user;
-          }
-          throw new Error('No user data received');
-        }),
-        catchError(error => throwError(() => new Error('Login failed: ' + error.message)))
-      );
+    const params = new HttpParams()
+      .set('email', email)
+      .set('password', password);
+    return this.apiService.post<User>(this.loginEndpoint, params).pipe(
+      map((response) => {
+        if (response) {
+          this.storeUser(response);
+          return response;
+        }
+        throw new Error('No user data received');
+      }),
+      catchError((error) => {
+        console.error('Login error:', error);
+        return throwError(() => new Error(`Login failed: ${error.message}`));
+      })
+    );
   }
 
   logout(): void {
-    this.removeUser();
+    this.clearUser();
   }
 
   isAuthenticated(): boolean {
-    return true
-    return this.getUser() != null; // Überprüft, ob Benutzerdaten gespeichert sind
+    return !!this.getCurrentUser();
   }
+
   getCurrentUser(): User | null {
-    const userJson = localStorage.getItem('user');
-    if (userJson) {
-      return JSON.parse(userJson) as User;
-    }
-    return null;
+    const userJson = this.getUserData();
+    return userJson ? JSON.parse(userJson) : null;
   }
+
   private storeUser(user: User): void {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('user', JSON.stringify(user)); // Speichere den Benutzer als String
+      localStorage.setItem('user', JSON.stringify(user));
     }
   }
 
-  private getUser(): User | null {
+  private getUserData(): string | null {
     if (typeof window !== 'undefined') {
-      const userStr = localStorage.getItem('user');
-      return userStr ? (JSON.parse(userStr) as User) : null;
+      return localStorage.getItem('user');
     }
     return null;
   }
 
-  private removeUser(): void {
+  private clearUser(): void {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('user');
     }

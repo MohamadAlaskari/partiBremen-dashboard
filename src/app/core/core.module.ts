@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthenticationModule } from './Authentication/authentication.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -8,6 +9,7 @@ import { AuthenticationModule } from './Authentication/authentication.module';
   declarations: [],
   imports: [
     CommonModule,
+    HttpClientModule,
     AuthenticationModule
 
   ]
