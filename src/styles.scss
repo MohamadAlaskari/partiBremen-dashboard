@@ -120,15 +120,12 @@ $partiBremen-dashboard-theme: mat.define-light-theme(
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-// Dunkelmodus-Variablen
 .dark {
   --bg-color-primary: #111827;
   --bg-color-secondary: #1f2937;
 
   --font-color-primary: #fff;
   --font-color-secondary: rgba(255, 255, 255, 0.8);
-
 
   --link-color: rgba(255, 255, 255, 0.8);
   --link-color-hover: rgba(195, 207, 244, 0.1);
@@ -146,7 +143,6 @@ $partiBremen-dashboard-theme: mat.define-light-theme(
   --more-list-shadow: rgba(195, 207, 244, 0.1);
   --message-btn: rgba(195, 207, 244, 0.1);
 }
-
 
 html,
 body {
