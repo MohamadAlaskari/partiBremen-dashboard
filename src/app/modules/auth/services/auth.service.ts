@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../../enviroments/environment';
+import { ApiService } from '../../../core/Services/api.service';
+import { User } from '../../../shared/models/user.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { User } from '../../../shared/models/user.model';
-import { ApiService } from '../../Services/api.service';
-import { environment } from '../../../../enviroments/environment';
 import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private loginEndpoint = environment.endpoints.users.login; // Endpoint from environment settings
+  private loginEndpoint = environment.endpoints.users.login;
 
   constructor(private apiService: ApiService) {}
 
@@ -32,7 +32,6 @@ export class AuthService {
       })
     );
   }
-
   logout(): void {
     this.clearUser();
   }

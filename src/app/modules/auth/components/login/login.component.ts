@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../core/Authentication/services/auth.service';
-import { User } from '../../../shared/models/user.model';
-import { ToastService } from '../../../shared/services/toast.service';
+import { User } from '../../../../shared/models/user.model';
+import { ToastService } from '../../../../shared/services/toast.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -19,10 +19,9 @@ export class LoginComponent {
   ) {}
 
   ngOnInit() {
-    this.authService.logout();
     // Automatische Umleitung zur Startseite, wenn bereits angemeldet
     if (this.authService.isAuthenticated()) {
-       this.router.navigate(['/dashboard']);
+      this.router.navigate(['/dashboard']);
     }
   }
   onLogin(): void {
