@@ -28,6 +28,14 @@ const routes: Routes = [
         (m) => m.PoiManagementModule
       ),
   },
+
+  {
+    path: 'comment-management',
+    loadChildren: () =>
+      import('./modules/comment-management/comment-management.module').then(
+        (m) => m.CommentManagementModule
+      ),
+  },
   { path: '**', redirectTo: 'login' }, // Fallback-Route
 ];
 

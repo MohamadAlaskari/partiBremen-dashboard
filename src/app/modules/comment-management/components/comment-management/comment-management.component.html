@@ -1,1 +1,26 @@
-<p>comment-management works!</p>
+<!-- comment-management.component.html -->
+
+<div>
+    <h1>Comment Management</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Content</th>
+          <th>Date & Time</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let comment of comments">
+          <td>{{ comment.user }}</td>
+          <td>{{ comment.content }}</td>
+          <td>{{ comment.dateTime }}</td>
+          <td>
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
