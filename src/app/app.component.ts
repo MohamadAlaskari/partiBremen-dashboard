@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { AuthService } from './core/Authentication/services/auth.service';
-import { ToastService } from './shared/services/toast.service';
+import { AuthService } from './modules/auth/services/auth.service';
+
 
 @Component({
   selector: 'app-root',

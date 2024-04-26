@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../core/Authentication/services/auth.service';
-import { User } from '../../../shared/models/user.model';
-import { ToastService } from '../../../shared/services/toast.service';
+import { User } from '../../../../shared/models/user.model';
+import { ToastService } from '../../../../shared/services/toast.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +11,6 @@ import { ToastService } from '../../../shared/services/toast.service';
 })
 export class LoginComponent {
   user: User = new User('', '', '', '', '', null, '', '', false);
-
 
   constructor(
     private router: Router,
@@ -22,24 +21,27 @@ export class LoginComponent {
   ngOnInit() {
     // Automatische Umleitung zur Startseite, wenn bereits angemeldet
     if (this.authService.isAuthenticated()) {
-      // this.router.navigate(['/dashboard']);
+      this.router.navigate(['/dashboard']);
     }
   }
   onLogin(): void {
-    this.authService.login(this.user.email, this.user.password).subscribe(
-      (data) => {
-        console.log('Login erfolgreich', data);
-        this.toastService.show('success', 'Login Successful', 'Welcome back!');
-
+    this.authService.login(this.user.email, this.user.password).subscribe({
+      next: (user) => {
         this.router.navigate(['/dashboard']);
+        this.toastService.show(
+          'success',
+          'Login Successful',
+          `Welcome back ${user.name}!`
+        );
       },
-      (error) => {
+      error: (error) => {
         this.toastService.show(
           'error',
           'Login Failed',
           'Invalid email or password.'
         );
-      }
-    );
+        console.error('Login fehlgeschlagen', error);
+      },
+    });
   }
 }

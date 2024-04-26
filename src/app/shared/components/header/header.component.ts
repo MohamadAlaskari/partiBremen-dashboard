@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../../core/Authentication/services/auth.service';
 import { Router } from '@angular/router';
+import { User } from '../../models/user.model';
+import { AuthService } from '../../../modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -9,10 +10,12 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
   title = ' Dashboard';
+  currentUser: User | null = null;
   darkMode: boolean = false;
-
   constructor(private authService: AuthService, private _router: Router) {}
-
+  ngOnInit() {
+    this.currentUser = this.authService.getCurrentUser();
+  }
   logout(): void {
     this.authService.logout();
     this._router.navigate(['/login']);
