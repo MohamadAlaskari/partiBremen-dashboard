@@ -3,6 +3,7 @@
  * - baseUrl: The base url for the backend api
  * - endpoints:
  */
+//
 // environments/environment.prod.ts (für Produktion)
 export const environment = {
   production: true,
