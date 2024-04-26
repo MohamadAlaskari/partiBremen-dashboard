@@ -6,16 +6,16 @@
   <div class="projects-section-line">
     <div class="projects-status">
       <div class="item-status">
-        <span class="status-number">45</span>
-        <span class="status-type">In Progress</span>
+        <span class="status-number">3</span>
+        <span class="status-type">In Planung</span>
       </div>
       <div class="item-status">
-        <span class="status-number">24</span>
-        <span class="status-type">Upcoming</span>
+        <span class="status-number">3</span>
+        <span class="status-type">Wird gebaut</span>
       </div>
       <div class="item-status">
-        <span class="status-number">62</span>
-        <span class="status-type">Total Projects</span>
+        <span class="status-number">3</span>
+        <span class="status-type">Fertig</span>
       </div>
     </div>
     <div class="view-actions active">
@@ -60,11 +60,11 @@
         @for (poi of filteredItems; track poi.id) {
 
         <tr>
-            <td>{{poi.name}}</td>
-            <td>{{poi.date}}</td>
-            <td>{{poi.beschreibung}}</td>
-            <td>{{poi.adresse}}</td>
-            <td>{{poi.status}}</td>
+            <td>{{poi.titel}}</td>
+            <td>{{poi.createdAt}}</td>
+            <td>{{poi.description}}</td>
+            <td></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>

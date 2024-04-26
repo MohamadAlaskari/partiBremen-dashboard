@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
+import {Observable} from "rxjs";
+import {ApiService} from "../../../core/Services/api.service";
+import {environment} from "../../../../enviroments/environment";
+import {Poi} from "../../../shared/models/poi.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PoiManagementService {
+  private poiEndpoints = environment.endpoints.pois;
 
   private currentpoi = {
     id: 1,
@@ -14,7 +19,7 @@ export class PoiManagementService {
     adresse: 'Bremen'
   };
 
-  constructor() { }
+  constructor(private apiService: ApiService) {}
 
   getPoi() {
       return this.currentpoi;
@@ -22,5 +27,9 @@ export class PoiManagementService {
 
   setPoi(poi: any) {
       this.currentpoi = poi;
+  }
+
+  getPois(): Observable<Poi[]> {
+    return this.apiService.get<Poi[]>(`${this.poiEndpoints.findAll}`);
   }
 }

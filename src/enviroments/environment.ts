@@ -17,6 +17,8 @@ export const environment = {
       delete: '/user/delete',
     },
     comments: {},
-    pois: {},
+    pois: {
+      findAll: '/poi',
+    },
   },
 };

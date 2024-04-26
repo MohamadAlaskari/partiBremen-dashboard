@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { PoiManagementService } from '../../services/poi-management.service';
+import {ToastService} from "../../../../shared/services/toast.service";
+import {Subscription} from "rxjs";
+import {User} from "../../../../shared/models/user.model";
+import {Poi} from "../../../../shared/models/poi.model";
 
 @Component({
   selector: 'app-poi-management',
@@ -7,46 +11,14 @@ import { PoiManagementService } from '../../services/poi-management.service';
   styleUrl: './poi-management.component.scss'
 })
 export class PoiManagementComponent {
-  items: any[] = [];
+  items: Poi[] = [];
+  private subscriptions: Subscription = new Subscription();
 
-  constructor(private poiManagementService: PoiManagementService) { }
+  constructor(private poiManagementService: PoiManagementService,
+              private toastService: ToastService) { }
 
   ngOnInit() {
-
-    this.items = [
-      {
-        id: 1,
-        name: 'Baum',
-        date: '20.03.1996',
-        status: 'In Planung',
-        adresse: 'Mond',
-        beschreibung: 'ist cool'
-      },
-      {
-        id: 2,
-        name: 'Butze',
-        date: '20.03.1996',
-        status: 'Wird gebaut',
-        adresse: 'Berlin',
-        beschreibung: 'beschreibung'
-      },
-      {
-        id: 3,
-        name: 'zweiter Flughafen',
-        date: '20.03.1996',
-        status: 'Fertig',
-        adresse: 'Erdkern',
-        beschreibung: 'nein'
-      },
-      {
-        id: 4,
-        name: 'Dysonsphäre',
-        date: '20.03.1996',
-        status: 'In Planung',
-        adresse: 'New York',
-        beschreibung: 'aboutakum'
-      },
-    ];
+    this.loadPois();
   }
 
   searchTerm: string = '';
@@ -59,8 +31,46 @@ export class PoiManagementComponent {
     );
   }
 
+  /**
+  get fertig() {
+    return this.items.filter(item =>
+      item.status.includes("Fertig")
+    ).length;
+  }
+
+  get wirdgebaut() {
+    return this.items.filter(item =>
+      item.status.includes("Wird gebaut")
+    ).length;
+  }
+
+  get inplanung() {
+    return this.items.filter(item =>
+      item.status.includes("In Planung")
+    ).length;
+  }
+    **/
+
   showPoi(poi: any) {
     this.poiManagementService.setPoi(poi)
 
+  }
+
+  loadPois(): void {
+    this.subscriptions.add(
+      this.poiManagementService.getPois().subscribe({
+        next: (pois) => {
+          this.items = pois;
+          this.toastService.show(
+            'success',
+            'Success',
+            'Pois loaded successfully'
+          );
+        },
+        error: (err) => {
+          this.toastService.show('error', 'Error', 'Failed to load Pois');
+        },
+      })
+    );
   }
 }
