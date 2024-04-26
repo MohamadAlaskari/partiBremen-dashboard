@@ -20,6 +20,14 @@ const routes: Routes = [
         (m) => m.UserManagementModule
       ),
   },
+
+  {
+    path: 'poi-management',
+    loadChildren: () =>
+      import('./modules/poi-management/poi-management.module').then(
+        (m) => m.PoiManagementModule
+      ),
+  },
   { path: '**', redirectTo: 'login' }, // Fallback-Route
 ];
 
