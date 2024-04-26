@@ -4,9 +4,10 @@ import { PoiManagementComponent } from './components/poi-management/poi-manageme
 import { PoiManagementRoutingModule } from './poi-management-routing.module';
 import { PoiManagementService } from './services/poi-management.service';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { PoiAnzeigeComponent } from './components/poi-anzeige/poi-anzeige.component';
 
 @NgModule({
-  declarations: [PoiManagementComponent],
+  declarations: [PoiManagementComponent, PoiAnzeigeComponent],
   imports: [CommonModule, PoiManagementRoutingModule, ReactiveFormsModule, FormsModule],
   providers: [PoiManagementService],
 })

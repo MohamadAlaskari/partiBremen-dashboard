@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TableComponent } from './table.component';
+import { PoiAnzeigeComponent } from './poi-anzeige.component';
 
-describe('TableComponent', () => {
-  let component: TableComponent;
-  let fixture: ComponentFixture<TableComponent>;
+describe('PoiAnzeigeComponent', () => {
+  let component: PoiAnzeigeComponent;
+  let fixture: ComponentFixture<PoiAnzeigeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TableComponent]
+      declarations: [PoiAnzeigeComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(TableComponent);
+    fixture = TestBed.createComponent(PoiAnzeigeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

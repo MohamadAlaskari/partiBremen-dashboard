@@ -51,6 +51,8 @@
         <thead>
         <th>Name</th>
         <th>Date of Creation</th>
+        <th>Beschreibung</th>
+        <th>Adresse</th>
         <th>Status</th>
         <th></th>
         </thead>
@@ -61,15 +63,15 @@
         <tr>
             <td>{{poi.name}}</td>
             <td>{{poi.date}}</td>
+            <td>{{poi.beschreibung}}</td>
+            <td>{{poi.adresse}}</td>
             <td>{{poi.status}}</td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
-            <td></td>
             <td class="text-right">
-              <button class="button tiny">View Poi</button>
+              <button class="button tiny" (click)="showPoi(poi)">View Poi</button>
               <button class="button alert tiny">Delete</button>
             </td>
           </tr>
