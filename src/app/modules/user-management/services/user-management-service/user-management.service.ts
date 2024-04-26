@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../../../core/Services/api.service';
+import { ApiService } from '../../../../core/Services/api.service';
 import { Observable } from 'rxjs';
-import { User } from '../../../shared/models/user.model';
-import { environment } from '../../../../enviroments/environment';
+import { User } from '../../../../shared/models/user.model';
+import { environment } from '../../../../../enviroments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +25,10 @@ export class UserManagementService {
   }
 
   updateUser(userId: string, user: User): Observable<User> {
-    return this.apiService.put<User>(`${this.userEndpoints.update}/${userId}`, user);
+    return this.apiService.put<User>(
+      `${this.userEndpoints.update}/${userId}`,
+      user
+    );
   }
 
   deleteUser(userId: string): Observable<User> {

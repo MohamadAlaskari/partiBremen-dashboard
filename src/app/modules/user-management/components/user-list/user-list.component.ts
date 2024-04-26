@@ -1,13 +1,8 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { UserManagementService } from '../../services/user-management.service';
+import { UserManagementService } from '../../services/user-management-service/user-management.service';
 import { User } from '../../../../shared/models/user.model';
 import { ToastService } from '../../../../shared/services/toast.service';
-
-interface Tab {
-  name: string;
-  translateValue: string;
-}
 
 @Component({
   selector: 'app-user-list',
@@ -15,15 +10,11 @@ interface Tab {
   styleUrl: './user-list.component.scss',
 })
 export class UserListComponent {
-  tabs: Tab[] = [
-    { name: 'view all', translateValue: '0%' },
-    { name: 'verfiziert', translateValue: '100%' },
-    { name: 'Following', translateValue: '200%' },
-  ];
-  selectedTab: string = this.tabs[0].name; // Default to the first tab
-  sliderTransform: string = `translateX(${this.tabs[0].translateValue})`;
-
+  isSortDropdownActive = false;
   users: User[] = [];
+  filteredUsers: User[] = [];
+  searchText: string = '';
+
   private subscriptions: Subscription = new Subscription();
   constructor(
     private userManagementService: UserManagementService,
@@ -33,16 +24,15 @@ export class UserListComponent {
   ngOnInit() {
     this.loadUsers();
   }
-  selectTab(tab: Tab): void {
-    this.selectedTab = tab.name;
-    this.sliderTransform = `translateX(${tab.translateValue})`;
+  toggleDropdown(): void {
+    this.isSortDropdownActive = !this.isSortDropdownActive;
   }
-
   loadUsers(): void {
     this.subscriptions.add(
       this.userManagementService.getUsers().subscribe({
         next: (users) => {
           this.users = users;
+          this.filteredUsers = users;
           this.toastService.show(
             'success',
             'Success',
@@ -58,7 +48,16 @@ export class UserListComponent {
   countUsers(): number {
     return this.users.length;
   }
-
+  filterUsers(): void {
+    console.log(this.searchText);
+    this.filteredUsers = this.users.filter((user) => {
+      return (
+        user.name.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        user.surname.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        user.email.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    });
+  }
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
     console.log('Cleaned up subscriptions');

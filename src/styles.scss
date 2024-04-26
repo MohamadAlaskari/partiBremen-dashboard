@@ -94,6 +94,11 @@ $partiBremen-dashboard-theme: mat.define-light-theme(
   --color-error1: #851d41;
   --color-error2: #db3056;
   --transition-base: all 0.5s ease 0s;
+  //verviziert
+  --bg-color-verified: var(--color-help2);
+  --bg-color-unverified: #888;
+  --color-verified: var(--color-help2);
+  --color-unverified: var(--color-help2);
 
   //fonts-family
   --font-primary: "DM Sans", sans-serif, "Inter", -apple-system,
