@@ -13,6 +13,8 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { UserManagementModule } from './modules/user-management/user-management.module';
 import { MatIconModule } from '@angular/material/icon';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { CommentManagementComponent } from './modules/comment-management/components/comment-management/comment-management.component';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
