@@ -1,0 +1,283 @@
+.projects-section {
+  display: flex;
+  flex-direction: column;
+
+  &-line {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 32px;
+  }
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    color: var(--font-color-primary);
+
+    p {
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 700;
+      opacity: 0.9;
+      margin: 0;
+      color: var(--font-color-primary);
+    }
+
+    .time {
+      font-size: 20px;
+    }
+  }
+}
+
+.projects-status {
+  display: flex;
+}
+
+.item-status {
+  display: flex;
+  flex-direction: column;
+  margin-right: 16px;
+
+  &:not(:last-child) .status-type:after {
+    content: "";
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translatey(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: 1px solid var(--font-color-secondary);
+  }
+}
+
+.status-number {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 700;
+  color: var(--font-color-primary);
+}
+
+.status-type {
+  position: relative;
+  padding-right: 24px;
+  color: var(--font-color-secondary);
+}
+
+.view-actions {
+  display: flex;
+  align-items: center;
+}
+
+.view-btn {
+  width: 200px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  border-radius: 4px;
+  background-color: transparent;
+  border: none;
+  color: var(--font-color-primary);
+  margin-left: 8px;
+  transition: 0.2s;
+
+  &.active {
+    background-color: var(--link-color-active-bg);
+    color: var(--link-color-active);
+  }
+
+  &:not(.active):hover {
+    background-color: var(--link-color-hover);
+    color: var(--link-color-active);
+  }
+  span {
+    padding-inline: 10px;
+  }
+}
+.search-wrapper {
+  border-radius: 4px;
+  background-color: var(--search-area-bg);
+  border: 1px solid var(--link-color-active-bg);
+  padding-right: 12px;
+  height: 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 430px;
+  color: var(--light-font);
+  overflow: hidden;
+
+  .dark & {
+    box-shadow: none;
+  }
+}
+
+.search-input {
+  border: none;
+  flex: 1;
+  outline: none;
+  height: 100%;
+  padding: 0 20px;
+  font-size: 16px;
+  background-color: var(--search-area-bg);
+  color: var(--font-color-primary);
+
+  &:placeholder {
+    color: var(--font-color-primary);
+    opacity: 0.6;
+  }
+}
+//filtersbar
+
+.tabs {
+  display: flex;
+  position: relative;
+  background-color: var(--bg-color-primary);
+  // box-shadow: 0 0 1px 0 rgba(#185ee0, 0.15), 0 6px 12px 0 rgba(#185ee0, 0.15);
+  // padding: 0.15rem;
+  border-radius: 4px; // just a high number to create pill effect
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.tab {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  width: 90px;
+  border-radius: 4px; // just a high number to create pill effect
+  cursor: pointer;
+  color: var(--link-color);
+  transition: color 0.15s ease-in;
+}
+
+.notification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin-left: 0.75rem;
+  border-radius: 50%;
+  background-color: #e6eef9;
+  transition: 0.15s ease-in;
+}
+
+input[type="radio"] {
+  &:checked {
+    & + label {
+      color: var(--link-color-active);
+      & > .notification {
+        background-color: #185ee0;
+        color: #fff;
+      }
+    }
+  }
+}
+
+input[id="radio-1"] {
+  &:checked {
+    & ~ .glider {
+      transform: translateX(0);
+    }
+  }
+}
+
+input[id="radio-2"] {
+  &:checked {
+    & ~ .glider {
+      transform: translateX(100%);
+    }
+  }
+}
+
+input[id="radio-3"] {
+  &:checked {
+    & ~ .glider {
+      transform: translateX(200%);
+    }
+  }
+}
+
+.glider {
+  position: absolute;
+  display: flex;
+  height: 30px;
+  width: 90px;
+  background-color: var(--link-color-active-bg);
+  z-index: 1;
+  border-radius: 4px; // just a high number to create pill effect
+  transition: 0.25s ease-out;
+}
+
+//table
+
+.scroll-window table {
+  margin-bottom: 0;
+}
+/*fixed header background*/
+.scroll-window:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2.5rem;
+  display: table;
+  z-index: 10;
+  background: rgba(170, 170, 170, 0.8);
+}
+
+/*the actual fixed header*/
+table.fixed-header th div {
+  position: absolute;
+  margin-top: -0.5rem;
+  z-index: 11;
+  color: #333;
+}
+.table.fixed-header th {
+  text-align: left;
+}
+table.fixed-header thead tr {
+  height: 2.5rem;
+}
+
+.user-list {
+  width: 100%;
+}
+
+.user-list td.text-right {
+  width: 16rem;
+}
+
+/*-----experimental scrollbar styles-----*/
+/* line 199, ../scss/main.scss */
+#bodywrap ::-webkit-scrollbar {
+  width: 1rem;
+}
+/* line 202, ../scss/main.scss */
+#bodywrap ::-webkit-scrollbar-button {
+  /* width:1rem;*/
+}
+/* line 205, ../scss/main.scss */
+#bodywrap ::-webkit-scrollbar-track {
+  background-color: #eaeaea;
+  border-left: 1px solid #ccc;
+}
+/* line 212, ../scss/main.scss */
+#bodywrap ::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+}
+/* line 215, ../scss/main.scss */
+#bodywrap ::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}

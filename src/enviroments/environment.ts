@@ -10,7 +10,7 @@ export const environment = {
   endpoints: {
     users: {
       login: '/user/login',
-      findAll: '/user/find-all',
+      findAll: '/user',
       findById: '/user/findById',
       create: '/user/create',
       update: '/user/update',

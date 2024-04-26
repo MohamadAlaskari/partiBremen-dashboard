@@ -4,24 +4,39 @@ import { User } from '../../../../shared/models/user.model';
 import { Subscription } from 'rxjs';
 import { ToastService } from '../../../../shared/services/toast.service';
 
+interface Tab {
+  name: string;
+  translateValue: string;
+}
 @Component({
   selector: 'app-user-management',
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.scss',
 })
 export class UserManagementComponent {
+  tabs: Tab[] = [
+    { name: 'view all', translateValue: '0%' },
+    { name: 'verfiziert', translateValue: '100%' },
+    { name: 'Following', translateValue: '200%' },
+  ];
+  selectedTab: string = this.tabs[0].name; // Default to the first tab
+  sliderTransform: string = `translateX(${this.tabs[0].translateValue})`;
+
   users: User[] = [];
   private subscriptions: Subscription = new Subscription();
   constructor(
     private userManagementService: UserManagementService,
     private toastService: ToastService
-  ) {
-    this.loadUsers();
-  }
+  ) {}
 
   ngOnInit() {
     this.loadUsers();
   }
+  selectTab(tab: Tab): void {
+    this.selectedTab = tab.name;
+    this.sliderTransform = `translateX(${tab.translateValue})`;
+  }
+
   loadUsers(): void {
     this.subscriptions.add(
       this.userManagementService.getUsers().subscribe({

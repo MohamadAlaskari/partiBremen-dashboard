@@ -42,7 +42,7 @@ $partiBremen-dashboard-theme: mat.define-light-theme(
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($partiBremen-dashboard-theme);
-*/
+
 
 // Importiere Basis-Variablen
 @import "styles/abstracts/variabeles";
@@ -59,8 +59,90 @@ $partiBremen-dashboard-theme: mat.define-light-theme(
 @import "styles/abstracts/mixins";
 @import "styles/abstracts/functions";
 @import "styles/abstracts/placeholders";
-
+*/
 // Weitere globale Stile
+:root {
+  //font-colors
+  --font-color-primary: #1f1c2e;
+  --font-color-secondary: #4a4a4a;
+
+  //bg-colors
+  --bg-color-primary: #f3f6fd;
+  --bg-color-secondary: #fff;
+
+  //btn-colors-bg
+  --btn-color-bg-primary: #1f1c24;
+  --btn-color-bg-secondary: #fff;
+
+  //btn-colors-fonts
+  --btn-font-color-primary: #fff;
+  --btn-font-color-secondary: #1f1c24;
+
+  //links-colors
+  --link-color: #1f1c2e;
+  --link-color-hover: #c3cff4;
+  --link-color-active: #fff;
+  --link-color-active-bg: #1f1c2e;
+
+  //toast-colors
+  --color-help1: #05478a;
+  --color-help2: #0070e0;
+  --color-success1: #005e38;
+  --color-success2: #03a65a;
+  --color-warning1: #c24914;
+  --color-warning2: #fc8621;
+  --color-error1: #851d41;
+  --color-error2: #db3056;
+  --transition-base: all 0.5s ease 0s;
+
+  //fonts-family
+  --font-primary: "DM Sans", sans-serif, "Inter", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+  //
+
+  --message-box-hover: #fafcff;
+  --message-box-border: #e9ebf0;
+
+  --more-list-bg: #fff;
+  --more-list-bg-hover: #f6fbff;
+  --more-list-shadow: rgba(209, 209, 209, 0.4);
+
+  --button-bg: #1f1c24;
+  --button-font-color: #fff;
+
+  --search-area-bg: #fff;
+  --star: #1ff1c2e;
+  --message-btn: #fff;
+
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.dark {
+  --bg-color-primary: #111827;
+  --bg-color-secondary: #1f2937;
+
+  --font-color-primary: #fff;
+  --font-color-secondary: rgba(255, 255, 255, 0.8);
+
+  --link-color: rgba(255, 255, 255, 0.8);
+  --link-color-hover: rgba(195, 207, 244, 0.1);
+  --link-color-active-bg: rgba(195, 207, 244, 0.2);
+
+  --button-bg: #1f2937;
+  --search-area-bg: #1f2937;
+  --message-box-hover: #243244;
+  --message-box-border: rgba(255, 255, 255, 0.1);
+
+  --star: #ffd92c;
+  --light-font: rgba(255, 255, 255, 0.8);
+  --more-list-bg: #2f3142;
+  --more-list-bg-hover: rgba(195, 207, 244, 0.1);
+  --more-list-shadow: rgba(195, 207, 244, 0.1);
+  --message-btn: rgba(195, 207, 244, 0.1);
+}
 
 html,
 body {
@@ -70,6 +152,7 @@ body {
 body {
   background-color: var(--app-container);
   color: var(--text-color);
+  min-height: 100vh;
 }
 
 button,
