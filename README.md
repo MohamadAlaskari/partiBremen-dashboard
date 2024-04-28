@@ -1,11 +1,14 @@
 # PartiBremenDashboard
-t
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.2.
 
-## swagger
+## URL PartiBremenDashboard von Development
+
+This project läuft auf folgenden URL: https://vercel.com/mo-alaskaris-projects/parti-bremen-dashboard/HLAry1skFAUK7LHzowUA2WNd6baa
+
+## swagger URL
+
 https://api.partibremen.student.28apps-software.de/swagger-ui/index.html#/
-
-
 
 ## Development server
 
