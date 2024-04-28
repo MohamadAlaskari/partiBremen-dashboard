@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../../../../core/Services/api.service';
 import { Observable } from 'rxjs';
 import { User } from '../../../../shared/models/user.model';
-import { environment } from '../../../../../enviroments/environment';
+import { environment } from '../../../../../environment';
 
 @Injectable({
   providedIn: 'root',
