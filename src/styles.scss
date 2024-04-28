@@ -43,23 +43,9 @@ $partiBremen-dashboard-theme: mat.define-light-theme(
 // that you are using.
 @include mat.all-component-themes($partiBremen-dashboard-theme);
 
-
-// Importiere Basis-Variablen
-@import "styles/abstracts/variabeles";
-
-// Importiere Basis-Styles
-@import "styles/base/reset";
-@import "styles/base/typography";
-@import "styles/base/base";
-
-// Importiere Themes
-@import "styles/themes/dark";
-
-// Optional: Importiere Mixins, Funktionen und Platzhalter, falls nötig
-@import "styles/abstracts/mixins";
-@import "styles/abstracts/functions";
-@import "styles/abstracts/placeholders";
 */
+
+
 // Weitere globale Stile
 :root {
   //font-colors
