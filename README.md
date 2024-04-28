@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## URL PartiBremenDashboard von Development
 
-This project läuft auf folgenden URL: https://vercel.com/mo-alaskaris-projects/parti-bremen-dashboard/HLAry1skFAUK7LHzowUA2WNd6baa
+This project läuft auf folgenden URL: https://parti-bremen-dashboard.vercel.app/
 
 ## swagger URL
 

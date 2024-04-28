@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { UserManagementService } from '../../services/user-management-service/user-management.service';
 import { User } from '../../../../shared/models/user.model';
 import { ToastService } from '../../../../shared/services/toast.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-user-list',
@@ -10,6 +11,19 @@ import { ToastService } from '../../../../shared/services/toast.service';
   styleUrl: './user-list.component.scss',
 })
 export class UserListComponent {
+  columns: { header: string; field: string }[] = [
+    { header: 'ID', field: 'id' },
+    { header: 'createdAt', field: 'createdAt' },
+    { header: 'updatedAt', field: 'name' },
+    { header: 'Name', field: 'name' },
+    { header: 'Surname', field: 'surname' },
+    { header: 'Date of Birth', field: 'dob' },
+    { header: 'Email', field: 'email' },
+    { header: 'Password', field: 'password' },
+    { header: 'Verified', field: 'verified' },
+  ];
+  dataSource = new MatTableDataSource<User>();
+
   isSortDropdownActive = false;
   users: User[] = [];
   filteredUsers: User[] = [];
@@ -23,6 +37,7 @@ export class UserListComponent {
 
   ngOnInit() {
     this.loadUsers();
+    console.log('dataSource:', this.dataSource);
   }
   toggleDropdown(): void {
     this.isSortDropdownActive = !this.isSortDropdownActive;
@@ -33,6 +48,7 @@ export class UserListComponent {
         next: (users) => {
           this.users = users;
           this.filteredUsers = users;
+          this.dataSource.data = this.users;
           this.toastService.show(
             'success',
             'Success',
