@@ -8,16 +8,20 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class TableComponent {
   @Input()
-  columnDefinitions!: { header: string; field: string }[]; // Jetzt ein Array von Objekten
+  columnDefinitions!: { header: string; field: string }[];
+
   @Input()
-  dataSource!: MatTableDataSource<any>; // Die Datenquelle wird von außen übergeben
-  constructor() {
-    console.log('from tabel', this.dataSource);
-    console.log('from tabel', this.columnDefinitions);
-  }
+  dataSource!: MatTableDataSource<any>; // Ensure that this is correctly passed from the parent component
+
+  displayedColumns: string[] = [];
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
+
+  ngOnInit() {
+    // Assuming columnDefinitions are properly passed and not null or undefined
+    this.displayedColumns = this.columnDefinitions.map((cd) => cd.field);
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
