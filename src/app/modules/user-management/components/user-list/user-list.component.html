@@ -95,100 +95,99 @@
 <div class="project-boxes jsGridView">
   <div class="project-box-wrapper">
     <!-- In user-list.component.html -->
-    <app-table [columnDefinitions]="columns" [dataSource]="dataSource"></app-table>
+
+    <table class="table table-striped table-hover user-list fixed-header">
+      <thead>
+        <th></th>
+        <th>Name</th>
+        <th>Date of Birth</th>
+        <th>Rolle</th>
+        <th>Email</th>
+        <th>settings</th>
+
+
+      </thead>
+      <tbody>
+        @for (user of filteredUsers ; track user.id) {
+
+        <tr>
+          <td>
+            @if(user.verified){
+            <svg class="uname-verified" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1350.03 1326.16">
+              <defs>
+                <style>
+                  .cls-1 {
+                    fill: var(--bg-color-verified);
+                  }
+
+                  .cls-2 {
+                    fill: #fff;
+
+                  }
+                </style>
+              </defs>
+              <title>verified</title>
+              <g id="Layer_3" data-name="Layer 3">
+                <polygon class="cls-1"
+                  points="0 747.37 120.83 569.85 70.11 355.04 283.43 292.38 307.3 107.41 554.93 107.41 693.66 0 862.23 120.83 1072.57 126.8 1112.84 319.23 1293.35 399.79 1256.05 614.6 1350.03 793.61 1197.87 941.29 1202.35 1147.15 969.64 1178.48 868.2 1326.16 675.02 1235.17 493.77 1315.72 354.99 1133.73 165.58 1123.29 152.16 878.64 0 747.37">
+                </polygon>
+              </g>
+              <g id="Layer_2" data-name="Layer 2">
+                <path class="cls-2"
+                  d="M755.33,979.23s125.85,78.43,165.06,114c34.93-36,234.37-277.22,308.24-331.94,54.71,21.89,85,73.4,93,80.25-3.64,21.89-321.91,418.58-368.42,445.94-32.74-3.84-259-195.16-275.4-217C689.67,1049.45,725.24,1003.85,755.33,979.23Z"
+                  transform="translate(-322.83 -335.95)"></path>
+              </g>
+            </svg>
+            }@else{
+            <svg class="uname-verified" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1350.03 1326.16">
+              <defs>
+                <style>
+                  .cls-11 {
+                    fill: var(--bg-color-unverified);
+                  }
+
+                  .cls-12 {
+                    fill: #fff;
+
+                  }
+                </style>
+              </defs>
+              <title>verified</title>
+              <g id="Layer_3" data-name="Layer 3">
+                <polygon class="cls-11"
+                  points="0 747.37 120.83 569.85 70.11 355.04 283.43 292.38 307.3 107.41 554.93 107.41 693.66 0 862.23 120.83 1072.57 126.8 1112.84 319.23 1293.35 399.79 1256.05 614.6 1350.03 793.61 1197.87 941.29 1202.35 1147.15 969.64 1178.48 868.2 1326.16 675.02 1235.17 493.77 1315.72 354.99 1133.73 165.58 1123.29 152.16 878.64 0 747.37">
+                </polygon>
+              </g>
+              <g id="Layer_2" data-name="Layer 2">
+                <path class="cls-12"
+                  d="M755.33,979.23s125.85,78.43,165.06,114c34.93-36,234.37-277.22,308.24-331.94,54.71,21.89,85,73.4,93,80.25-3.64,21.89-321.91,418.58-368.42,445.94-32.74-3.84-259-195.16-275.4-217C689.67,1049.45,725.24,1003.85,755.33,979.23Z"
+                  transform="translate(-322.83 -335.95)"></path>
+              </g>
+            </svg>
+            }
+          </td>
+          <td style="font-weight: bold;">
+            {{user.name}} {{user.surname}}
+
+          </td>
+          <td>{{user.dob}}</td>
+          <td></td>
+          <td>{{user.email}}</td>
+          <td class="text-right">
+            <div class="user-settings">
+              <span class=" punkt punkt-1"></span>
+              <span class=" punkt punkt-2"></span>
+              <span class=" punkt punkt-3"></span>
+
+            </div>
+          </td>
+        </tr>
+        }@empty {
+        <p>Keine User vorhanden</p>
+        }
+      </tbody>
+    </table>
+    <app-table></app-table>
 
   </div>
 </div>
-
-<!--
-<table class="table table-striped table-hover user-list fixed-header">
-  <thead>
-    <th></th>
-    <th>Name</th>
-    <th>Date of Birth</th>
-    <th>Rolle</th>
-    <th>Email</th>
-    <th>settings</th>
-
-
-  </thead>
-  <tbody>
-    @for (user of filteredUsers ; track user.id) {
-
-    <tr>
-      <td>
-        @if(user.verified){
-        <svg class="uname-verified" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1350.03 1326.16">
-          <defs>
-            <style>
-              .cls-1 {
-                fill: var(--bg-color-verified);
-              }
-
-              .cls-2 {
-                fill: #fff;
-
-              }
-            </style>
-          </defs>
-          <title>verified</title>
-          <g id="Layer_3" data-name="Layer 3">
-            <polygon class="cls-1"
-              points="0 747.37 120.83 569.85 70.11 355.04 283.43 292.38 307.3 107.41 554.93 107.41 693.66 0 862.23 120.83 1072.57 126.8 1112.84 319.23 1293.35 399.79 1256.05 614.6 1350.03 793.61 1197.87 941.29 1202.35 1147.15 969.64 1178.48 868.2 1326.16 675.02 1235.17 493.77 1315.72 354.99 1133.73 165.58 1123.29 152.16 878.64 0 747.37">
-            </polygon>
-          </g>
-          <g id="Layer_2" data-name="Layer 2">
-            <path class="cls-2"
-              d="M755.33,979.23s125.85,78.43,165.06,114c34.93-36,234.37-277.22,308.24-331.94,54.71,21.89,85,73.4,93,80.25-3.64,21.89-321.91,418.58-368.42,445.94-32.74-3.84-259-195.16-275.4-217C689.67,1049.45,725.24,1003.85,755.33,979.23Z"
-              transform="translate(-322.83 -335.95)"></path>
-          </g>
-        </svg>
-        }@else{
-        <svg class="uname-verified" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1350.03 1326.16">
-          <defs>
-            <style>
-              .cls-11 {
-                fill: var(--bg-color-unverified);
-              }
-
-              .cls-12 {
-                fill: #fff;
-
-              }
-            </style>
-          </defs>
-          <title>verified</title>
-          <g id="Layer_3" data-name="Layer 3">
-            <polygon class="cls-11"
-              points="0 747.37 120.83 569.85 70.11 355.04 283.43 292.38 307.3 107.41 554.93 107.41 693.66 0 862.23 120.83 1072.57 126.8 1112.84 319.23 1293.35 399.79 1256.05 614.6 1350.03 793.61 1197.87 941.29 1202.35 1147.15 969.64 1178.48 868.2 1326.16 675.02 1235.17 493.77 1315.72 354.99 1133.73 165.58 1123.29 152.16 878.64 0 747.37">
-            </polygon>
-          </g>
-          <g id="Layer_2" data-name="Layer 2">
-            <path class="cls-12"
-              d="M755.33,979.23s125.85,78.43,165.06,114c34.93-36,234.37-277.22,308.24-331.94,54.71,21.89,85,73.4,93,80.25-3.64,21.89-321.91,418.58-368.42,445.94-32.74-3.84-259-195.16-275.4-217C689.67,1049.45,725.24,1003.85,755.33,979.23Z"
-              transform="translate(-322.83 -335.95)"></path>
-          </g>
-        </svg>
-        }
-      </td>
-      <td style="font-weight: bold;">
-        {{user.name}} {{user.surname}}
-
-      </td>
-      <td>{{user.dob}}</td>
-      <td></td>
-      <td>{{user.email}}</td>
-      <td class="text-right">
-        <div class="user-settings">
-          <span class=" punkt punkt-1"></span>
-          <span class=" punkt punkt-2"></span>
-          <span class=" punkt punkt-3"></span>
-
-        </div>
-      </td>
-    </tr>
-    }@empty {
-    <p>Keine User vorhanden</p>
-    }
-  </tbody>
-</table>-->
