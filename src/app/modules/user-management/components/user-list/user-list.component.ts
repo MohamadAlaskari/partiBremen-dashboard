@@ -12,11 +12,13 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class UserListComponent {
   columns: { header: string; field: string }[] = [
-    { header: 'ID', field: 'id' },
+    { header: 'Verified', field: 'verified' },
     { header: 'Name', field: 'name' },
     { header: 'Surname', field: 'surname' },
     { header: 'Email', field: 'email' },
     { header: 'Date of Birth', field: 'dob' },
+    { header: 'Role', field: 'role' },
+    { header: 'Status', field: 'active' },
   ];
   dataSource = new MatTableDataSource<User>();
 

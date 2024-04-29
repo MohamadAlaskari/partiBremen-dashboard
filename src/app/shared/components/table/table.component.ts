@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 @Component({
@@ -8,7 +14,11 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class TableComponent {
   @Input()
-  columnDefinitions!: { header: string; field: string }[];
+  columnDefinitions!: {
+    header: string;
+    field: string;
+    cellTemplate?: TemplateRef<any>;
+  }[];
 
   @Input()
   dataSource!: MatTableDataSource<any>; // Ensure that this is correctly passed from the parent component
