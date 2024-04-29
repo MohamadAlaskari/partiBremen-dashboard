@@ -1,0 +1,34 @@
+.state-counter {
+  display: flex;
+}
+
+.counter-item {
+  display: flex;
+  flex-direction: column;
+  margin-right: 16px;
+
+  &:not(:last-child) .counter-label:after {
+    content: "";
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translatey(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: 1px solid var(--font-color-secondary);
+  }
+}
+
+.counter-value {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 700;
+  color: var(--font-color-primary);
+}
+
+.counter-label {
+  position: relative;
+  padding-right: 24px;
+  color: var(--font-color-secondary);
+}

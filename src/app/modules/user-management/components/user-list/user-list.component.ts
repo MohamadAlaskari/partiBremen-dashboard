@@ -4,6 +4,7 @@ import { UserManagementService } from '../../services/user-management-service/us
 import { User } from '../../../../shared/models/user.model';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { CounterState } from '../../../../shared/components/state-counter/state-counter.component';
 
 @Component({
   selector: 'app-user-list',
@@ -11,6 +12,8 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrl: './user-list.component.scss',
 })
 export class UserListComponent {
+  counters: CounterState[] = [];
+
   columns: { header: string; field: string }[] = [
     { header: 'Verified', field: 'verified' },
     { header: 'Name', field: 'name' },
@@ -35,8 +38,6 @@ export class UserListComponent {
 
   ngOnInit() {
     this.loadUsers();
-
-    console.log('dataSource:', this.dataSource);
   }
   toggleDropdown(): void {
     this.isSortDropdownActive = !this.isSortDropdownActive;
@@ -48,6 +49,7 @@ export class UserListComponent {
           this.users = users;
           this.filteredUsers = users;
           this.dataSource.data = users;
+          this.updateCounters();
           this.toastService.show(
             'success',
             'Success',
@@ -60,9 +62,24 @@ export class UserListComponent {
       })
     );
   }
-  countUsers(): number {
-    return this.users.length;
+  updateCounters(): void {
+    this.counters = [
+      {
+        count: this.users.filter((user) => user.active).length,
+        label: 'Aktiv',
+      },
+      {
+        count: this.users.filter((user) => user.role === 'admin').length,
+        label: 'Admin',
+      },
+      {
+        count: this.users.filter((user) => user.verified).length,
+        label: 'Verified',
+      },
+      { count: this.users.length, label: 'Total Users' },
+    ];
   }
+
   filterUsers(): void {
     console.log(this.searchText);
     this.filteredUsers = this.users.filter((user) => {

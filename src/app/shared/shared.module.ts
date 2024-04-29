@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { TableComponent } from './components/table/table.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { StateCounterComponent } from './components/state-counter/state-counter.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     HeaderComponent,
     ToastComponent,
     TableComponent,
+    StateCounterComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +34,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     FooterComponent,
     ToastComponent,
     TableComponent,
+    StateCounterComponent,
   ],
   providers: [ToastService],
 })

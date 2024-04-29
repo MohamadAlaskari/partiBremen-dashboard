@@ -1,18 +1,7 @@
 <div class="projects-section-line infos-line">
-  <div class="projects-status">
-    <div class="item-status">
-      <span class="status-number">45</span>
-      <span class="status-type">Aktiv</span>
-    </div>
-    <div class="item-status">
-      <span class="status-number">24</span>
-      <span class="status-type">Admin</span>
-    </div>
-    <div class="item-status">
-      <span class="status-number">{{countUsers()}}</span>
-      <span class="status-type">Total Users</span>
-    </div>
-  </div>
+
+  <app-state-counter [states]="counters"></app-state-counter>
+
 </div>
 <div class="projects-section-line steurung-line">
   <div class="tabs">

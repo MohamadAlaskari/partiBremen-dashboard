@@ -1,0 +1,11 @@
+<div class="state-counter">
+  @for (state of states; track $index) {
+
+  <div class=" counter-item">
+    <span class=" counter-value">{{ state.count }}</span>
+    <span class=" counter-label">{{ state.label }}</span>
+  </div>
+  }
+
+
+</div>
