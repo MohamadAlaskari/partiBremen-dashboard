@@ -11,6 +11,7 @@ import { MatTableModule } from '@angular/material/table';
 import { TableComponent } from './components/table/table.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { StateCounterComponent } from './components/state-counter/state-counter.component';
+import { SectionHeaderComponent } from './components/section-header/section-header.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { StateCounterComponent } from './components/state-counter/state-counter.
     ToastComponent,
     TableComponent,
     StateCounterComponent,
+    SectionHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +37,7 @@ import { StateCounterComponent } from './components/state-counter/state-counter.
     ToastComponent,
     TableComponent,
     StateCounterComponent,
+    SectionHeaderComponent,
   ],
   providers: [ToastService],
 })

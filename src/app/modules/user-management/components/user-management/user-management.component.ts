@@ -14,6 +14,7 @@ interface Tab {
   styleUrl: './user-management.component.scss',
 })
 export class UserManagementComponent {
+  title_userManagment:string='User Management'
   tabs: Tab[] = [
     { name: 'view all', translateValue: '0%' },
     { name: 'verfiziert', translateValue: '100%' },
