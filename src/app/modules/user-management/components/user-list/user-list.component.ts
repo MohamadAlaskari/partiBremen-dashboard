@@ -5,6 +5,7 @@ import { User } from '../../../../shared/models/user.model';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { CounterState } from '../../../../shared/components/state-counter/state-counter.component';
+import { error } from 'console';
 
 @Component({
   selector: 'app-user-list',
@@ -34,11 +35,11 @@ export class UserListComponent {
   constructor(
     private userManagementService: UserManagementService,
     private toastService: ToastService
-  ) {}
-
-  ngOnInit() {
+  ) {
     this.loadUsers();
   }
+
+  ngOnInit() {}
   toggleDropdown(): void {
     this.isSortDropdownActive = !this.isSortDropdownActive;
   }
@@ -57,6 +58,7 @@ export class UserListComponent {
           );
         },
         error: (err) => {
+          console.log('Failed to load users by subscribtion data (user-list.component.ts)', err);
           this.toastService.show('error', 'Error', 'Failed to load users');
         },
       })

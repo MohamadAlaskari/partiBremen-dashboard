@@ -1,32 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './modules/auth/components/login/login.component';
-
+import { authGuard } from './modules/auth/guards/auth.guard';
+import { DashboardComponent } from './modules/dashboard/components/dashboard/dashboard.component';
+import { UserManagementComponent } from './modules/user-management/components/user-management/user-management.component';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   {
     path: 'dashboard',
-    loadChildren: () =>
-      import('./modules/dashboard/dashboard.module').then(
-        (m) => m.DashboardModule
-      ),
+    component: DashboardComponent,
+    //canActivate: [authGuard],
   },
-
   {
     path: 'user-management',
-    loadChildren: () =>
-      import('./modules/user-management/user-management.module').then(
-        (m) => m.UserManagementModule
-      ),
+    component: UserManagementComponent,
+    //  canActivate: [authGuard],
   },
-
   {
     path: 'poi-management',
-    loadChildren: () =>
-      import('./modules/poi-management/poi-management.module').then(
-        (m) => m.PoiManagementModule
-      ),
+    component: DashboardComponent,
+    // canActivate: [authGuard],
   },
   { path: '**', redirectTo: 'login' }, // Fallback-Route
 ];

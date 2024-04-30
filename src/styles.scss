@@ -45,7 +45,6 @@ $partiBremen-dashboard-theme: mat.define-light-theme(
 
 */
 
-
 // Weitere globale Stile
 :root {
   //font-colors
@@ -139,11 +138,12 @@ html,
 body {
   margin: 0;
   font-family: var(--font-primary);
+  min-height: 100%;
 }
 body {
   background-color: var(--app-container);
   color: var(--text-color);
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 button,
