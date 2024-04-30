@@ -25,10 +25,10 @@ export class UserListComponent {
   ];
   dataSource = new MatTableDataSource<User>();
 
-  isSortDropdownActive = false;
   users: User[] = [];
   filteredUsers: User[] = [];
   searchText: string = '';
+  isSortDropdownActive = false;
 
   private subscriptions: Subscription = new Subscription();
   constructor(
