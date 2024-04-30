@@ -1,37 +1,18 @@
-.projects-section {
+.user-list-section {
   display: flex;
   flex-direction: column;
-
-  &-line {
+  color: var(--font-color-primary);
+  .state-counter-line {
+    padding-bottom: 32px;
+  }
+  .steurung-line {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     padding-bottom: 32px;
   }
-
-  &-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    color: var(--font-color-primary);
-
-    p {
-      font-size: 24px;
-      line-height: 32px;
-      font-weight: 700;
-      opacity: 0.9;
-      margin: 0;
-      color: var(--font-color-primary);
-    }
-
-    .time {
-      font-size: 20px;
-    }
-  }
 }
-
 
 .view-actions {
   display: flex;

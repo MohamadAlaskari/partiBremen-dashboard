@@ -1,183 +1,86 @@
-<div class="projects-section-line infos-line">
-
-  <app-state-counter [states]="counters"></app-state-counter>
-
-</div>
-<div class="projects-section-line steurung-line">
-  <div class="tabs">
-    <input type="radio" id="radio-1" name="tabs" checked />
-    <label class="tab" for="radio-1">view All
-    </label>
-    <input type="radio" id="radio-2" name="tabs" />
-    <label class="tab" for="radio-2">admins</label>
-    <input type="radio" id="radio-3" name="tabs" />
-    <label class="tab" for="radio-3">aktive</label>
-    <span class="glider"></span>
+<div class="user-list-section">
+  <div class="state-counter-line">
+    <app-state-counter [states]="counters"></app-state-counter>
   </div>
 
-  <div class="view-actions active">
-    <div class="search-wrapper">
-      <input class="search-input" type="text" placeholder="Search..." [(ngModel)]="searchText"
-        (ngModelChange)="filterUsers()">
-
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
-        stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-search"
-        viewBox="0 0 24 24">
-        <defs></defs>
-        <circle cx="11" cy="11" r="8"></circle>
-        <path d="M21 21l-4.35-4.35"></path>
-      </svg>
+  <div class=" steurung-line">
+    <div class="tabs">
+      <input type="radio" id="radio-1" name="tabs" checked />
+      <label class="tab" for="radio-1">view All
+      </label>
+      <input type="radio" id="radio-2" name="tabs" />
+      <label class="tab" for="radio-2">admins</label>
+      <input type="radio" id="radio-3" name="tabs" />
+      <label class="tab" for="radio-3">aktive</label>
+      <span class="glider"></span>
     </div>
 
+    <div class="view-actions active">
+      <div class="search-wrapper">
+        <input class="search-input" type="text" placeholder="Search..." [(ngModel)]="searchText"
+          (ngModelChange)="filterUsers()">
 
-
-
-    <!--sort-->
-    <div class='sort-menu-container ' title="User Sort">
-      <!--sort btn -->
-      <button class='sort-btn' (click)="toggleDropdown()">
-
-        <svg class='fl-sort-icon' xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-          <path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z" />
-          <path d="M0 0h24v24H0z" fill="none" />
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+          stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-search"
+          viewBox="0 0 24 24">
+          <defs></defs>
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="M21 21l-4.35-4.35"></path>
         </svg>
-
-        <span class='sort-btn__text'>Sortieren</span>
-
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" role="img"
-          class="sort-btn__arrow">
-          <path
-            d="M21.5265 8.77171C22.1578 8.13764 22.1578 7.10962 21.5265 6.47555C20.8951 5.84148 19.8714 5.84148 19.24 6.47555L11.9999 13.7465L4.75996 6.47573C4.12858 5.84166 3.10492 5.84166 2.47354 6.47573C1.84215 7.10979 1.84215 8.13782 2.47354 8.77188L10.8332 17.1671C10.8408 17.1751 10.8486 17.183 10.8565 17.1909C11.0636 17.399 11.313 17.5388 11.577 17.6103C11.5834 17.6121 11.5899 17.6138 11.5964 17.6154C12.132 17.7536 12.7242 17.6122 13.1435 17.1911C13.1539 17.1807 13.1641 17.1702 13.1742 17.1596L21.5265 8.77171Z">
-          </path>
-        </svg>
-      </button>
-      <!--sort dropdown-->
-      <div class='sortDropdown' [ngClass]="{'open':isSortDropdownActive }">
-        <ul>
-          <li>
-            <input type='radio' id='sort-none' name='sort' value='none'>
-            <label for='sort-none'>Keine Auswahl</label>
-          </li>
-          <li>
-            <input type='radio' id='sort-kategorie' name='sort' value='Kategorie'>
-            <label for='sort-kategorie'>Kategorie</label>
-          </li>
-          <li>
-            <input type='radio' id='sort-niedrigerPreis' name='sort' value='Niedriger Preis'>
-            <label for='sort-niedrigerPreis'>Niedriger Preis</label>
-          </li>
-          <li>
-            <input type='radio' id='sort-höchsterPreis' name='sort' value='Höchster Preis'>
-            <label for='sort-höchsterPreis'>Höchster Preis</label>
-          </li>
-          <li>
-            <input type='radio' id='sort-alpha' name='sort' value='alpha'>
-            <label for='sort-alpha'>A-Z</label>
-          </li>
-        </ul>
       </div>
-    </div>
-    <!--sort-->
-  </div>
-</div>
-
-<div class="project-boxes jsGridView">
-  <div class="project-box-wrapper">
-    <!-- In user-list.component.html -->
-    <app-table [columnDefinitions]="columns" [dataSource]="dataSource"></app-table>
-
-  </div>
-</div>
-
-<!--
-<table class="table table-striped table-hover user-list fixed-header">
-  <thead>
-    <th></th>
-    <th>Name</th>
-    <th>Date of Birth</th>
-    <th>Rolle</th>
-    <th>Email</th>
-    <th>settings</th>
 
 
-  </thead>
-  <tbody>
-    @for (user of filteredUsers ; track user.id) {
+      <!--sort-->
+      <div class='sort-menu-container ' title="User Sort">
+        <!--sort btn -->
+        <button class='sort-btn' (click)="toggleDropdown()">
 
-    <tr>
-      <td>
-        @if(user.verified){
-        <svg class="uname-verified" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1350.03 1326.16">
-          <defs>
-            <style>
-              .cls-1 {
-                fill: var(--bg-color-verified);
-              }
+          <svg class='fl-sort-icon' xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+            <path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z" />
+            <path d="M0 0h24v24H0z" fill="none" />
+          </svg>
 
-              .cls-2 {
-                fill: #fff;
+          <span class='sort-btn__text'>Sortieren</span>
 
-              }
-            </style>
-          </defs>
-          <title>verified</title>
-          <g id="Layer_3" data-name="Layer 3">
-            <polygon class="cls-1"
-              points="0 747.37 120.83 569.85 70.11 355.04 283.43 292.38 307.3 107.41 554.93 107.41 693.66 0 862.23 120.83 1072.57 126.8 1112.84 319.23 1293.35 399.79 1256.05 614.6 1350.03 793.61 1197.87 941.29 1202.35 1147.15 969.64 1178.48 868.2 1326.16 675.02 1235.17 493.77 1315.72 354.99 1133.73 165.58 1123.29 152.16 878.64 0 747.37">
-            </polygon>
-          </g>
-          <g id="Layer_2" data-name="Layer 2">
-            <path class="cls-2"
-              d="M755.33,979.23s125.85,78.43,165.06,114c34.93-36,234.37-277.22,308.24-331.94,54.71,21.89,85,73.4,93,80.25-3.64,21.89-321.91,418.58-368.42,445.94-32.74-3.84-259-195.16-275.4-217C689.67,1049.45,725.24,1003.85,755.33,979.23Z"
-              transform="translate(-322.83 -335.95)"></path>
-          </g>
-        </svg>
-        }@else{
-        <svg class="uname-verified" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1350.03 1326.16">
-          <defs>
-            <style>
-              .cls-11 {
-                fill: var(--bg-color-unverified);
-              }
-
-              .cls-12 {
-                fill: #fff;
-
-              }
-            </style>
-          </defs>
-          <title>verified</title>
-          <g id="Layer_3" data-name="Layer 3">
-            <polygon class="cls-11"
-              points="0 747.37 120.83 569.85 70.11 355.04 283.43 292.38 307.3 107.41 554.93 107.41 693.66 0 862.23 120.83 1072.57 126.8 1112.84 319.23 1293.35 399.79 1256.05 614.6 1350.03 793.61 1197.87 941.29 1202.35 1147.15 969.64 1178.48 868.2 1326.16 675.02 1235.17 493.77 1315.72 354.99 1133.73 165.58 1123.29 152.16 878.64 0 747.37">
-            </polygon>
-          </g>
-          <g id="Layer_2" data-name="Layer 2">
-            <path class="cls-12"
-              d="M755.33,979.23s125.85,78.43,165.06,114c34.93-36,234.37-277.22,308.24-331.94,54.71,21.89,85,73.4,93,80.25-3.64,21.89-321.91,418.58-368.42,445.94-32.74-3.84-259-195.16-275.4-217C689.67,1049.45,725.24,1003.85,755.33,979.23Z"
-              transform="translate(-322.83 -335.95)"></path>
-          </g>
-        </svg>
-        }
-      </td>
-      <td style="font-weight: bold;">
-        {{user.name}} {{user.surname}}
-
-      </td>
-      <td>{{user.dob}}</td>
-      <td></td>
-      <td>{{user.email}}</td>
-      <td class="text-right">
-        <div class="user-settings">
-          <span class=" punkt punkt-1"></span>
-          <span class=" punkt punkt-2"></span>
-          <span class=" punkt punkt-3"></span>
-
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" role="img"
+            class="sort-btn__arrow">
+            <path
+              d="M21.5265 8.77171C22.1578 8.13764 22.1578 7.10962 21.5265 6.47555C20.8951 5.84148 19.8714 5.84148 19.24 6.47555L11.9999 13.7465L4.75996 6.47573C4.12858 5.84166 3.10492 5.84166 2.47354 6.47573C1.84215 7.10979 1.84215 8.13782 2.47354 8.77188L10.8332 17.1671C10.8408 17.1751 10.8486 17.183 10.8565 17.1909C11.0636 17.399 11.313 17.5388 11.577 17.6103C11.5834 17.6121 11.5899 17.6138 11.5964 17.6154C12.132 17.7536 12.7242 17.6122 13.1435 17.1911C13.1539 17.1807 13.1641 17.1702 13.1742 17.1596L21.5265 8.77171Z">
+            </path>
+          </svg>
+        </button>
+        <!--sort dropdown-->
+        <div class='sortDropdown' [ngClass]="{'open':isSortDropdownActive }">
+          <ul>
+            <li>
+              <input type='radio' id='sort-none' name='sort' value='none'>
+              <label for='sort-none'>Keine Auswahl</label>
+            </li>
+            <li>
+              <input type='radio' id='sort-kategorie' name='sort' value='Kategorie'>
+              <label for='sort-kategorie'>Kategorie</label>
+            </li>
+            <li>
+              <input type='radio' id='sort-niedrigerPreis' name='sort' value='Niedriger Preis'>
+              <label for='sort-niedrigerPreis'>Niedriger Preis</label>
+            </li>
+            <li>
+              <input type='radio' id='sort-höchsterPreis' name='sort' value='Höchster Preis'>
+              <label for='sort-höchsterPreis'>Höchster Preis</label>
+            </li>
+            <li>
+              <input type='radio' id='sort-alpha' name='sort' value='alpha'>
+              <label for='sort-alpha'>A-Z</label>
+            </li>
+          </ul>
         </div>
-      </td>
-    </tr>
-    }@empty {
-    <p>Keine User vorhanden</p>
-    }
-  </tbody>
-</table>-->
+      </div>
+      <!--sort-->
+    </div>
+  </div>
+
+  <div class="table-line">
+    <app-table [columnDefinitions]="columns" [dataSource]="dataSource"></app-table>
+  </div>
+
+</div>
