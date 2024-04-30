@@ -4,6 +4,9 @@ import { LoginComponent } from './modules/auth/components/login/login.component'
 import { authGuard } from './modules/auth/guards/auth.guard';
 import { DashboardComponent } from './modules/dashboard/components/dashboard/dashboard.component';
 import { UserManagementComponent } from './modules/user-management/components/user-management/user-management.component';
+import { CommentManagementComponent } from './modules/comment-management/components/comment-management/comment-management.component';
+
+
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -22,14 +25,12 @@ const routes: Routes = [
     component: DashboardComponent,
     // canActivate: [authGuard],
   },
-
   {
     path: 'comment-management',
-    loadChildren: () =>
-      import('./modules/comment-management/comment-management.module').then(
-        (m) => m.CommentManagementModule
-      ),
+    component: CommentManagementComponent,
+    // canActivate: [authGuard],
   },
+  
   { path: '**', redirectTo: 'login' }, // Fallback-Route
 ];
 
