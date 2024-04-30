@@ -32,40 +32,6 @@
   }
 }
 
-.projects-status {
-  display: flex;
-}
-
-.item-status {
-  display: flex;
-  flex-direction: column;
-  margin-right: 16px;
-
-  &:not(:last-child) .status-type:after {
-    content: "";
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translatey(-50%);
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    border: 1px solid var(--font-color-secondary);
-  }
-}
-
-.status-number {
-  font-size: 24px;
-  line-height: 32px;
-  font-weight: 700;
-  color: var(--font-color-primary);
-}
-
-.status-type {
-  position: relative;
-  padding-right: 24px;
-  color: var(--font-color-secondary);
-}
 
 .view-actions {
   display: flex;
