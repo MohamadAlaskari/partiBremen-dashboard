@@ -2,9 +2,13 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.2.
 
-## URL PartiBremenDashboard von Development
+## URL Deployment für master branch
 
-This project läuft auf folgenden URL: https://parti-bremen-dashboard.vercel.app/
+This project läuft auf folgenden URL von branch master: https://parti-bremen-dashboard.vercel.app/
+
+## Deployment für Development branch
+
+This project läuft auf folgenden URL von branch Development: https://parti-bremen-dashboard-dev.vercel.app/
 
 ## swagger URL
 
