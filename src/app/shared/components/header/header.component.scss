@@ -47,13 +47,16 @@
   align-items: center;
   height: 32px;
   width: 32px;
-  /*
+  border-radius: 50%;
+  transition: all 0.3s ease-out;
+  opacity: 0.9;
+
   &:hover {
     background-color: var(--button-bg);
     color: #fff;
     border-radius: 50%;
-
-  }*/
+    opacity: 1;
+  }
 }
 
 .profile-btn {
@@ -71,6 +74,11 @@
     object-fit: cover;
     border-radius: 50%;
     margin-right: 4px;
+  }
+  span {
+    color: var(--font-color-primary);
+    font-weight: bold;
+    font-size: 1rem;
   }
 }
 
@@ -104,15 +112,13 @@
     padding: 10px;
   }
 
-  .search-input {
-    max-width: 120px;
-  }
-
   .profile-btn img {
     width: 24px;
     height: 24px;
   }
-
+  .profile-btn span {
+    font-size: 12px;
+  }
   .search-input {
     font-size: 14px;
   }
