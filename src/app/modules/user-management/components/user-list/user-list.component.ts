@@ -5,7 +5,6 @@ import { User } from '../../../../shared/models/user.model';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { CounterState } from '../../../../shared/components/state-counter/state-counter.component';
-import { error } from 'console';
 
 @Component({
   selector: 'app-user-list',
@@ -25,13 +24,12 @@ export class UserListComponent {
     { header: 'Status', field: 'active' },
   ];
   dataSource = new MatTableDataSource<User>();
-
-  users: User[] = [];
-  filteredUsers: User[] = [];
   searchText: string = '';
-  isSortDropdownActive = false;
 
   private subscriptions: Subscription = new Subscription();
+
+  isSortDropdownActive = false;
+
   constructor(
     private userManagementService: UserManagementService,
     private toastService: ToastService
@@ -47,8 +45,6 @@ export class UserListComponent {
     this.subscriptions.add(
       this.userManagementService.getUsers().subscribe({
         next: (users) => {
-          this.users = users;
-          this.filteredUsers = users;
           this.dataSource.data = users;
           this.updateCounters();
           this.toastService.show(
@@ -58,7 +54,8 @@ export class UserListComponent {
           );
         },
         error: (err) => {
-          console.log('Failed to load users by subscribtion data (user-list.component.ts)', err);
+          console.error('Failed to load users', err);
+
           this.toastService.show('error', 'Error', 'Failed to load users');
         },
       })
@@ -67,31 +64,40 @@ export class UserListComponent {
   updateCounters(): void {
     this.counters = [
       {
-        count: this.users.filter((user) => user.active).length,
+        count: this.dataSource.filteredData.filter((user) => user.active)
+          .length,
         label: 'Aktiv',
       },
       {
-        count: this.users.filter((user) => user.role === 'admin').length,
+        count: this.dataSource.filteredData.filter(
+          (user) => user.role === 'admin'
+        ).length,
         label: 'Admin',
       },
       {
-        count: this.users.filter((user) => user.verified).length,
+        count: this.dataSource.filteredData.filter((user) => user.verified)
+          .length,
         label: 'Verified',
       },
-      { count: this.users.length, label: 'Total Users' },
+      { count: this.dataSource.filteredData.length, label: 'Total Users' },
     ];
   }
 
-  filterUsers(): void {
-    console.log(this.searchText);
-    this.filteredUsers = this.users.filter((user) => {
+  setCustomFilterPredicate(): void {
+    this.dataSource.filterPredicate = (data: User, filter: string): boolean => {
+      const transformedFilter = filter.trim().toLowerCase();
       return (
-        user.name.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        user.surname.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        user.email.toLowerCase().includes(this.searchText.toLowerCase())
+        data.name?.toLowerCase().includes(transformedFilter) ||
+        data.surname?.toLowerCase().includes(transformedFilter) ||
+        data.email?.toLowerCase().includes(transformedFilter)
       );
-    });
+    };
   }
+
+  filterUsers(): void {
+    this.dataSource.filter = this.searchText.trim().toLowerCase();
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
     console.log('Cleaned up subscriptions');
