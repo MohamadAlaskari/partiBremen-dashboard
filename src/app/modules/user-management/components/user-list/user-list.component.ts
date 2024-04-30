@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs';
 import { UserManagementService } from '../../services/user-management-service/user-management.service';
 import { User } from '../../../../shared/models/user.model';
 import { ToastService } from '../../../../shared/services/toast.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { CounterState } from '../../../../shared/components/state-counter/state-counter.component';
 
 @Component({
   selector: 'app-user-list',
@@ -10,10 +12,23 @@ import { ToastService } from '../../../../shared/services/toast.service';
   styleUrl: './user-list.component.scss',
 })
 export class UserListComponent {
-  isSortDropdownActive = false;
+  counters: CounterState[] = [];
+
+  columns: { header: string; field: string }[] = [
+    { header: 'Verified', field: 'verified' },
+    { header: 'Name', field: 'name' },
+    { header: 'Surname', field: 'surname' },
+    { header: 'Email', field: 'email' },
+    { header: 'Date of Birth', field: 'dob' },
+    { header: 'Role', field: 'role' },
+    { header: 'Status', field: 'active' },
+  ];
+  dataSource = new MatTableDataSource<User>();
+
   users: User[] = [];
   filteredUsers: User[] = [];
   searchText: string = '';
+  isSortDropdownActive = false;
 
   private subscriptions: Subscription = new Subscription();
   constructor(
@@ -33,6 +48,8 @@ export class UserListComponent {
         next: (users) => {
           this.users = users;
           this.filteredUsers = users;
+          this.dataSource.data = users;
+          this.updateCounters();
           this.toastService.show(
             'success',
             'Success',
@@ -45,9 +62,24 @@ export class UserListComponent {
       })
     );
   }
-  countUsers(): number {
-    return this.users.length;
+  updateCounters(): void {
+    this.counters = [
+      {
+        count: this.users.filter((user) => user.active).length,
+        label: 'Aktiv',
+      },
+      {
+        count: this.users.filter((user) => user.role === 'admin').length,
+        label: 'Admin',
+      },
+      {
+        count: this.users.filter((user) => user.verified).length,
+        label: 'Verified',
+      },
+      { count: this.users.length, label: 'Total Users' },
+    ];
   }
+
   filterUsers(): void {
     console.log(this.searchText);
     this.filteredUsers = this.users.filter((user) => {

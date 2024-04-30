@@ -10,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  user: User = new User('', '', '', '', '', null, '', '', false);
+  user: User = new User('', '', '', '', '', null, '', '', false, '', false);
 
   constructor(
     private router: Router,

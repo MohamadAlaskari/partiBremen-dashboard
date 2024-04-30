@@ -1,70 +1,15 @@
-.projects-section {
+.user-list-section {
   display: flex;
   flex-direction: column;
+  color: var(--font-color-primary);
 
-  &-line {
+  .steurung-line {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     padding-bottom: 32px;
   }
-
-  &-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    color: var(--font-color-primary);
-
-    p {
-      font-size: 24px;
-      line-height: 32px;
-      font-weight: 700;
-      opacity: 0.9;
-      margin: 0;
-      color: var(--font-color-primary);
-    }
-
-    .time {
-      font-size: 20px;
-    }
-  }
-}
-
-.projects-status {
-  display: flex;
-}
-
-.item-status {
-  display: flex;
-  flex-direction: column;
-  margin-right: 16px;
-
-  &:not(:last-child) .status-type:after {
-    content: "";
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translatey(-50%);
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    border: 1px solid var(--font-color-secondary);
-  }
-}
-
-.status-number {
-  font-size: 24px;
-  line-height: 32px;
-  font-weight: 700;
-  color: var(--font-color-primary);
-}
-
-.status-type {
-  position: relative;
-  padding-right: 24px;
-  color: var(--font-color-secondary);
 }
 
 .view-actions {
