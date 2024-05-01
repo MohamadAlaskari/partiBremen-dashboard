@@ -13,8 +13,18 @@
 
     <div class="inputs">
       <input type="email" formControlName="email" placeholder="Email" autocomplete="username" required>
+      <div style="color: red;" *ngIf=" loginForm.get('email')?.errors?.['email']">
+        Please enter a valid email.
+      </div>
       <br>
       <input type="password" formControlName="password" placeholder="Password" autocomplete="current-password" required>
+      <div style="color: red;" *ngIf="loginForm.get('password')?.errors?.['minLength']">
+        Password must be at least 6 characters.
+      </div>
+      <div style="color: red;" *ngIf=" loginForm.get('password')?.errors?.['required']">
+        Password is required.
+      </div>
+
     </div>
 
     <br><br>

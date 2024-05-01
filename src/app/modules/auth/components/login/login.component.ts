@@ -11,7 +11,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  user: User = new User('', '', '', '', '', null, '', '', false, '', false);
   loginForm: FormGroup;
 
   constructor(
@@ -23,7 +22,7 @@ export class LoginComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(3),
       ]),
     });
   }
@@ -59,7 +58,7 @@ export class LoginComponent {
       this.toastService.show(
         'error',
         'Validation Error',
-        'Please check your input.'
+        'Please check your input!'
       );
     }
   }
