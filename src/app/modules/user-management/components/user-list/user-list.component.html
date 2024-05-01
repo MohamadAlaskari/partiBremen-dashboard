@@ -3,16 +3,9 @@
   <app-state-counter [states]="counters"></app-state-counter>
 
   <div class=" steurung-line">
-    <div class="tabs">
-      <input type="radio" id="radio-1" name="tabs" checked (click)="switchTab('all')" />
-      <label class="tab" for="radio-1">view All
-      </label>
-      <input type="radio" id="radio-2" name="tabs" (click)="switchTab('admins')" />
-      <label class="tab" for="radio-2">admins</label>
-      <input type="radio" id="radio-3" name="tabs" (click)="switchTab('active')" />
-      <label class="tab" for="radio-3">aktive</label>
-      <span class="glider"></span>
-    </div>
+
+    <app-taps></app-taps>
+
 
     <div class="view-actions active">
       <div class="search-wrapper">
@@ -40,7 +33,28 @@
 
       </button>
 
-      <!--sort
+    </div>
+  </div>
+
+  @defer{
+  <app-table [columnDefinitions]="columns" [dataSource]="dataSource"></app-table>
+  } @loading (minimum 700ms) {
+  <div style="width: 100vw;display: flex;
+    justify-content: center;
+    align-items: center;"></div>
+  <p>loading Users Data...</p>
+  <img style="width: 80px; height: 80px;" alt="loading..." src="https://meinesachsenzeit.de/szapp/images/loading.gif" />
+  }@error {
+  <p>Failed to load table data!</p>
+  }
+
+</div>
+
+
+
+
+
+<!--sort
       <div class='sort-menu-container ' title="User Sort">
         <button class='sort-btn' (click)="toggleDropdown()">
 
@@ -85,20 +99,3 @@
         </div>
       </div>
     -->
-    </div>
-  </div>
-
-  @defer{
-  <app-table [columnDefinitions]="columns" [dataSource]="dataSource"></app-table>
-  } @loading (minimum 700ms) {
-  <div style="width: 100vw;display: flex;
-    justify-content: center;
-    align-items: center;"></div>
-  <p>loading Users Data...</p>
-  <img style="width: 80px; height: 80px;" alt="loading..." src="https://meinesachsenzeit.de/szapp/images/loading.gif" />
-  }@error {
-  <p>Failed to load table data!</p>
-  }
-
-
-</div>
