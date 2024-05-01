@@ -53,17 +53,21 @@
 }
 
 .btn-add-user {
-  cursor: pointer;
-  outline: none;
-  transition: all 0.2s ease;
-  width: 150px;
+  background-color: var(--link-color-active-bg);
+  color: var(--link-color-active);
+  width: 200px;
   height: 36px;
   display: flex;
+  justify-content: center;
   align-items: center;
+  padding: 6px;
   border-radius: 4px;
-  background-color: var(--link-color-active-bg);
-  color: var(--btn-font-color-primary);
+  border: none;
   margin-left: 8px;
+  transition: 0.2s;
+  span {
+    padding-inline: 10px;
+  }
 }
 
 //filtersbar
