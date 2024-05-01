@@ -12,7 +12,7 @@ import { TableComponent } from './components/table/table.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { StateCounterComponent } from './components/state-counter/state-counter.component';
 import { SectionHeaderComponent } from './components/section-header/section-header.component';
-import { TapsComponent } from './components/taps/taps.component';
+import { TabsComponent } from './components/tabs/tabs.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import { TapsComponent } from './components/taps/taps.component';
     TableComponent,
     StateCounterComponent,
     SectionHeaderComponent,
-    TapsComponent,
+    TabsComponent,
   ],
   imports: [
     CommonModule,
@@ -40,7 +40,7 @@ import { TapsComponent } from './components/taps/taps.component';
     TableComponent,
     StateCounterComponent,
     SectionHeaderComponent,
-    TapsComponent,
+    TabsComponent,
   ],
   providers: [ToastService],
 })

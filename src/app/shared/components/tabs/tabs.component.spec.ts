@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TapsComponent } from './taps.component';
+import { TabsComponent } from './tabs.component';
 
 describe('TapsComponent', () => {
-  let component: TapsComponent;
-  let fixture: ComponentFixture<TapsComponent>;
+  let component: TabsComponent;
+  let fixture: ComponentFixture<TabsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TapsComponent]
-    })
-    .compileComponents();
-    
-    fixture = TestBed.createComponent(TapsComponent);
+      declarations: [TabsComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(TabsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

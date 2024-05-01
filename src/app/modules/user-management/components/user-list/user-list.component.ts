@@ -12,6 +12,11 @@ import { CounterState } from '../../../../shared/components/state-counter/state-
   styleUrl: './user-list.component.scss',
 })
 export class UserListComponent {
+  tabConfig = [
+    { label: 'View All', value: 'all' },
+    { label: 'Admins', value: 'admins' },
+    { label: 'Active', value: 'active' }
+  ];
   currentTab: string = 'all'; // Default-Tab
   counters: CounterState[] = [];
 
@@ -87,11 +92,12 @@ export class UserListComponent {
 
   setCustomFilterPredicate(): void {
     this.dataSource.filterPredicate = (data: User, filter: string): boolean => {
+      const transformedFilter = filter.trim().toLowerCase();
       switch (this.currentTab) {
         case 'admins':
           return data.role === 'admin' && this.textFilter(data, filter);
         case 'active':
-          return data.active && this.textFilter(data, filter);
+          return data.active=== true && this.textFilter(data, filter);
         case 'all':
         default:
           return this.textFilter(data, filter);
@@ -111,10 +117,9 @@ export class UserListComponent {
   filterUsers(): void {
     this.dataSource.filter = this.searchText.trim().toLowerCase();
   }
-  switchTab(tab: string): void {
-    this.currentTab = tab;
-    console.log(this.currentTab);
-    this.filterUsers(); // Reapply filter whenever the tab changes
+  handleTabChange(selectedTab: string): void {
+    this.currentTab = selectedTab;
+    this.filterUsers(); // Aktualisiert die Filterung der Datenquelle basierend auf dem neuen Tab
   }
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();

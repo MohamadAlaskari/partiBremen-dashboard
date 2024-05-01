@@ -4,8 +4,7 @@
 
   <div class=" steurung-line">
 
-    <app-taps></app-taps>
-
+    <app-tabs [tabs]="tabConfig" (tabChanged)="handleTabChange($event)"></app-tabs>
 
     <div class="view-actions active">
       <div class="search-wrapper">

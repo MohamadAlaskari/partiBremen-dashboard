@@ -1,0 +1,12 @@
+<div class="tabs">
+
+  @for (tab of tabs; track $index) {
+
+  <input type="radio" [id]="'radio-' + ($index + 1)" name="tabs" (click)="onTabChange(tab.value)" [checked]="$index === 0" />
+  <label class="tab" [for]="'radio-' + ($index + 1)">{{tab.label}}</label>
+  }
+
+
+  <span class="glider"></span>
+
+</div>
