@@ -52,114 +52,20 @@
   }
 }
 
-/// sort
-.sort-menu-container {
-  position: relative;
-}
-
-/*sort btn */
-.sort-btn {
-  padding: 0 40px 0 20px;
-  // font-size: 16px;
-  text-align: left;
+.btn-add-user {
   cursor: pointer;
   outline: none;
   transition: all 0.2s ease;
-  border: 1px solid var(--link-color-active-bg);
-
   width: 150px;
   height: 36px;
   display: flex;
   align-items: center;
   border-radius: 4px;
-  background-color: transparent;
-  color: var(--font-color-primary);
+  background-color: var(--link-color-active-bg);
+  color: var(--btn-font-color-primary);
   margin-left: 8px;
-  transition: 0.2s;
-  svg {
-    fill: var(--link-color);
-  }
-  span {
-    padding-left: 4px;
-  }
 }
 
-.sort-btn__arrow {
-  position: absolute;
-  right: 20px;
-  top: 15px;
-  fill: var(--link-color);
-  width: 10px;
-  height: 10px;
-  margin: 0;
-  transition: transform 0.2s ease;
-}
-
-.sort-menu-container.open .sort-btn__arrow {
-  transform: rotate(180deg);
-}
-
-/* sort Dropdown */
-
-.sortDropdown {
-  margin-left: 8px;
-
-  position: absolute;
-  z-index: 700;
-  box-sizing: border-box;
-  width: 100%;
-  min-width: 170px;
-  border: 1px solid #9aa0a6;
-  border-radius: 8px;
-  margin-top: 15px;
-  background: var(--bg-color-primary);
-  opacity: 0;
-  transform: translatey(-10px);
-  pointer-events: none;
-  transition: all 0.1s ease;
-}
-
-.sort-menu-container.open .sortDropdown {
-  opacity: 1;
-  transform: translatey(0);
-  pointer-events: all;
-}
-.open {
-  opacity: 1;
-  transform: translatey(0);
-  pointer-events: all;
-}
-.sortDropdown ul {
-  padding: 20px 10px;
-  margin: 0;
-  list-style: none;
-}
-
-.sortDropdown input {
-  position: absolute;
-  visibility: hidden;
-}
-
-.sortDropdown label {
-  display: block;
-  padding: 8px 10px;
-  border-radius: 5px;
-  color: #9aa0a6;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.sortDropdown input:checked ~ label {
-  background: var(--link-color-active-bg) !important;
-  color: var(--link-color-active) !important;
-}
-
-.sortDropdown label:hover {
-  background: var(--link-color) !important;
-  opacity: 0.8;
-  color: var(--link-color-active) !important;
-}
-/// ende sort
 //filtersbar
 
 .tabs {
@@ -332,3 +238,112 @@ table.fixed-header thead tr {
   width: 16px;
   cursor: default;
 }
+
+/// sort
+.sort-menu-container {
+  position: relative;
+}
+
+/*sort btn */
+.sort-btn {
+  padding: 0 40px 0 20px;
+  // font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  border: 1px solid var(--link-color-active-bg);
+
+  width: 150px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  background-color: transparent;
+  color: var(--font-color-primary);
+  margin-left: 8px;
+  transition: 0.2s;
+  svg {
+    fill: var(--link-color);
+  }
+  span {
+    padding-left: 4px;
+  }
+}
+
+.sort-btn__arrow {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  fill: var(--link-color);
+  width: 10px;
+  height: 10px;
+  margin: 0;
+  transition: transform 0.2s ease;
+}
+
+.sort-menu-container.open .sort-btn__arrow {
+  transform: rotate(180deg);
+}
+
+/* sort Dropdown */
+
+.sortDropdown {
+  margin-left: 8px;
+
+  position: absolute;
+  z-index: 700;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 170px;
+  border: 1px solid #9aa0a6;
+  border-radius: 8px;
+  margin-top: 15px;
+  background: var(--bg-color-primary);
+  opacity: 0;
+  transform: translatey(-10px);
+  pointer-events: none;
+  transition: all 0.1s ease;
+}
+
+.sort-menu-container.open .sortDropdown {
+  opacity: 1;
+  transform: translatey(0);
+  pointer-events: all;
+}
+.open {
+  opacity: 1;
+  transform: translatey(0);
+  pointer-events: all;
+}
+.sortDropdown ul {
+  padding: 20px 10px;
+  margin: 0;
+  list-style: none;
+}
+
+.sortDropdown input {
+  position: absolute;
+  visibility: hidden;
+}
+
+.sortDropdown label {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 5px;
+  color: #9aa0a6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sortDropdown input:checked ~ label {
+  background: var(--link-color-active-bg) !important;
+  color: var(--link-color-active) !important;
+}
+
+.sortDropdown label:hover {
+  background: var(--link-color) !important;
+  opacity: 0.8;
+  color: var(--link-color-active) !important;
+}
+/// ende sort

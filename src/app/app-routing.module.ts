@@ -4,6 +4,7 @@ import { LoginComponent } from './modules/auth/components/login/login.component'
 import { authGuard } from './modules/auth/guards/auth.guard';
 import { DashboardComponent } from './modules/dashboard/components/dashboard/dashboard.component';
 import { UserManagementComponent } from './modules/user-management/components/user-management/user-management.component';
+import { PoiManagementComponent } from './modules/poi-management/components/poi-management/poi-management.component';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -19,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'poi-management',
-    component: DashboardComponent,
+    component: PoiManagementComponent,
     // canActivate: [authGuard],
   },
   { path: '**', redirectTo: 'login' }, // Fallback-Route

@@ -4,12 +4,12 @@
 
   <div class=" steurung-line">
     <div class="tabs">
-      <input type="radio" id="radio-1" name="tabs" checked />
+      <input type="radio" id="radio-1" name="tabs" checked (click)="switchTab('all')" />
       <label class="tab" for="radio-1">view All
       </label>
-      <input type="radio" id="radio-2" name="tabs" />
+      <input type="radio" id="radio-2" name="tabs" (click)="switchTab('admins')" />
       <label class="tab" for="radio-2">admins</label>
-      <input type="radio" id="radio-3" name="tabs" />
+      <input type="radio" id="radio-3" name="tabs" (click)="switchTab('active')" />
       <label class="tab" for="radio-3">aktive</label>
       <span class="glider"></span>
     </div>
@@ -27,11 +27,21 @@
           <path d="M21 21l-4.35-4.35"></path>
         </svg>
       </div>
+      <button class="btn-add-user active" title="Add new Poi">
 
+        <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+          class="feather feather-plus">
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
 
-      <!--sort-->
+        <span>Add New User</span>
+
+      </button>
+
+      <!--sort
       <div class='sort-menu-container ' title="User Sort">
-        <!--sort btn -->
         <button class='sort-btn' (click)="toggleDropdown()">
 
           <svg class='fl-sort-icon' xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -48,7 +58,7 @@
             </path>
           </svg>
         </button>
-        <!--sort dropdown-->
+
         <div class='sortDropdown' [ngClass]="{'open':isSortDropdownActive }">
           <ul>
             <li>
@@ -74,7 +84,7 @@
           </ul>
         </div>
       </div>
-      <!--sort-->
+    -->
     </div>
   </div>
 

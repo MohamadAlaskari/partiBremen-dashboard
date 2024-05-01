@@ -12,6 +12,7 @@ import { CounterState } from '../../../../shared/components/state-counter/state-
   styleUrl: './user-list.component.scss',
 })
 export class UserListComponent {
+  currentTab: string = 'all'; // Default-Tab
   counters: CounterState[] = [];
 
   columns: { header: string; field: string }[] = [
@@ -33,11 +34,12 @@ export class UserListComponent {
   constructor(
     private userManagementService: UserManagementService,
     private toastService: ToastService
-  ) {
-    this.loadUsers();
-  }
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadUsers();
+    this.setCustomFilterPredicate();
+  }
   toggleDropdown(): void {
     this.isSortDropdownActive = !this.isSortDropdownActive;
   }
@@ -85,19 +87,35 @@ export class UserListComponent {
 
   setCustomFilterPredicate(): void {
     this.dataSource.filterPredicate = (data: User, filter: string): boolean => {
-      const transformedFilter = filter.trim().toLowerCase();
-      return (
-        data.name?.toLowerCase().includes(transformedFilter) ||
-        data.surname?.toLowerCase().includes(transformedFilter) ||
-        data.email?.toLowerCase().includes(transformedFilter)
-      );
+      switch (this.currentTab) {
+        case 'admins':
+          return data.role === 'admin' && this.textFilter(data, filter);
+        case 'active':
+          return data.active && this.textFilter(data, filter);
+        case 'all':
+        default:
+          return this.textFilter(data, filter);
+      }
     };
+  }
+
+  textFilter(data: User, filter: string): boolean {
+    const transformedFilter = filter.trim().toLowerCase();
+    return (
+      data.name?.toLowerCase().includes(transformedFilter) ||
+      data.surname?.toLowerCase().includes(transformedFilter) ||
+      data.email?.toLowerCase().includes(transformedFilter)
+    );
   }
 
   filterUsers(): void {
     this.dataSource.filter = this.searchText.trim().toLowerCase();
   }
-
+  switchTab(tab: string): void {
+    this.currentTab = tab;
+    console.log(this.currentTab);
+    this.filterUsers(); // Reapply filter whenever the tab changes
+  }
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
     console.log('Cleaned up subscriptions');
