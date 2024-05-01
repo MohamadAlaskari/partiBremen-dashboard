@@ -15,9 +15,9 @@ export class UserListComponent {
   tabConfig = [
     { label: 'View All', value: 'all' },
     { label: 'Admins', value: 'admins' },
-    { label: 'Active', value: 'active' }
+    { label: 'Active', value: 'active' },
   ];
-  currentTab: string = 'all'; // Default-Tab
+
   counters: CounterState[] = [];
 
   columns: { header: string; field: string }[] = [
@@ -29,6 +29,7 @@ export class UserListComponent {
     { header: 'Role', field: 'role' },
     { header: 'Status', field: 'active' },
   ];
+
   dataSource = new MatTableDataSource<User>();
   searchText: string = '';
 
@@ -69,38 +70,34 @@ export class UserListComponent {
     );
   }
   updateCounters(): void {
+    const activeUsers = this.dataSource.filteredData.filter(
+      (user) => user.active
+    );
+    const adminUsers = this.dataSource.filteredData.filter(
+      (user) => user.role === 'admin'
+    );
+    const verifiedUsers = this.dataSource.filteredData.filter(
+      (user) => user.verified
+    );
+
     this.counters = [
-      {
-        count: this.dataSource.filteredData.filter((user) => user.active)
-          .length,
-        label: 'Aktiv',
-      },
-      {
-        count: this.dataSource.filteredData.filter(
-          (user) => user.role === 'admin'
-        ).length,
-        label: 'Admin',
-      },
-      {
-        count: this.dataSource.filteredData.filter((user) => user.verified)
-          .length,
-        label: 'Verified',
-      },
+      { count: activeUsers.length, label: 'Aktiv' },
+      { count: adminUsers.length, label: 'Admin' },
+      { count: verifiedUsers.length, label: 'Verified' },
       { count: this.dataSource.filteredData.length, label: 'Total Users' },
     ];
   }
 
   setCustomFilterPredicate(): void {
     this.dataSource.filterPredicate = (data: User, filter: string): boolean => {
-      const transformedFilter = filter.trim().toLowerCase();
-      switch (this.currentTab) {
+      switch (filter) {
         case 'admins':
-          return data.role === 'admin' && this.textFilter(data, filter);
+          return data.role === 'admin';
         case 'active':
-          return data.active=== true && this.textFilter(data, filter);
+          return data.active === true;
         case 'all':
         default:
-          return this.textFilter(data, filter);
+          return true; // Kein Filter angewendet
       }
     };
   }
@@ -117,9 +114,11 @@ export class UserListComponent {
   filterUsers(): void {
     this.dataSource.filter = this.searchText.trim().toLowerCase();
   }
-  handleTabChange(selectedTab: string): void {
-    this.currentTab = selectedTab;
-    this.filterUsers(); // Aktualisiert die Filterung der Datenquelle basierend auf dem neuen Tab
+  handleTabChange(tabValue: string): void {
+    this.dataSource.filter = tabValue;
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();

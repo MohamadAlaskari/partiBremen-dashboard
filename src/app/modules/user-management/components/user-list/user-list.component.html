@@ -6,7 +6,7 @@
 
     <app-tabs [tabs]="tabConfig" (tabChanged)="handleTabChange($event)"></app-tabs>
 
-    <div class="view-actions active">
+    <div class="search-add-container ">
       <div class="search-wrapper">
         <input class="search-input" type="text" placeholder="Search..." [(ngModel)]="searchText"
           (ngModelChange)="filterUsers()">
@@ -33,6 +33,7 @@
       </button>
 
     </div>
+
   </div>
 
   @defer{
