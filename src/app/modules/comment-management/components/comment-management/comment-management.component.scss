@@ -1,0 +1,22 @@
+.button-container {
+    width: 100%; // Ensure the buttons take up the full width of the cell
+    display: flex; // Use flexbox to manage button layout
+    justify-content: space-between; // Space buttons evenly within the container
+    align-items: center; // Align items vertically in the center
+  }
+  
+  // Apply styles to buttons inside the container
+  .button-container button {
+    width: calc(50% - 5px); // Adjust button width according to your needs
+    // Subtracting 5px to allow space for potential margins
+  }
+  
+  // Example table styles
+  table {
+    width: 100%; // Make sure the table spans the entire container
+  }
+  
+  td {
+    text-align: center;
+    padding: 10px;
+  }

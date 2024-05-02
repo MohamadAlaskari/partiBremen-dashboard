@@ -1,0 +1,34 @@
+<!-- comment-management.component.html -->
+
+<div>
+    <h1>Comment Management</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>User</th>
+          <th>Content</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (comment of comments; track comment.id) {
+        <tr>
+          <td>{{ comment.id+1 }}</td>
+          <td>{{ comment.user }}</td>
+          <td>{{ comment.content }}</td>
+          <td>{{ comment.date }}</td>
+          <td>{{ comment.time }}</td>
+          <td>
+            <div class="button-container">
+              <button>Edit</button>
+              <button>Delete</button>
+            </div>
+          </td>
+        </tr>
+      }
+      </tbody>
+    </table>
+  </div>
