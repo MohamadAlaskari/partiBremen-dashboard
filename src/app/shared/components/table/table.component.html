@@ -13,7 +13,7 @@
         <ng-template #defaultCell>{{ element[column.field] }}</ng-template>
       </td>
     </ng-container>
-    
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>

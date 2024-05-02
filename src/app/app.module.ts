@@ -13,6 +13,8 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { UserManagementModule } from './modules/user-management/user-management.module';
 import { MatIconModule } from '@angular/material/icon';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { PoiManagementComponent } from './modules/poi-management/components/poi-management/poi-management.component';
+import { PoiManagementModule } from './modules/poi-management/poi-management.module';
 import { CommentManagementComponent } from './modules/comment-management/components/comment-management/comment-management.component';
 
 @NgModule({
@@ -24,6 +26,7 @@ import { CommentManagementComponent } from './modules/comment-management/compone
     SharedModule,
     DashboardModule,
     UserManagementModule,
+    PoiManagementModule,
     MatIconModule,
     AppRoutingModule,
   ],

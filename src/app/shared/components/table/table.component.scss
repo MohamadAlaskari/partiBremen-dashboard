@@ -4,3 +4,13 @@ tr.mat-mdc-header-row.mdc-data-table__header-row.cdk-header-row {
 tr.mat-mdc-row.mdc-data-table__row.cdk-row {
   color: var(--font-color-secondary);
 }
+
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  border-color: currentColor;
+}
