@@ -14,6 +14,7 @@ import { StateCounterComponent } from './components/state-counter/state-counter.
 import { SectionHeaderComponent } from './components/section-header/section-header.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { MatSortModule } from '@angular/material/sort';
+import { BottomSheetComponent } from './components/bottom-sheet/bottom-sheet.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { MatSortModule } from '@angular/material/sort';
     StateCounterComponent,
     SectionHeaderComponent,
     TabsComponent,
+    BottomSheetComponent,
   ],
   imports: [
     CommonModule,
