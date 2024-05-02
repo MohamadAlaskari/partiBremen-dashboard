@@ -27,7 +27,7 @@ export class UserListComponent {
     { header: 'Email', field: 'email' },
     { header: 'Date of Birth', field: 'dob' },
     { header: 'Role', field: 'role' },
-    { header: 'Status', field: 'active' },
+    { header: 'Active', field: 'active' },
   ];
 
   dataSource = new MatTableDataSource<User>();
