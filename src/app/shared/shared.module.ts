@@ -13,6 +13,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { StateCounterComponent } from './components/state-counter/state-counter.component';
 import { SectionHeaderComponent } from './components/section-header/section-header.component';
 import { TabsComponent } from './components/tabs/tabs.component';
+import { MatSortModule } from '@angular/material/sort';
+import { BottomSheetComponent } from './components/bottom-sheet/bottom-sheet.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { TabsComponent } from './components/tabs/tabs.component';
     StateCounterComponent,
     SectionHeaderComponent,
     TabsComponent,
+    BottomSheetComponent,
   ],
   imports: [
     CommonModule,
@@ -31,6 +34,7 @@ import { TabsComponent } from './components/tabs/tabs.component';
     MatIconModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
   ],
   exports: [
     SidenavComponent,

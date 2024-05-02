@@ -12,14 +12,18 @@ import { CounterState } from '../../../../shared/components/state-counter/state-
   styleUrl: './user-list.component.scss',
 })
 export class UserListComponent {
+  // Konfiguration der Tabs, die in der Ansicht verwendet werden.
   tabConfig = [
     { label: 'View All', value: 'all' },
     { label: 'Admins', value: 'admins' },
     { label: 'Active', value: 'active' },
   ];
+  // Hinzufügen einer Zustandsvariablen für den aktiven Filtertyp
+  activeFilterType: 'tab' | 'search' = 'tab';
 
   counters: CounterState[] = [];
 
+  // Spaltenüberschriften für die Anzeige in der Material Table.
   columns: { header: string; field: string }[] = [
     { header: 'Verified', field: 'verified' },
     { header: 'Name', field: 'name' },
@@ -27,12 +31,16 @@ export class UserListComponent {
     { header: 'Email', field: 'email' },
     { header: 'Date of Birth', field: 'dob' },
     { header: 'Role', field: 'role' },
-    { header: 'Status', field: 'active' },
+    { header: 'Active', field: 'active' },
   ];
 
+  // Datenquelle für Material Table.
   dataSource = new MatTableDataSource<User>();
+
+  // Text für das Suchfeld.
   searchText: string = '';
 
+  // Subscription für API-Anfragen.
   private subscriptions: Subscription = new Subscription();
 
   isSortDropdownActive = false;
@@ -46,9 +54,13 @@ export class UserListComponent {
     this.loadUsers();
     this.setCustomFilterPredicate();
   }
+
+  // Umschalten des Zustands des Sortierungs-Dropdown-Menüs.
   toggleDropdown(): void {
     this.isSortDropdownActive = !this.isSortDropdownActive;
   }
+
+  // Laden der Benutzer vom Server.
   loadUsers(): void {
     this.subscriptions.add(
       this.userManagementService.getUsers().subscribe({
@@ -69,6 +81,8 @@ export class UserListComponent {
       })
     );
   }
+
+  // Aktualisieren der Zustandszähler basierend auf den gefilterten Daten.
   updateCounters(): void {
     const activeUsers = this.dataSource.filteredData.filter(
       (user) => user.active
@@ -88,16 +102,27 @@ export class UserListComponent {
     ];
   }
 
+  // Anpassen des Filterkriteriums der Datenquelle
   setCustomFilterPredicate(): void {
     this.dataSource.filterPredicate = (data: User, filter: string): boolean => {
-      switch (filter) {
-        case 'admins':
-          return data.role === 'ADMIN';
-        case 'active':
-          return data.active === true;
-        case 'all':
-        default:
-          return true; // Kein Filter angewendet
+      if (this.activeFilterType === 'search') {
+        // Suchlogik nur anwenden, wenn der aktive Filtertyp 'search' ist
+        return (
+          data.name?.toLowerCase().includes(filter) ||
+          data.surname?.toLowerCase().includes(filter) ||
+          data.email?.toLowerCase().includes(filter)
+        );
+      } else {
+        // Tab-Filterlogik nur anwenden, wenn der aktive Filtertyp 'tab' ist
+        switch (filter) {
+          case 'admins':
+            return data.role === 'ADMIN';
+          case 'active':
+            return data.active === true;
+          case 'all':
+          default:
+            return true; // Kein Filter angewendet, alle Daten anzeigen
+        }
       }
     };
   }
@@ -112,15 +137,19 @@ export class UserListComponent {
   }
 
   filterUsers(): void {
+    this.activeFilterType = 'search'; // Setzt den aktiven Filtertyp auf 'search'
     this.dataSource.filter = this.searchText.trim().toLowerCase();
-    console.log(this.searchText)
   }
+
   handleTabChange(tabValue: string): void {
+    this.activeFilterType = 'tab'; // Setzt den aktiven Filtertyp auf 'tab'
     this.dataSource.filter = tabValue;
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  // Bereinigen der Subscriptions beim Zerstören der Komponente.
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
     console.log('Cleaned up subscriptions');

@@ -1,5 +1,6 @@
 import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-table',
@@ -18,6 +19,8 @@ export class TableComponent {
   dataSource!: MatTableDataSource<any>; // Ensure that this is correctly passed from the parent component
 
   displayedColumns: string[] = [];
+  @ViewChild(MatSort)
+  sort!: MatSort;
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -28,6 +31,7 @@ export class TableComponent {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator; // Stellen Sie sicher, dass der Paginator auch hier initialisiert wird
   }
 }
