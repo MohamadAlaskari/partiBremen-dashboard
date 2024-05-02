@@ -74,7 +74,7 @@ export class UserListComponent {
       (user) => user.active
     );
     const adminUsers = this.dataSource.filteredData.filter(
-      (user) => user.role === 'admin'
+      (user) => user.role === 'ADMIN'
     );
     const verifiedUsers = this.dataSource.filteredData.filter(
       (user) => user.verified
@@ -92,7 +92,7 @@ export class UserListComponent {
     this.dataSource.filterPredicate = (data: User, filter: string): boolean => {
       switch (filter) {
         case 'admins':
-          return data.role === 'admin';
+          return data.role === 'ADMIN';
         case 'active':
           return data.active === true;
         case 'all':
@@ -113,6 +113,7 @@ export class UserListComponent {
 
   filterUsers(): void {
     this.dataSource.filter = this.searchText.trim().toLowerCase();
+    console.log(this.searchText)
   }
   handleTabChange(tabValue: string): void {
     this.dataSource.filter = tabValue;
