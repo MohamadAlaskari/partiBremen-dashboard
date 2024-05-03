@@ -18,6 +18,11 @@ export const environment = {
       delete: '/user/delete',
     },
     comments: {},
-    pois: {},
+    pois: {
+      findAll: '/poi',
+      findOnly: '/poi/Only',
+      findById: '/poi',
+      update: '/poi',
+    },
   },
 };
