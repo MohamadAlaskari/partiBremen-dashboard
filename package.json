@@ -13,12 +13,12 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^17.3.0",
-    "@angular/cdk": "^17.3.4",
+    "@angular/cdk": "^17.3.6",
     "@angular/common": "^17.3.0",
     "@angular/compiler": "^17.3.0",
     "@angular/core": "^17.3.0",
     "@angular/forms": "^17.3.0",
-    "@angular/material": "^17.3.4",
+    "@angular/material": "^17.3.6",
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/platform-server": "^17.3.0",
@@ -44,5 +44,27 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.4.2"
-  }
+  },
+  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.2.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MohamadAlaskari/partiBremen-dashboard.git"
+  },
+  "keywords": [
+    "Parti",
+    "Bremen",
+    "Dashboard",
+    "Administration",
+    "CRUD",
+    "Angular",
+    "Angular",
+    "Material"
+  ],
+  "author": "Mohamad Alaskari",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MohamadAlaskari/partiBremen-dashboard/issues"
+  },
+  "homepage": "https://github.com/MohamadAlaskari/partiBremen-dashboard#readme"
 }

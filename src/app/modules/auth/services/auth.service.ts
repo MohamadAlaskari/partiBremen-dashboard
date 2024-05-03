@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../../enviroments/environment';
 import { ApiService } from '../../../core/Services/api.service';
 import { User } from '../../../shared/models/user.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
+import { environment } from '../../../../environment';
 
 @Injectable({
   providedIn: 'root',
@@ -15,10 +15,8 @@ export class AuthService {
   constructor(private apiService: ApiService) {}
 
   login(email: string, password: string): Observable<User> {
-    const params = new HttpParams()
-      .set('email', email)
-      .set('password', password);
-    return this.apiService.post<User>(this.loginEndpoint, params).pipe(
+    const body = { email: email, password: password };
+    return this.apiService.post<User>(this.loginEndpoint, body).pipe(
       map((response) => {
         if (response) {
           this.storeUser(response);

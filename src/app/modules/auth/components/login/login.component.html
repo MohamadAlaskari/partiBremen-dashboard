@@ -7,15 +7,24 @@
     </div>
   </div>
 
-  <form (ngSubmit)="onLogin()" class="right">
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="right">
     <h5>Login</h5>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic, repellat!</p>
 
     <div class="inputs">
-      <input type="email" id="email" [(ngModel)]="user.email" name="email" placeholder="email" autocomplete="current-username"  required>
+      <input type="email" formControlName="email" placeholder="Email" autocomplete="username" required>
+      <div style="color: red;" *ngIf=" loginForm.get('email')?.errors?.['email']">
+        Please enter a valid email.
+      </div>
       <br>
-      <input type="password" id="password" [(ngModel)]="user.password" name="password" placeholder="password"
-        autocomplete="current-password" required>
+      <input type="password" formControlName="password" placeholder="Password" autocomplete="current-password" required>
+      <div style="color: red;" *ngIf="loginForm.get('password')?.errors?.['minLength']">
+        Password must be at least 6 characters.
+      </div>
+      <div style="color: red;" *ngIf=" loginForm.get('password')?.errors?.['required']">
+        Password is required.
+      </div>
+
     </div>
 
     <br><br>
@@ -29,7 +38,7 @@
     </div>
 
     <br>
-    <button type="submit" class="btn btn-primary"  >Login</button>
+    <button type="submit" class="btn btn-primary">Login</button>
 
   </form>
 

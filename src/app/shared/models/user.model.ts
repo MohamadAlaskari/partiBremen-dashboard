@@ -8,6 +8,8 @@ export class User {
     public dob: Date | null,
     public email: string,
     public password: string,
-    public verified: boolean
+    public verified: boolean,
+    public role: string | null,
+    public active: boolean,
   ) {}
 }

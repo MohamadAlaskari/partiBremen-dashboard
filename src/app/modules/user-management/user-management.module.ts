@@ -6,6 +6,7 @@ import { UserManagementService } from './services/user-management-service/user-m
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserAdditionComponent } from './components/user-addition/user-addition.component';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,12 @@ import { FormsModule } from '@angular/forms';
     UserListComponent,
     UserAdditionComponent,
   ],
-  imports: [CommonModule, FormsModule, UserManagementRoutingModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    UserManagementRoutingModule,
+    SharedModule,
+  ],
   providers: [UserManagementService],
 })
 export class UserManagementModule {}

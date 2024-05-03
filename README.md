@@ -2,7 +2,20 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.2.
 
-## swagger
+## Deployment Url
+
+https://partibremen.student.28apps-software.de
+
+## URL Deployment für master branch
+
+This project läuft auf folgenden URL von branch master: https://parti-bremen-dashboard.vercel.app/
+
+## Deployment für Development branch
+
+This project läuft auf folgenden URL von branch Development: https://parti-bremen-dashboard-dev.vercel.app/
+
+## swagger URL
+
 https://api.partibremen.student.28apps-software.de/swagger-ui/index.html#/
 
 ## Development server
