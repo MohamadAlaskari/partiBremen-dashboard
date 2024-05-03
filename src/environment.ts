@@ -16,11 +16,12 @@ export const environment = {
       update: '/user',
       delete: '/user',
     },
-    comments: {
-      comment: {},
-    },
+    comments: {},
     pois: {
-      pois: {},
+      findAll: '/poi',
+      findOnly: '/poi/Only',
+      findById: '/poi/findById',
+      update: '/poi/update',
     },
   },
 };
