@@ -1,0 +1,43 @@
+<!-- add-user.component.html -->
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" formControlName="name">
+  </div>
+  <div>
+    <label for="surname">Surname:</label>
+    <input type="text" id="surname" formControlName="surname">
+  </div>
+  <div>
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" formControlName="dob">
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input type="email" id="email" formControlName="email">
+  </div>
+  <div>
+    <label for="password">Password:</label>
+    <input type="password" id="password" formControlName="password">
+  </div>
+  <div>
+    <label for="verified">Verified:</label>
+    <input type="checkbox" id="verified" formControlName="verified">
+  </div>
+  <div>
+    <label for="role">Role:</label>
+    <select id="role" formControlName="role">
+      <option value="0">Default</option>
+      <option value="1">User</option>
+      <option value="2">Creator</option>
+      <option value="3">Moderator</option>
+      <option value="4">Admin</option>
+      <option value="5">Decider</option>
+    </select>
+  </div>
+  <div>
+    <label for="active">Active:</label>
+    <input type="checkbox" id="active" formControlName="active">
+  </div>
+  <button type="submit" [disabled]="!userForm.valid">Add User</button>
+</form>

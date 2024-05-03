@@ -4,21 +4,18 @@ import { UserManagementComponent } from './components/user-management/user-manag
 import { UserManagementRoutingModule } from './user-management-routing.module';
 import { UserManagementService } from './services/user-management-service/user-management.service';
 import { UserListComponent } from './components/user-list/user-list.component';
-import { UserAdditionComponent } from './components/user-addition/user-addition.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
+import { AddUserComponent } from './components/add-user/add-user.component';
 
 @NgModule({
-  declarations: [
-    UserManagementComponent,
-    UserListComponent,
-    UserAdditionComponent,
-  ],
+  declarations: [UserManagementComponent, UserListComponent, AddUserComponent],
   imports: [
     CommonModule,
     FormsModule,
     UserManagementRoutingModule,
     SharedModule,
+    ReactiveFormsModule,
   ],
   providers: [UserManagementService],
 })
