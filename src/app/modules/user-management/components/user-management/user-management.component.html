@@ -3,10 +3,15 @@
 
     <app-section-header [title]="title_userManagment" time=""></app-section-header>
 
-
     <app-user-list></app-user-list>
 
+
   </div>
-  <div class="user-settings"></div>
-</div>
-<app-add-user></app-add-user>
+
+  <div class="modal">
+    <div class="modal-container">
+      <h1>Add User</h1>
+      <app-add-user></app-add-user>
+    </div>
+
+  </div>
