@@ -20,8 +20,8 @@ export const environment = {
     pois: {
       findAll: '/poi',
       findOnly: '/poi/Only',
-      findById: '/poi/findById',
-      update: '/poi/update',
+      findById: '/poi',
+      update: '/poi',
     },
   },
 };
