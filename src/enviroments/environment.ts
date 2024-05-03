@@ -20,6 +20,9 @@ export const environment = {
     comments: {},
     pois: {
       findAll: '/poi',
+      findOnly: '/poi/Only',
+      findById: '/poi',
+      update: '/poi',
     },
   },
 };

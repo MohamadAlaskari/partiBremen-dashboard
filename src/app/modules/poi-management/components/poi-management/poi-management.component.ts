@@ -11,7 +11,7 @@ import {Poi} from "../../../../shared/models/poi.model";
   styleUrl: './poi-management.component.scss'
 })
 export class PoiManagementComponent {
-  items: Poi[] = [];
+  pois: Poi[] = [];
   private subscriptions: Subscription = new Subscription();
 
   constructor(private poiManagementService: PoiManagementService,
@@ -24,32 +24,14 @@ export class PoiManagementComponent {
   searchTerm: string = '';
 
   get filteredItems() {
-    return this.items.filter(item =>
+    return this.pois.filter(item =>
       Object.values(item).some((value: any) =>
+        value !== null &&
         value.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
       )
     );
   }
 
-  /**
-  get fertig() {
-    return this.items.filter(item =>
-      item.status.includes("Fertig")
-    ).length;
-  }
-
-  get wirdgebaut() {
-    return this.items.filter(item =>
-      item.status.includes("Wird gebaut")
-    ).length;
-  }
-
-  get inplanung() {
-    return this.items.filter(item =>
-      item.status.includes("In Planung")
-    ).length;
-  }
-    **/
 
   showPoi(poi: any) {
     this.poiManagementService.setPoi(poi)
@@ -60,7 +42,7 @@ export class PoiManagementComponent {
     this.subscriptions.add(
       this.poiManagementService.getPois().subscribe({
         next: (pois) => {
-          this.items = pois;
+          this.pois = pois;
           this.toastService.show(
             'success',
             'Success',
@@ -72,5 +54,36 @@ export class PoiManagementComponent {
         },
       })
     );
+  }
+
+  updatePoi(poiId: string, poi: Poi): void {
+    this.subscriptions.add(
+      this.poiManagementService.updatePoi(poiId, poi).subscribe({
+        next: (updatedPoi) => {
+          const index = this.pois.findIndex((u) => u.id === updatedPoi.id);
+          this.pois[index] = updatedPoi;
+          this.toastService.show(
+            'success',
+            'Success',
+            `Poi updated successfully: ${updatedPoi.titel}`
+          );
+        },
+        error: (error) => {
+          this.toastService.show(
+            'error',
+            'Error',
+            `Error updating poi: ${error.message}`
+          );
+        },
+      })
+    );
+  }
+
+  getActiveCount(): number {
+    return this.pois.filter(item => item.active === true).length;
+  }
+
+  getInactiveCount(): number {
+    return this.pois.filter(item => item.active === false).length;
   }
 }
