@@ -16,6 +16,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { PoiManagementComponent } from './modules/poi-management/components/poi-management/poi-management.component';
 import { PoiManagementModule } from './modules/poi-management/poi-management.module';
 import { CommentManagementComponent } from './modules/comment-management/components/comment-management/comment-management.component';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 @NgModule({
   declarations: [AppComponent],
