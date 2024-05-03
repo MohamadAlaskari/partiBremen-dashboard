@@ -9,36 +9,43 @@ import { AuthGuard } from './modules/auth/guards/auth.guard';
 import { isAuthenticatedGuard } from './modules/auth/guards/isAuthenticated.guard';
 
 const routes: Routes = [
- 
-  { 
-    
-    path:'login', 
+  {
+    path: 'login',
     canActivate: [isAuthenticatedGuard],
-    component : LoginComponent, 
-    
- 
-   
-  }, 
-  { path: 'auth', loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule) , canActivate: [isAuthenticatedGuard]},
-   {
+    component: LoginComponent,
+  },
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./modules/auth/auth.module').then((m) => m.AuthModule),
+    canActivate: [isAuthenticatedGuard],
+  },
+  {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'user-management',
-    component: UserManagementComponent,
-    canActivate: [AuthGuard]
+    loadChildren: () =>
+      import('./modules/user-management/user-management.module').then(
+        (m) => m.UserManagementModule
+      ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'poi-management',
     component: PoiManagementComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'comment-management',
+    component: CommentManagementComponent,
+    canActivate: [AuthGuard],
   },
   { path: '', redirectTo: 'login', pathMatch: 'prefix' },
   { path: '**', redirectTo: 'login' }, // Fallback-Route
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

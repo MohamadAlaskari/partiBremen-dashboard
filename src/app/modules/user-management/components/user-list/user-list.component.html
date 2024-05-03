@@ -19,7 +19,7 @@
           <path d="M21 21l-4.35-4.35"></path>
         </svg>
       </div>
-      <button class="btn-add-user active" title="Add new User">
+      <button class="btn-add-user active" title="Add new User" (click)="addUser()">
 
         <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
@@ -39,11 +39,11 @@
   @defer{
   <app-table [columnDefinitions]="columns" [dataSource]="dataSource"></app-table>
   } @loading (minimum 700ms) {
-  <div style="width: 100vw;display: flex;
-    justify-content: center;
-    align-items: center;"></div>
-  <p>loading Users Data...</p>
-  <img style="width: 80px; height: 80px;" alt="loading..." src="https://meinesachsenzeit.de/szapp/images/loading.gif" />
+  <div class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
   }@error {
   <p>Failed to load table data!</p>
   }

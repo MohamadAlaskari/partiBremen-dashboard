@@ -5,6 +5,7 @@ import { User } from '../../../../shared/models/user.model';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { CounterState } from '../../../../shared/components/state-counter/state-counter.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -47,7 +48,8 @@ export class UserListComponent {
 
   constructor(
     private userManagementService: UserManagementService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -148,7 +150,9 @@ export class UserListComponent {
       this.dataSource.paginator.firstPage();
     }
   }
-
+  addUser() {
+    this.router.navigate(['/user-management/add-user']);
+  }
   // Bereinigen der Subscriptions beim Zerstören der Komponente.
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();

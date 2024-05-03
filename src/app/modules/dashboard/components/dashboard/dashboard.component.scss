@@ -21,22 +21,22 @@
     flex-direction: column;
     align-items: center;
   }
-  
+
   .projects-section-line {
     display: flex;
     justify-content: space-between;
     width: 100%;
   }
-  
+
   .view-actions {
     display: flex;
   }
-  
+
   .chart-container {
     width: 400px; /* Adjust width as needed */
     height: 300px; /* Adjust height as needed */
   }
-  
+
   &-content {
     display: flex;
     height: 100%;
@@ -292,7 +292,7 @@
   justify-content: center;
   align-items: center;
   transition: background-color 0.3s, box-shadow 0.3s;
-  border-left: 5px solid #007bff; 
+  border-left: 5px solid #007bff;
 }
 .dashboard-section {
   background-color: #f8f9fa;
@@ -544,7 +544,7 @@
       flex: 1;
     }
   }
-  
+
   @media screen and (max-width: 767px) {
     .jsGridView .project-box-wrapper {
       width: calc(100% - 40px); /* One element per row, considering 40px for margins */

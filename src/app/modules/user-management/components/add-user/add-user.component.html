@@ -1,43 +1,67 @@
 <!-- add-user.component.html -->
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="name">Name:</label>
-    <input type="text" id="name" formControlName="name">
+<app-section-header [title]="title" time=""></app-section-header>
+
+<form class="row g-3" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+  <!--Name-->
+  <div class="col-md-6">
+    <div class="form-floating">
+      <input type="text" class="form-control " id="name" placeholder="" formControlName="name" [required]="true">
+      <label for="name" class="form-label">Name*</label>
+    </div>
+    <div class="invalid-feedback">
+      Please provide a valid zip.
+    </div>
   </div>
-  <div>
-    <label for="surname">Surname:</label>
-    <input type="text" id="surname" formControlName="surname">
+
+  <!--Surname-->
+  <div class="col-md-6">
+    <div class="form-floating">
+      <input type="text" class="form-control" id="surname" placeholder="" formControlName="surname">
+      <label for="surname" class="form-label">Surname*</label>
+    </div>
   </div>
-  <div>
-    <label for="dob">Date of Birth:</label>
-    <input type="date" id="dob" formControlName="dob">
+  <!--Role-->
+  <div class="col-md-4">
+    <div class="form-floating">
+      <select class="form-select" id="role" formControlName="role">
+        <option value="0">Default</option>
+        <option value="1">User</option>
+        <option value="2">Creator</option>
+        <option value="3">Moderator</option>
+        <option value="4">Admin</option>
+        <option value="5">Decider</option>
+      </select>
+      <label for="role">Role*</label>
+    </div>
   </div>
-  <div>
-    <label for="email">Email:</label>
-    <input type="email" id="email" formControlName="email">
+
+  <!--Date of Birth-->
+  <div class="col-8">
+    <div class="form-floating">
+      <input type="date" class="form-control" id="dob" placeholder="" formControlName="dob">
+      <label for="dob" class="form-label">Date of Birth*</label>
+    </div>
   </div>
-  <div>
-    <label for="password">Password:</label>
-    <input type="password" id="password" formControlName="password">
+
+  <!--Email-->
+  <div class="col-md-6">
+    <div class="form-floating">
+      <input type="email" class="form-control" id="email" placeholder="" formControlName="email">
+      <label for="email" class="form-label">Email*</label>
+    </div>
   </div>
-  <div>
-    <label for="verified">Verified:</label>
-    <input type="checkbox" id="verified" formControlName="verified">
+
+  <!--Password-->
+  <div class="col-md-6">
+    <div class="form-floating">
+      <input type="password" class="form-control" id="password" placeholder="">
+      <label for="password" class="form-label">Password*</label>
+    </div>
   </div>
-  <div>
-    <label for="role">Role:</label>
-    <select id="role" formControlName="role">
-      <option value="0">Default</option>
-      <option value="1">User</option>
-      <option value="2">Creator</option>
-      <option value="3">Moderator</option>
-      <option value="4">Admin</option>
-      <option value="5">Decider</option>
-    </select>
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-dark" >Add New User</button>
   </div>
-  <div>
-    <label for="active">Active:</label>
-    <input type="checkbox" id="active" formControlName="active">
-  </div>
-  <button type="submit" [disabled]="!userForm.valid">Add User</button>
+
 </form>

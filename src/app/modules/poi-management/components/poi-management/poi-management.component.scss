@@ -1,5 +1,3 @@
-
-
 .projects-section {
   flex: 2;
   background-color: var(--projects-section);
@@ -103,10 +101,9 @@
     background-color: var(--link-color-hover);
     color: var(--link-color-active);
   }
-  span{
+  span {
     padding-inline: 10px;
   }
-
 }
 .search-wrapper {
   border-radius: 4px;
@@ -120,7 +117,7 @@
   max-width: 480px;
   color: var(--light-font);
   box-shadow: 0 2px 6px 0 rgba(136, 148, 171, 0.2),
-  0 24px 20px -24px rgba(71, 82, 107, 0.1);
+    0 24px 20px -24px rgba(71, 82, 107, 0.1);
   overflow: hidden;
 
   .dark & {
@@ -144,31 +141,29 @@
   }
 }
 
-
-.scroll-window table{
-  margin-bottom:0;
+.scroll-window table {
+  margin-bottom: 0;
 }
 /*fixed header background*/
-.scroll-window:before{
-  content:"";
+.scroll-window:before {
+  content: "";
   position: absolute;
-  width:100%;
-  height:2.5rem;
+  width: 100%;
+  height: 2.5rem;
   display: table;
   z-index: 10;
-  background:rgba(170,170,170,0.8);
+  background: rgba(170, 170, 170, 0.8);
 }
-
 
 /*the actual fixed header*/
-table.fixed-header th div{
+table.fixed-header th div {
   position: absolute;
-  margin-top: -.5rem;
+  margin-top: -0.5rem;
   z-index: 11;
-  color:#333;
+  color: #333;
 }
-table.fixed-header  thead tr{
-  height:2.5rem;
+table.fixed-header thead tr {
+  height: 2.5rem;
 }
 
 thead {
@@ -177,12 +172,12 @@ thead {
   }
 }
 
-.user-list{
-  width:100%;
+.user-list {
+  width: 100%;
 }
 
-.user-list	td.text-right{
-  width:16rem;
+.user-list td.text-right {
+  width: 16rem;
 }
 
 /*-----experimental scrollbar styles-----*/
@@ -469,10 +464,7 @@ thead {
   display: none;
 }
 
-
 @media screen and (max-width: 980px) {
-
-
   .status-number,
   .status-type {
     font-size: 14px;
@@ -566,7 +558,6 @@ thead {
     max-width: 120px;
   }
 
-
   .projects-section {
     padding: 24px 16px 0 16px;
   }
@@ -615,7 +606,6 @@ thead {
     font-size: 10px;
   }
 
-
   .box-progress-header {
     font-size: 12px;
   }
@@ -638,5 +628,4 @@ thead {
     right: 2px;
     top: 10px;
   }
-
 }
