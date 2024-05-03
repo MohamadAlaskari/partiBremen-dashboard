@@ -171,6 +171,12 @@ table.fixed-header  thead tr{
   height:2.5rem;
 }
 
+thead {
+  th {
+    text-align: left;
+  }
+}
+
 .user-list{
   width:100%;
 }
@@ -609,6 +615,7 @@ table.fixed-header  thead tr{
     font-size: 10px;
   }
 
+
   .box-progress-header {
     font-size: 12px;
   }
@@ -631,4 +638,5 @@ table.fixed-header  thead tr{
     right: 2px;
     top: 10px;
   }
+
 }
