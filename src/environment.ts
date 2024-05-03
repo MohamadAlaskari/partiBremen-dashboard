@@ -11,12 +11,16 @@ export const environment = {
     users: {
       login: '/user/login',
       findAll: '/user',
-      findById: '/user/findById',
-      create: '/user/create',
-      update: '/user/update',
-      delete: '/user/delete',
+      findById: '/user',
+      create: '/user',
+      update: '/user',
+      delete: '/user',
     },
-    comments: {},
-    pois: {},
+    comments: {
+      comment: {},
+    },
+    pois: {
+      pois: {},
+    },
   },
 };
