@@ -1,20 +1,37 @@
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource" matSort>
+<div class="table-responsive">
 
-    <ng-container *ngFor="let column of columnDefinitions" [matColumnDef]="column.field">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="{{ column.field }}">{{ column.header }}</th>
+  <table class="table table-responsive caption-buttom ">
+    <caption>List of users</caption>
+    <thead>
+      <tr>
 
-      <td mat-cell *matCellDef="let element">
-        <ng-container *ngIf="column.cellTemplate; else defaultCell">
-          <ng-container *ngTemplateOutlet="column.cellTemplate; context: {$implicit: element}"></ng-container>
-        </ng-container>
+        <th>index</th>
+        @for (column of columns; track $index) {
+        <th scope="col">{{column.header}}</th>
+        }
+        <th>Actions</th>
 
-        <ng-template #defaultCell>{{ element[column.field] }}</ng-template>
-      </td>
-    </ng-container>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      @for (item of data; track $index) {
+      <tr>
+        <th scope="row">{{$index}}</th>
+        @for (column of columns; track $index) {
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <td>{{ item[column.key] }}</td>
+        }
+        <td>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+            <path
+              d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+          </svg>
+        </td>
+
+      </tr>
+      }
+    </tbody>
   </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" aria-label="Select page" showFirstLastButtons></mat-paginator>
+
 </div>

@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 import { UserManagementService } from '../../services/user-management-service/user-management.service';
 import { User } from '../../../../shared/models/user.model';
 import { ToastService } from '../../../../shared/services/toast.service';
-import { MatTableDataSource } from '@angular/material/table';
 import { CounterState } from '../../../../shared/components/state-counter/state-counter.component';
 import { Router } from '@angular/router';
 
@@ -13,6 +12,7 @@ import { Router } from '@angular/router';
   styleUrl: './user-list.component.scss',
 })
 export class UserListComponent {
+  users: User[] = [];
   // Konfiguration der Tabs, die in der Ansicht verwendet werden.
   tabConfig = [
     { label: 'View All', value: 'all' },
@@ -25,18 +25,15 @@ export class UserListComponent {
   counters: CounterState[] = [];
 
   // Spaltenüberschriften für die Anzeige in der Material Table.
-  columns: { header: string; field: string }[] = [
-    { header: 'Verified', field: 'verified' },
-    { header: 'Name', field: 'name' },
-    { header: 'Surname', field: 'surname' },
-    { header: 'Email', field: 'email' },
-    { header: 'Date of Birth', field: 'dob' },
-    { header: 'Role', field: 'role' },
-    { header: 'Active', field: 'active' },
+  columns: { header: string; key: string }[] = [
+    { header: 'Verified', key: 'verified' },
+    { header: 'Name', key: 'name' },
+    { header: 'Surname', key: 'surname' },
+    { header: 'Email', key: 'email' },
+    { header: 'Date of Birth', key: 'dob' },
+    { header: 'Role', key: 'role' },
+    { header: 'Active', key: 'active' },
   ];
-
-  // Datenquelle für Material Table.
-  dataSource = new MatTableDataSource<User>();
 
   // Text für das Suchfeld.
   searchText: string = '';
@@ -54,7 +51,7 @@ export class UserListComponent {
 
   ngOnInit() {
     this.loadUsers();
-    this.setCustomFilterPredicate();
+    //  this.setCustomFilterPredicate();
   }
 
   // Umschalten des Zustands des Sortierungs-Dropdown-Menüs.
@@ -67,7 +64,8 @@ export class UserListComponent {
     this.subscriptions.add(
       this.userManagementService.getUsers().subscribe({
         next: (users) => {
-          this.dataSource.data = users;
+          this.users = users;
+          console.log('load Users: ', this.users);
           this.updateCounters();
           this.toastService.show(
             'success',
@@ -86,6 +84,7 @@ export class UserListComponent {
 
   // Aktualisieren der Zustandszähler basierend auf den gefilterten Daten.
   updateCounters(): void {
+    /*
     const activeUsers = this.dataSource.filteredData.filter(
       (user) => user.active
     );
@@ -102,10 +101,12 @@ export class UserListComponent {
       { count: verifiedUsers.length, label: 'Verified' },
       { count: this.dataSource.filteredData.length, label: 'Total Users' },
     ];
+    */
   }
 
   // Anpassen des Filterkriteriums der Datenquelle
   setCustomFilterPredicate(): void {
+    /*
     this.dataSource.filterPredicate = (data: User, filter: string): boolean => {
       if (this.activeFilterType === 'search') {
         // Suchlogik nur anwenden, wenn der aktive Filtertyp 'search' ist
@@ -126,7 +127,7 @@ export class UserListComponent {
             return true; // Kein Filter angewendet, alle Daten anzeigen
         }
       }
-    };
+    };*/
   }
 
   textFilter(data: User, filter: string): boolean {
@@ -139,16 +140,21 @@ export class UserListComponent {
   }
 
   filterUsers(): void {
+    /*
     this.activeFilterType = 'search'; // Setzt den aktiven Filtertyp auf 'search'
     this.dataSource.filter = this.searchText.trim().toLowerCase();
+    */
   }
 
   handleTabChange(tabValue: string): void {
+    /*
     this.activeFilterType = 'tab'; // Setzt den aktiven Filtertyp auf 'tab'
     this.dataSource.filter = tabValue;
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
+
     }
+    */
   }
   addUser() {
     this.router.navigate(['/user-management/add-user']);
