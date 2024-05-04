@@ -1,8 +1,8 @@
-<div class="toast-panel">
+<div class="toast-panel-parti">
 
   @for( toast of toasts; track toast.id){
   <div class="toast-item" [ngClass]="toast.type">
-    <div class="toast" [ngClass]="toast.type">
+    <div class="toast-parti" [ngClass]="toast.type">
       <button class="close" (click)="closeToast(toast.id)">&times;</button>
       <h3>{{toast.title}}</h3>
       <p>{{toast.message}}</p>
