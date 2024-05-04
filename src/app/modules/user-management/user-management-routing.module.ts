@@ -9,7 +9,19 @@ const routes: Routes = [
     component: UserManagementComponent,
     children: [
       {
+        path: 'view-user',
+        component: AddUserComponent,
+      },
+      {
         path: 'add-user',
+        component: AddUserComponent,
+      },
+      {
+        path: 'update-user',
+        component: AddUserComponent,
+      },
+      {
+        path: 'delete-user',
         component: AddUserComponent,
       },
     ],

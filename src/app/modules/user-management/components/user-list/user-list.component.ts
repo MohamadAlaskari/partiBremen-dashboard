@@ -28,7 +28,6 @@ export class UserListComponent implements OnDestroy {
 
   columns: { header: string; key: string }[] = [
     { header: 'Name', key: 'name' },
-    { header: 'Surname', key: 'surname' },
     { header: 'Email', key: 'email' },
     { header: 'Date of Birth', key: 'dob' },
     { header: 'Role', key: 'role' },

@@ -19,6 +19,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { ViewUserComponent } from './components/view-user/view-user.component';
+import { UserTableComponent } from './components/user-table/user-table.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ViewUserComponent } from './components/view-user/view-user.component';
     UserListComponent,
     AddUserComponent,
     ViewUserComponent,
+    UserTableComponent,
   ],
   imports: [
     CommonModule,

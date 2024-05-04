@@ -1,13 +1,13 @@
-import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrl: './table.component.scss',
+  selector: 'app-user-table',
+  templateUrl: './user-table.component.html',
+  styleUrl: './user-table.component.scss',
 })
-export class TableComponent {
+export class UserTableComponent {
   @Input() columns: { header: string; key: string }[] = [];
-  @Input() data: any[] = [];
+  @Input() users: any[] = [];
 
   dropdownActive: boolean = false;
 
