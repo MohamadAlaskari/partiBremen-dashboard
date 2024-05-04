@@ -24,9 +24,8 @@ export class UserListComponent {
 
   counters: CounterState[] = [];
 
-  // Spaltenüberschriften für die Anzeige in der Material Table.
+  // Spaltenüberschriften für die Anzeige in der Table.
   columns: { header: string; key: string }[] = [
-    { header: 'Verified', key: 'verified' },
     { header: 'Name', key: 'name' },
     { header: 'Surname', key: 'surname' },
     { header: 'Email', key: 'email' },
@@ -65,7 +64,6 @@ export class UserListComponent {
       this.userManagementService.getUsers().subscribe({
         next: (users) => {
           this.users = users;
-          console.log('load Users: ', this.users);
           this.updateCounters();
           this.toastService.show(
             'success',
@@ -84,24 +82,16 @@ export class UserListComponent {
 
   // Aktualisieren der Zustandszähler basierend auf den gefilterten Daten.
   updateCounters(): void {
-    /*
-    const activeUsers = this.dataSource.filteredData.filter(
-      (user) => user.active
-    );
-    const adminUsers = this.dataSource.filteredData.filter(
-      (user) => user.role === 'ADMIN'
-    );
-    const verifiedUsers = this.dataSource.filteredData.filter(
-      (user) => user.verified
-    );
+    const activeUsers = this.users.filter((user) => user.active);
+    const adminUsers = this.users.filter((user) => user.role === 'ADMIN');
+    const verifiedUsers = this.users.filter((user) => user.verified);
 
     this.counters = [
       { count: activeUsers.length, label: 'Aktiv' },
       { count: adminUsers.length, label: 'Admin' },
       { count: verifiedUsers.length, label: 'Verified' },
-      { count: this.dataSource.filteredData.length, label: 'Total Users' },
+      { count: this.users.length, label: 'Total Users' },
     ];
-    */
   }
 
   // Anpassen des Filterkriteriums der Datenquelle
