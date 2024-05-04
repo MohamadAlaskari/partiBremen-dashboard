@@ -18,9 +18,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
+import { ViewUserComponent } from './components/view-user/view-user.component';
 
 @NgModule({
-  declarations: [UserManagementComponent, UserListComponent, AddUserComponent],
+  declarations: [
+    UserManagementComponent,
+    UserListComponent,
+    AddUserComponent,
+    ViewUserComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,

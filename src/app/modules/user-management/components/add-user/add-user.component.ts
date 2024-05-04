@@ -3,6 +3,8 @@ import { UserManagementService } from '../../services/user-management-service/us
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { User } from '../../../../shared/models/user.model';
+import { ToastService } from '../../../../shared/services/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-user',
@@ -14,13 +16,17 @@ export class AddUserComponent {
 
   userForm!: FormGroup;
 
-  constructor(private userService: UserManagementService) {}
+  constructor(
+    private userService: UserManagementService,
+    private toastService: ToastService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.userForm = new FormGroup({
       name: new FormControl('', Validators.required),
       surname: new FormControl('', Validators.required),
-      dob: new FormControl('', Validators.required),  // Hier "dob" statt "date"
+      dob: new FormControl('', Validators.required), // Hier "dob" statt "date"
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
       verified: new FormControl(false),
@@ -35,11 +41,26 @@ export class AddUserComponent {
       this.userService.createUser(this.userForm.value).subscribe({
         next: (response) => {
           console.log('User created successfully', response);
+          this.toastService.show(
+            'success',
+            'Success',
+            'User created successfully'
+          );
+          this.router.navigate(['/user-management']);
         },
         error: (error) => {
           console.error('Error creating user', error);
+          this.toastService.show(
+            'error',
+            'Error',
+            'Failed to create user. Please try again later'
+          );
         },
       });
     }
+  }
+  onCancel(): void {
+    this.userForm.reset();
+    this.router.navigate(['/user-management']);
   }
 }
