@@ -115,6 +115,10 @@ export class UserListComponent implements OnDestroy {
   addUser(): void {
     this.router.navigate(['/user-management/add-user']);
   }
+  handleUserAction(event: { action: string; userId: number }): void {
+    console.log('Action:', event.action, 'User ID:', event.userId);
+    // Führen Sie hier die Logik aus, um die Aktion zu verarbeiten (z.B. Navigation, Aufrufen von Services, etc.)
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();

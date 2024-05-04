@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-user-table',
@@ -8,16 +8,27 @@ import { Component, Input } from '@angular/core';
 export class UserTableComponent {
   @Input() columns: { header: string; key: string }[] = [];
   @Input() users: any[] = [];
+  @Output() userAction = new EventEmitter<{ action: string; userId: number }>();
 
-  dropdownActive: boolean = false;
+  dropdownStates: boolean[] = [];
 
-  ngOnInit() {
-    // Assuming columnDefinitions are properly passed and not null or undefined
+  action: {} = { action: '', userId: '' };
+  toggleDropdown(index: number): void {
+    // Umschaltet nur das Dropdown des angegebenen Indexes
+    this.dropdownStates[index] = !this.dropdownStates[index];
+
+    // Optional: Schließt alle anderen Dropdowns
+    this.dropdownStates = this.dropdownStates.map((state, i) =>
+      i === index ? state : false
+    );
   }
 
-  ngAfterViewInit() {}
+  ngOnInit(): void {
+    // Initialisieren Sie das Zustandsarray mit false für jedes Element
+    this.users.forEach(() => this.dropdownStates.push(false));
+  }
 
-  toggleDropdown() {
-    this.dropdownActive = !this.dropdownActive;
+  onUserAction(action: string, userId: number): void {
+    this.userAction.emit({ action, userId });
   }
 }
