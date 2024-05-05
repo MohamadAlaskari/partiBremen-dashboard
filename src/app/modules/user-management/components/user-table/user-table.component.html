@@ -64,16 +64,16 @@
             </button>
             <ul class="dropdown-menu" [class.dropdown-active]="dropdownStates[$index]">
               <li>
-                <a class="dropdown-item" (click)="onUserAction('view', user.id)" routerLink="
-                  /user-management/view-user">view user</a>
+                <a class="dropdown-item" (click)="onUserAction('view', user.id)"
+                  routerLink="/user-management/view-user">view user</a>
               </li>
               <li>
-                <a class="dropdown-item" (click)="onUserAction('update', user.id)" routerLink="
-                  /user-management/update-user">update user</a>
+                <a class="dropdown-item" (click)="onUserAction('update', user.id)"
+                  routerLink="/user-management/update-user">update user</a>
               </li>
               <li>
-                <a class="dropdown-item" (click)="onUserAction('delete', user.id)" routerLink="
-                  /user-management/delete-user">delete user</a>
+                <a class="dropdown-item" (click)="onUserAction('delete', user.id)"
+                  routerLink="/user-management/delete-user">delete user</a>
               </li>
 
             </ul>
