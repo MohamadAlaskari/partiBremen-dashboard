@@ -11,19 +11,14 @@ import { isAuthenticatedGuard } from './modules/auth/guards/isAuthenticated.guar
 const routes: Routes = [
   {
     path: 'login',
-    canActivate: [isAuthenticatedGuard],
     component: LoginComponent,
+   // canActivate: [AuthGuard],
   },
-  {
-    path: 'auth',
-    loadChildren: () =>
-      import('./modules/auth/auth.module').then((m) => m.AuthModule),
-    canActivate: [isAuthenticatedGuard],
-  },
+
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard],
+   // canActivate: [AuthGuard],
   },
   {
     path: 'user-management',
@@ -31,19 +26,19 @@ const routes: Routes = [
       import('./modules/user-management/user-management.module').then(
         (m) => m.UserManagementModule
       ),
-    canActivate: [AuthGuard],
+   // canActivate: [AuthGuard],
   },
   {
     path: 'poi-management',
     component: PoiManagementComponent,
-    canActivate: [AuthGuard],
+  //  canActivate: [AuthGuard],
   },
   {
     path: 'comment-management',
     component: CommentManagementComponent,
-    canActivate: [AuthGuard],
+   // canActivate: [AuthGuard],
   },
-  { path: '', redirectTo: 'login', pathMatch: 'prefix' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' }, // Fallback-Route
 ];
 
