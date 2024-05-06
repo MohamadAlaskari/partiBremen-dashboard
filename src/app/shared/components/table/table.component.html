@@ -1,20 +1,78 @@
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource" matSort>
+<div class="table-responsive">
 
-    <ng-container *ngFor="let column of columnDefinitions" [matColumnDef]="column.field">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="{{ column.field }}">{{ column.header }}</th>
+  <table class="table table-responsive caption-buttom ">
+    <caption>List of users</caption>
+    <thead>
+      <tr>
 
-      <td mat-cell *matCellDef="let element">
-        <ng-container *ngIf="column.cellTemplate; else defaultCell">
-          <ng-container *ngTemplateOutlet="column.cellTemplate; context: {$implicit: element}"></ng-container>
-        </ng-container>
+        <th>index</th>
+        @for (column of columns; track $index) {
+        <th scope="col">{{column.header}}</th>
+        }
+        <th>Actions</th>
 
-        <ng-template #defaultCell>{{ element[column.field] }}</ng-template>
-      </td>
-    </ng-container>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      @for (item of data; track $index) {
+      <tr>
+        <th scope="row">{{$index}}</th>
+        @for (column of columns; track $index) {
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <td>{{ item[column.key] }}</td>
+        }
+
+
+
+        <td>
+          <div class=" dropend " role="group">
+            <button type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false"
+              (click)="toggleDropdown()">
+
+              @if (dropdownActive) {
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-three-dots" viewBox="0 0 16 16">
+                <path
+                  d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
+              </svg>
+              }@else{
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                <path
+                  d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+              </svg>
+              }
+
+            </button>
+            <ul class="dropdown-menu" [ngClass]="{'dropdown-active': dropdownActive}">
+              <li><a class="dropdown-item" routerLink="/">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-person-x" viewBox="0 0 16 16">
+                    <path
+                      d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z" />
+                    <path
+                      d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m-.646-4.854.646.647.646-.647a.5.5 0 0 1 .708.708l-.647.646.647.646a.5.5 0 0 1-.708.708l-.646-.647-.646.647a.5.5 0 0 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 .708-.708" />
+                  </svg>
+                  view user</a></li>
+              <li><a class="dropdown-item" routerLink="">update user</a></li>
+              <li><a class="dropdown-item" routerLink="">delete user</a></li>
+
+            </ul>
+          </div>
+
+        </td>
+
+
+      </tr>
+      }@empty {
+      <tr>
+        <div class="d-flex align-items-center">
+          <strong role="status">Loading...</strong>
+          <div class="spinner-border ms-auto" aria-hidden="true"></div>
+        </div>
+      </tr>
+      }
+    </tbody>
   </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" aria-label="Select page" showFirstLastButtons></mat-paginator>
+
 </div>

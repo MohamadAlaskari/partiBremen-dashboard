@@ -1,0 +1,12 @@
+.table {
+  --bs-table-color: var(--font-color-secondary);
+  --bs-table-bg: var(--bg-color-secondary);
+}
+thead {
+  --bs-table-color: var(--font-color-primary);
+}
+
+.dropdown-active {
+  display: block;
+  transform: translateX(-60px);
+}

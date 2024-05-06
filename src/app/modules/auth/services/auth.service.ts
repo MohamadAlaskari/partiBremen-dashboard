@@ -20,6 +20,7 @@ export class AuthService {
       map((response) => {
         if (response) {
           this.storeUser(response);
+          localStorage.setItem('status', "logedin");
           return response;
         }
         throw new Error('No user data received');

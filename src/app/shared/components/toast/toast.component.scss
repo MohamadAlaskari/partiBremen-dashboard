@@ -1,6 +1,6 @@
 //toast style
 
-.toast-panel {
+.toast-panel-parti {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,7 +20,7 @@
   position: relative;
   animation: show-toast 1s ease 3s 1;
 
-  .toast {
+  .toast-parti {
     background-color: var(--bg-color-secondary);
     color: var(--font-color-secondary);
     padding: 1rem 2rem 1rem 3rem;
@@ -78,19 +78,19 @@
       border: none;
     }
   }
-  &.success .toast {
+  &.success .toast-parti {
     color: var(--color-success2);
     //  --bg: var(--cs1);
     //--clr: var(--cs2);
     //--brd: var(--cs3);
   }
-  &.warning .toast {
+  &.warning .toast-parti {
     color: var(--color-warning2);
     //   --bg: var(--cw1);
     // --clr: var(--cw2);
     //--brd: var(--cw3);
   }
-  &.error .toast {
+  &.error .toast-parti {
     color: var(--color-error2);
     /*
     --bg: var(--ce1);
@@ -98,7 +98,7 @@
     --brd: var(--ce3);
     */
   }
-  &.info .toast {
+  &.info .toast-parti {
     color: var(--color-help2);
     /*
     --bg: var(--ch1);
