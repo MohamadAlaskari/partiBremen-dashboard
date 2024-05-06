@@ -16,7 +16,9 @@ export const environment = {
       update: '/user/update',
       delete: '/user/delete',
     },
-    comments: {},
+    comments: {
+      getAll: '/comment',
+    },
     pois: {},
   },
 };

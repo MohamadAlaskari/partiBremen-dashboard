@@ -1,4 +1,11 @@
 import { Component } from '@angular/core';
+import { CommentManagementService } from '../../services/comment-management.service';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { MatTableDataSource } from '@angular/material/table';
+import { CounterState } from '../../../../shared/components/state-counter/state-counter.component';
+import { ToastService } from '../../../../shared/services/toast.service';
+import { Comment } from '../../../../shared/models/comment.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-comment-management',
@@ -8,33 +15,42 @@ import { Component } from '@angular/core';
 
 export class CommentManagementComponent {
 
+  constructor(
+    private commentManagementService: CommentManagementService,
+    private toastService: ToastService
+  ) {}
+
   comments: any[] = [];
 
-  ngOnInit() {
-      this.comments = [
-        {
-          id: 0,
-          user: 'Max Mustermann',
-          content: 'Hello World',
-          date: '20.04.2020',
-          time: '20:56',
-        },
-        {
-          id: 1,
-          user: 'John Doe',
-          content: 'Test 123',
-          date: '04.01.2002',
-          time: '13:56',
-        },
-        {
-          id: 2,
-          user: 'Shawn Teusch',
-          content: 'Please let this work',
-          date: '29.04.2024',
-          time: '06:56',
-        },
-      ];
+  counters: CounterState[] = [];
 
+  dataSource = new MatTableDataSource<Comment>();
+
+  private subscriptions: Subscription = new Subscription();
+
+  ngOnInit() {
+      this.loadComments();
+  }
+
+  loadComments(): void {
+    this.subscriptions.add(
+      this.commentManagementService.getComments().subscribe({
+        next: (comments) => {
+          this.comments = comments;
+          this.dataSource.data = comments;
+          this.toastService.show(
+            'success',
+            'Success',
+            'Comments loaded successfully'
+          );
+        },
+        error: (err) => {
+          console.error('Failed to load users', err);
+
+          this.toastService.show('error', 'Error', 'Failed to load users');
+        },
+      })
+    );
   }
 
 }
