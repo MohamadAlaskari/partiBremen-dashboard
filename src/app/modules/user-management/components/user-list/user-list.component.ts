@@ -53,6 +53,8 @@ export class UserListComponent implements OnDestroy {
       this.userManagementService.getUsers().subscribe({
         next: (users) => {
           this.originalUsers = users;
+          this.updateCounters();
+
           this.applyFilters(); // Initial filter application after loading users
           this.toastService.show(
             'success',
@@ -69,14 +71,17 @@ export class UserListComponent implements OnDestroy {
   }
 
   updateCounters(): void {
-    const activeUsers = this.users.filter((user) => user.active);
-    const adminUsers = this.users.filter((user) => user.role === 'ADMIN');
-    const verifiedUsers = this.users.filter((user) => user.verified);
+    const activeUsers = this.originalUsers.filter((user) => user.active);
+    const adminUsers = this.originalUsers.filter(
+      (user) => user.role === 'ADMIN'
+    );
+    const verifiedUsers = this.originalUsers.filter((user) => user.verified);
+
     this.counters = [
       { count: activeUsers.length, label: 'Active' },
       { count: adminUsers.length, label: 'Admins' },
       { count: verifiedUsers.length, label: 'Verified' },
-      { count: this.users.length, label: 'Total Users' },
+      { count: this.originalUsers.length, label: 'Total Users' },
     ];
   }
 
