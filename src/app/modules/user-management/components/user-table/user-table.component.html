@@ -1,6 +1,6 @@
 <div class="table-responsive">
 
-  <table class="table table-hover table-responsive caption-buttom table-parti">
+  <table class=" table-parti table table-hover table-responsive caption-buttom align-middle">
     <caption>List of users</caption>
     <thead>
       <tr>
@@ -73,19 +73,16 @@
               </li>
               <li>
                 <a class="dropdown-item" (click)="onUserAction('delete', user.id)"
-                  routerLink="/user-management/delete-user">delete user</a>
+                  routerLink="/user-management/delete-user" data-bs-toggle="modal" data-bs-target="#confirmModal">delete user</a>
               </li>
             </ul>
           </div>
         </td>
       </tr>
       }@empty {
-      <tr>
-        <div class="d-flex align-items-center">
-          <strong role="status">Loading...</strong>
-          <div class="spinner-border ms-auto" aria-hidden="true"></div>
-        </div>
-      </tr>
+
+        <p>Keine Daten Vorhanden!!</p>
+
       }
     </tbody>
   </table>

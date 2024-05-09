@@ -19,7 +19,10 @@
           <path d="M21 21l-4.35-4.35"></path>
         </svg>
       </div>
-      <button class="btn-add-user active" title="Add new User" (click)="addUser()">
+
+
+      <button class="btn-add-user active" title="Add new User" (click)="addUser()" data-bs-toggle="modal"
+        data-bs-target="#addNewModal">
 
         <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
@@ -49,3 +52,6 @@
   }
 
 </div>
+
+<app-confirm-modal [modalTitle]="inhaltConfimModel.title" [modalBody]="inhaltConfimModel.body"
+  (result)="handleConfirmModalResult($event)"></app-confirm-modal>

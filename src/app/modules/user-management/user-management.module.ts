@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { ViewUserComponent } from './components/view-user/view-user.component';
 import { UserTableComponent } from './components/user-table/user-table.component';
+import { ConfirmModalComponent } from '../../shared/components/confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [

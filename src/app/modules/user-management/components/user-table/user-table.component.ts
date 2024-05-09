@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class UserTableComponent {
   @Input() columns: { header: string; key: string }[] = [];
   @Input() users: any[] = [];
-  @Output() userAction = new EventEmitter<{ action: string; userId: number }>();
+  @Output() userAction = new EventEmitter<{ action: string; userId: string }>();
 
   dropdownStates: boolean[] = [];
 
@@ -28,7 +28,7 @@ export class UserTableComponent {
     this.users.forEach(() => this.dropdownStates.push(false));
   }
 
-  onUserAction(action: string, userId: number): void {
+  onUserAction(action: string, userId: string): void {
     this.userAction.emit({ action, userId });
   }
 }
