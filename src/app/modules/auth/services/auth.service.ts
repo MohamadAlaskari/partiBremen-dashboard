@@ -3,24 +3,23 @@ import { ApiService } from '../../../core/Services/api.service';
 import { User } from '../../../shared/models/user.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private loginEndpoint = environment.endpoints.users.login;
+  private userEndpoints = environment.endpoints.users;
 
   constructor(private apiService: ApiService) {}
 
   login(email: string, password: string): Observable<User> {
     const body = { email: email, password: password };
-    return this.apiService.post<User>(this.loginEndpoint, body).pipe(
+    return this.apiService.post<User>(this.userEndpoints.login, body).pipe(
       map((response) => {
         if (response) {
           this.storeUser(response);
-          localStorage.setItem('status', "logedin");
+          localStorage.setItem('status', 'logedin');
           return response;
         }
         throw new Error('No user data received');
@@ -31,8 +30,18 @@ export class AuthService {
       })
     );
   }
-  logout(): void {
-    this.clearUser();
+  logout(userId: string): Observable<void> {
+    const endpoint = `${this.userEndpoints.logout}/${userId}`;
+    return this.apiService.post<void>(endpoint).pipe(
+      map(() => {
+        this.clearUser();
+        localStorage.setItem('status', 'loggedout');
+      }),
+      catchError((error) => {
+        console.error('Logout error:', error);
+        return throwError(() => new Error(`Logout failed: ${error.message}`));
+      })
+    );
   }
 
   isAuthenticated(): boolean {

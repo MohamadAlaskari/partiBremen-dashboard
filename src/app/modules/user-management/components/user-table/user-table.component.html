@@ -69,11 +69,13 @@
               </li>
               <li>
                 <a class="dropdown-item" (click)="onUserAction('update', user.id)"
-                  routerLink="/user-management/update-user">update user</a>
+                  routerLink="/user-management/update-user" data-bs-toggle="modal" data-bs-target="#updatNewModal">update
+                  user</a>
               </li>
               <li>
                 <a class="dropdown-item" (click)="onUserAction('delete', user.id)"
-                  routerLink="/user-management/delete-user" data-bs-toggle="modal" data-bs-target="#confirmModal">delete user</a>
+                  routerLink="/user-management/delete-user" data-bs-toggle="modal" data-bs-target="#confirmModal">delete
+                  user</a>
               </li>
             </ul>
           </div>
@@ -81,7 +83,7 @@
       </tr>
       }@empty {
 
-        <p>Keine Daten Vorhanden!!</p>
+      <p>Keine Daten Vorhanden!!</p>
 
       }
     </tbody>
