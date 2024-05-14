@@ -56,4 +56,4 @@
 <app-confirm-modal [modalTitle]="inhaltConfimModel.title" [modalBody]="inhaltConfimModel.body"
   (result)="handleConfirmModalResult($event)"></app-confirm-modal>
 
-<app-update-user ></app-update-user>
+<app-update-user [userId]="action.userId"></app-update-user>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserManagementService } from '../../services/user-management-service/user-management.service';
 import { ToastService } from '../../../../shared/services/toast.service';
@@ -11,9 +11,10 @@ import { User } from '../../../../shared/models/user.model';
   styleUrl: './update-user.component.scss',
 })
 export class UpdateUserComponent {
+  @Input() userId: string = '';
   title: string = 'Update User';
   user?: User;
-  userId: string = '1dea076a-e832-446d-a7b7-962ae2f3c1ff';
+  // userId: string = '1dea076a-e832-446d-a7b7-962ae2f3c1ff';
 
   userForm!: FormGroup;
 
@@ -58,7 +59,6 @@ export class UpdateUserComponent {
             'Success',
             'User updated successfully'
           );
-
         },
         error: (error) => {
           this.toastService.show(

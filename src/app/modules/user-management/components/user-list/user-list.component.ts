@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnDestroy {
+  action = { action: '', userId: '' };
   inhaltConfimModel = {
     title: 'Delete User',
     body: 'Sind Sie sicher, dass Sie diese Aktion ausführen möchten?',
@@ -151,11 +152,14 @@ export class UserListComponent implements OnDestroy {
       case 'delete':
         if (this.inhaltConfimModel.result) {
           this.deleteUser(event.userId);
-          console.log('deleted')
+          console.log('deleted');
         }
         break;
-
+      case 'update':
+        this.action = event;
+        break;
       default:
+        console.log('no action vorhanden');
         break;
     }
   }
