@@ -26,7 +26,7 @@ export class ApiService {
    * @param reqOpts Optionale Anforderungsoptionen, die spezifische Header enthalten können
    * @returns Ein Observable mit dem Antworttyp
    */
-  post<T>(endpoint: string, body: any, reqOpts?: any): Observable<T> {
+  post<T>(endpoint: string, body?: any): Observable<T> {
     return this.http.post<T>(`${this.baseUrl}${endpoint}`, body);
   }
 

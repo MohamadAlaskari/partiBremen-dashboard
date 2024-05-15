@@ -8,19 +8,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { AddUserComponent } from './components/add-user/add-user.component';
 
-///
-import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { ViewUserComponent } from './components/view-user/view-user.component';
 import { UserTableComponent } from './components/user-table/user-table.component';
-import { ConfirmModalComponent } from '../../shared/components/confirm-modal/confirm-modal.component';
+import { UpdateUserComponent } from './components/update-user/update-user.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +20,7 @@ import { ConfirmModalComponent } from '../../shared/components/confirm-modal/con
     AddUserComponent,
     ViewUserComponent,
     UserTableComponent,
+    UpdateUserComponent,
   ],
   imports: [
     CommonModule,
@@ -36,15 +28,6 @@ import { ConfirmModalComponent } from '../../shared/components/confirm-modal/con
     UserManagementRoutingModule,
     SharedModule,
     ReactiveFormsModule,
-    //
-    MatInputModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    BrowserAnimationsModule,
     MatIconModule,
   ],
   providers: [UserManagementService],
