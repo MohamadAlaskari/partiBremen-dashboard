@@ -1,4 +1,4 @@
-<div class="project-boxes jsGridView">
+<div class="project-boxes jsGridView" *ngIf="poiManagementService.pois">
 
 
   <app-state-counter [states]="this.poiManagementService.counters"></app-state-counter>
