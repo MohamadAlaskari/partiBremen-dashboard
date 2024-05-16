@@ -65,17 +65,18 @@
             <ul class="dropdown-menu" [class.dropdown-active]="dropdownStates[$index]">
               <li>
                 <a class="dropdown-item" (click)="onUserAction('view', user.id)"
-                  routerLink="/user-management/view-user">view user</a>
+                  [routerLink]="['/user-management/view-user',user.id]">view user</a>
               </li>
               <li>
                 <a class="dropdown-item" (click)="onUserAction('update', user.id)"
-                  routerLink="/user-management/update-user" data-bs-toggle="modal" data-bs-target="#updatNewModal">update
+                  [routerLink]="['/user-management/update-user',user.id]" data-bs-toggle="modal"
+                  data-bs-target="#updatNewModal">update
                   user</a>
               </li>
               <li>
                 <a class="dropdown-item" (click)="onUserAction('delete', user.id)"
-                  routerLink="/user-management/delete-user" data-bs-toggle="modal" data-bs-target="#confirmModal">delete
-                  user</a>
+                  [routerLink]="['/user-management/delete-user',user.id]" >
+                  delete user</a>
               </li>
             </ul>
           </div>
@@ -90,3 +91,4 @@
   </table>
 
 </div>
+
