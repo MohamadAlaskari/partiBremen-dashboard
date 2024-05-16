@@ -1,6 +1,6 @@
 // comment-management.component.ts
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, EventEmitter } from '@angular/core';
 import { CommentManagementService } from '../../services/comment-management.service';
 import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
@@ -50,7 +50,7 @@ export class CommentManagementComponent implements OnInit, OnDestroy {
 
   selectedCommentId: string | null = null;
 
-  toggleOptionsMenu(commentId: string): void {
+  toggleDropdown(commentId: string): void {
     if(this.selectedCommentId === commentId) {
       this.selectedCommentId = null;
     }
@@ -67,8 +67,26 @@ export class CommentManagementComponent implements OnInit, OnDestroy {
 
   }
 
-  deleteComment(comment: Comment): void {
-    
+  deleteComment(commentID: string): void {
+    this.subscriptions.add(
+      this.commentManagementService.deleteComment(commentID).subscribe({
+        next: () => {
+          this.comments = this.comments.filter((comment) => comment.id !== commentID);
+          this.toastService.show(
+            'success',
+            'Success',
+            'Comment deleted successfully'
+          );
+        },
+        error: (error) => {
+          this.toastService.show(
+            'error',
+            'Error',
+            `Error deleting comment: ${error.message}`
+          );
+        },
+      })
+    )
   }
 
 }

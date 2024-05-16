@@ -20,11 +20,18 @@
             <td>{{ comment.createdAt }}</td>
             <td>{{ comment.updatedAt }}</td>
             <td>
-              <button class="edit-comment-table" (click)="toggleOptionsMenu(comment.id)">Edit</button>
-              <div class="options-menu" *ngIf="selectedCommentId === comment.id">
-                <button (click)="editComment(comment)">Edit</button>
-                <button (click)="updateComment(comment)">Update</button>
-                <button (click)="deleteComment(comment)">Delete</button>
+              <div class="dropdown">
+                <button type="button" class="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="toggleDropdown(comment.id)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                  <path
+                    d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                  </svg>
+                </button>
+                <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <li><a class="dropdown-item" (click)="editComment(comment)">Edit</a></li>
+                  <li><a class="dropdown-item" (click)="deleteComment(comment.id)">Delete</a></li>
+                </ul>
               </div>
             </td>
           </tr>
