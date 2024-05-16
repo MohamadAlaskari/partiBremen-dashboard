@@ -145,32 +145,7 @@ export class UserListComponent implements OnDestroy {
   addUser(): void {
     this.router.navigate(['/user-management/add-user']);
   }
-  handleUserAction(event: { action: string; userId: string }): void {
-    console.log('Action:', event.action, 'User ID:', event.userId);
 
-    switch (event.action) {
-      case 'delete':
-        if (this.inhaltConfimModel.result) {
-          this.deleteUser(event.userId);
-          console.log('deleted');
-        }
-        break;
-      case 'update':
-        this.action = event;
-        break;
-      default:
-        console.log('no action vorhanden');
-        break;
-    }
-  }
-  handleConfirmModalResult(result: boolean) {
-    if (result) {
-      // Logik zum Verarbeiten der Bestätigung
-      this.inhaltConfimModel.result = result;
-    } else {
-      this.inhaltConfimModel.result = result;
-    }
-  }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
