@@ -16,11 +16,7 @@ export class ViewUserComponent {
     private userManagementService: UserManagementService,
     private toastService: ToastService
   ) {
-    this.toastService.show(
-      'error',
-      'Error',
-      'Failed to update user. Please try again later'
-    );
+   
   }
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {

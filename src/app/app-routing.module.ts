@@ -36,8 +36,8 @@ const routes: Routes = [
       import('./modules/poi-management/poi-management.module').then(
         (m) => m.PoiManagementModule
       ),
+    //  canActivate: [AuthGuard],
   },
-  //  canActivate: [AuthGuard],
   {
     path: 'comment-management',
     component: CommentManagementComponent,
