@@ -1,40 +1,92 @@
-import { Component } from '@angular/core';
+// comment-management.component.ts
+
+import { Component, OnDestroy, OnInit, EventEmitter } from '@angular/core';
+import { CommentManagementService } from '../../services/comment-management.service';
+import { Subscription } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
+import { ToastService } from '../../../../shared/services/toast.service';
+import { Comment } from '../../../../shared/models/comment.model';
 
 @Component({
   selector: 'app-comment-management',
   templateUrl: './comment-management.component.html',
-  styleUrl: './comment-management.component.scss'
+  styleUrls: ['./comment-management.component.scss']
 })
+export class CommentManagementComponent implements OnInit, OnDestroy {
 
-export class CommentManagementComponent {
+  comments: Comment[] = [];
+  dataSource = new MatTableDataSource<Comment>();
 
-  comments: any[] = [];
+  private subscriptions: Subscription = new Subscription();
 
-  ngOnInit() {
-      this.comments = [
-        {
-          id: 0,
-          user: 'Max Mustermann',
-          content: 'Hello World',
-          date: '20.04.2020',
-          time: '20:56',
+  constructor(
+    private commentManagementService: CommentManagementService,
+    private toastService: ToastService
+  ) {}
+
+  ngOnInit(): void {
+    this.loadComments();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  loadComments(): void {
+    this.subscriptions.add(
+      this.commentManagementService.getComments().subscribe({
+        next: (comments) => {
+          this.comments = comments;
+          this.dataSource.data = comments;
+          this.toastService.show('success', 'Success', 'Comments loaded successfully');
         },
-        {
-          id: 1,
-          user: 'John Doe',
-          content: 'Test 123',
-          date: '04.01.2002',
-          time: '13:56',
+        error: (err) => {
+          console.error('Failed to load comments', err);
+          this.toastService.show('error', 'Error', 'Failed to load comments');
         },
-        {
-          id: 2,
-          user: 'Shawn Teusch',
-          content: 'Please let this work',
-          date: '29.04.2024',
-          time: '06:56',
-        },
-      ];
+      })
+    );
+  }
 
+  selectedCommentId: string | null = null;
+
+  toggleDropdown(commentId: string): void {
+    if(this.selectedCommentId === commentId) {
+      this.selectedCommentId = null;
+    }
+    else {
+      this.selectedCommentId = commentId;
+    }
+  }
+
+  editComment(comment: Comment): void {
+
+  }
+
+  updateComment(comment: Comment): void {
+
+  }
+
+  deleteComment(commentID: string): void {
+    this.subscriptions.add(
+      this.commentManagementService.deleteComment(commentID).subscribe({
+        next: () => {
+          this.comments = this.comments.filter((comment) => comment.id !== commentID);
+          this.toastService.show(
+            'success',
+            'Success',
+            'Comment deleted successfully'
+          );
+        },
+        error: (error) => {
+          this.toastService.show(
+            'error',
+            'Error',
+            `Error deleting comment: ${error.message}`
+          );
+        },
+      })
+    )
   }
 
 }

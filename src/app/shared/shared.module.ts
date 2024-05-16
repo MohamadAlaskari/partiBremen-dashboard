@@ -15,6 +15,7 @@ import { SectionHeaderComponent } from './components/section-header/section-head
 import { TabsComponent } from './components/tabs/tabs.component';
 import { MatSortModule } from '@angular/material/sort';
 import { BottomSheetComponent } from './components/bottom-sheet/bottom-sheet.component';
+import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { BottomSheetComponent } from './components/bottom-sheet/bottom-sheet.com
     SectionHeaderComponent,
     TabsComponent,
     BottomSheetComponent,
+    ConfirmModalComponent,
   ],
   imports: [
     CommonModule,
@@ -45,6 +47,7 @@ import { BottomSheetComponent } from './components/bottom-sheet/bottom-sheet.com
     StateCounterComponent,
     SectionHeaderComponent,
     TabsComponent,
+    ConfirmModalComponent,
   ],
   providers: [ToastService],
 })

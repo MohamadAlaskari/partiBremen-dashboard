@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+
 import { CommentManagementComponent } from './components/comment-management/comment-management.component';
-
-
 
 
 @NgModule({
