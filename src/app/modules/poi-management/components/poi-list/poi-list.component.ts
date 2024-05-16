@@ -54,6 +54,5 @@ export class PoiListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
-    console.log('Cleaned up subscriptions');
   }
 }

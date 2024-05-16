@@ -133,6 +133,5 @@ export class UserManagementComponent {
   }
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
-    console.log('Cleaned up subscriptions');
   }
 }
