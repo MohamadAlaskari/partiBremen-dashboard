@@ -44,8 +44,8 @@ export class PoiAnzeigeComponent implements OnInit, OnDestroy {
   startMap(): void {
     if (isPlatformBrowser(this.platformId)) {
       import('leaflet').then(L => {
-        this.L = L
         this.initMap(L);
+        this.L = L
       }).catch(err => {
         console.error('Leaflet konnte nicht geladen werden:', err);
       });
