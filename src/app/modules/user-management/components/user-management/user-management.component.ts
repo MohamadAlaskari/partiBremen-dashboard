@@ -43,11 +43,6 @@ export class UserManagementComponent {
       this.userManagementService.getUsers().subscribe({
         next: (users) => {
           this.users = users;
-          this.toastService.show(
-            'success',
-            'Success',
-            'Users loaded successfully'
-          );
         },
         error: (err) => {
           this.toastService.show('error', 'Error', 'Failed to load users');
