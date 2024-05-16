@@ -1,11 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PoiManagementComponent } from './components/poi-management/poi-management.component';
+import { PoiAnzeigeComponent } from './components/poi-anzeige/poi-anzeige.component';
+import { PoiListComponent } from './components/poi-list/poi-list.component';
 
-const routes: Routes = [{ path: '', component: PoiManagementComponent }];
+const routes: Routes = [
+  { path: 'liste', component: PoiListComponent },
+  { path: 'anzeige', component: PoiAnzeigeComponent },
+  { path: '', redirectTo: 'liste', pathMatch: 'full' },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
-export class PoiManagementRoutingModule {}
+export class PoiManagementRoutingModule { }

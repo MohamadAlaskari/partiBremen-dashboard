@@ -1,0 +1,43 @@
+<div class="project-boxes jsGridView">
+
+
+  <app-state-counter [states]="this.poiManagementService.counters"></app-state-counter>
+
+  <div class="search-wrapper">
+    <input class="search-input" type="text" [(ngModel)]="searchTerm" placeholder="Suche...">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+         stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-search"
+         viewBox="0 0 24 24">
+      <defs></defs>
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="M21 21l-4.35-4.35"></path>
+    </svg>
+  </div>
+
+  <div class="project-box-wrapper">
+    <table class="table table-striped table-hover user-list table-fixed">
+      <thead>
+      <th>Name</th>
+      <th>Erstellungsdatum</th>
+      <th>letzte Änderung</th>
+      <th>Beschreibung</th>
+      <th>Creator</th>
+      <th>Aktiv?</th>
+      <th></th>
+      </thead>
+      <tbody>
+        @for (poi of filteredItems; track poi.id) {
+
+          <tr (dblclick)="showPoi(poi)" >
+            <td>{{poi.titel}}</td>
+            <td>{{poi.createdAt | date:'short'}}</td>
+            <td>{{poi.updatedAt | date:'short'}}</td>
+            <td>{{poi.description}}</td>
+            <td>{{poi.creator.name}} {{poi.creator.surname}}</td>
+            <td>{{poi.active ? 'ja' : 'nein'}}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

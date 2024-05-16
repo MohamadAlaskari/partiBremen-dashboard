@@ -1,3 +1,5 @@
+import {User} from "./user.model";
+
 export class Poi {
   constructor(
     public id: string,
@@ -12,21 +14,8 @@ export class Poi {
     public comments: Comment[],
     public voting: Voting[],
     public titel: string,
-    public answerer: User
-  ) {}
-}
-
-export class User {
-  constructor(
-    public id: string,
-    public createdAt: string,
-    public updatedAt: string,
-    public name: string,
-    public surname: string,
-    public dob: Date | null,
-    public email: string,
-    public password: string,
-    public verified: boolean
+    public longitude: number,
+    public latitude: number,
   ) {}
 }
 

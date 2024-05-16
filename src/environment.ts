@@ -26,6 +26,7 @@ export const environment = {
       findOnly: '/poi/Only',
       findById: '/poi',
       update: '/poi',
+      delete: '/poi',
     },
   },
 };
