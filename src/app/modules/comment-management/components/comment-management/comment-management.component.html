@@ -14,20 +14,21 @@
       </thead>
       <tbody>
         @for (comment of comments; track comment.id) {
-
-        <tr>
-          <td>{{ comment.id }}</td>
-          <td>{{ comment.actualcomment }}</td>
-          <td>{{ comment.createdAt }}</td>
-          <td>{{ comment.updatedAt }}</td>
-          <td>
-            <div class="button-container">
-              <button>Edit</button>
-              <button>Delete</button>
-            </div>
-          </td>
-        </tr>
-      }
+          <tr>
+            <td>{{ comment.id }}</td>
+            <td>{{ comment.actualcomment }}</td>
+            <td>{{ comment.createdAt }}</td>
+            <td>{{ comment.updatedAt }}</td>
+            <td>
+              <button class="edit-comment-table" (click)="toggleOptionsMenu(comment.id)">Edit</button>
+              <div class="options-menu" *ngIf="selectedCommentId === comment.id">
+                <button (click)="editComment(comment)">Edit</button>
+                <button (click)="updateComment(comment)">Update</button>
+                <button (click)="deleteComment(comment)">Delete</button>
+              </div>
+            </td>
+          </tr>
+        }
       </tbody>
     </table>
   </div>
