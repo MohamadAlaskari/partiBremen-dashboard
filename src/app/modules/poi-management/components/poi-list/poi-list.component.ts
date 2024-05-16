@@ -41,7 +41,20 @@ export class PoiListComponent implements OnInit, OnDestroy {
 
   showPoi(poi: any) {
     this.poiManagementService.currentPoi = this.poiManagementService.loadPoiById(poi.id)
+    this.waitForCurrentPoi()
     this.router.navigate(['poi-management/anzeige']);
+  }
+
+  private waitForCurrentPoi(): Promise<any> {
+    return new Promise(resolve => {
+      const intervalId = setInterval(() => {
+        const currentPoi = this.poiManagementService.currentPoi;
+        if (currentPoi) {
+          clearInterval(intervalId);
+          resolve(currentPoi);
+        }
+      }, 500); // Prüfen Sie jede Sekunde
+    });
   }
 
   getActiveCount(): number {

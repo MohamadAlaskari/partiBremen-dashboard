@@ -19,7 +19,11 @@ export class PoiManagementService {
   pois: Poi[] = [];
   private subscriptions: Subscription = new Subscription();
   dataSource = new MatTableDataSource<Poi>();
-  counters: CounterState[] = [];
+  counters: CounterState[] = [
+    { count: 3, label: 'Aktiv' },
+    { count: 3, label: 'inaktiv' },
+    { count: 3, label: 'Insgesamt' },
+  ];
 
   constructor(private apiService: ApiService) {}
 

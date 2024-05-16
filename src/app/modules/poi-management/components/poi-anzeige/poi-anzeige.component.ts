@@ -4,6 +4,8 @@ import { PoiManagementService } from "../../services/poi-management.service";
 import { Subscription } from "rxjs";
 import { ToastService } from "../../../../shared/services/toast.service";
 import { Updatepoi } from "../../../../shared/models/updatepoi.model";
+import {Poi} from "../../../../shared/models/poi.model";
+import {User} from "../../../../shared/models/user.model";
 
 @Component({
   selector: 'app-poi-anzeige',
@@ -42,8 +44,8 @@ export class PoiAnzeigeComponent implements OnInit, OnDestroy {
   startMap(): void {
     if (isPlatformBrowser(this.platformId)) {
       import('leaflet').then(L => {
-        this.L = L
         this.initMap(L);
+        this.L = L
       }).catch(err => {
         console.error('Leaflet konnte nicht geladen werden:', err);
       });
@@ -63,7 +65,9 @@ export class PoiAnzeigeComponent implements OnInit, OnDestroy {
   }
 
   private initMap(L: any): void {
-    const currentPoi = this.poiManagementService.currentPoi;
+    const currentPoi = new Poi("1", "12.05.2002", "12.05.2002", "y", true,
+      new User("1", "12.05.2002", "12.05.2002", "Ja", "no",  new Date(), "ewfw@gmail.com", "y", true, null, true),
+      [],[],[],[],[], "y", 3, 3)
     if (currentPoi) {
       let latitude = currentPoi.latitude;
       let longitude = currentPoi.longitude;
@@ -79,8 +83,8 @@ export class PoiAnzeigeComponent implements OnInit, OnDestroy {
 
         const customIcon = this.createCustomIcon(L);
 
-        this.marker = L.marker([latitude, longitude], { icon: customIcon }).addTo(this.map)
-          .openPopup();
+        //this.marker = L.marker([latitude, longitude], { icon: customIcon }).addTo(this.map)
+        //  .openPopup();
       } else {
         console.error('Invalid coordinates:', latitude, longitude);
       }
@@ -98,9 +102,9 @@ export class PoiAnzeigeComponent implements OnInit, OnDestroy {
       this.map.setView([latitude, longitude], 15);
 
       const customIcon = this.createCustomIcon(this.L);
-      this.marker.setLatLng([latitude, longitude])
-        .setIcon(customIcon)
-        .openPopup();
+      //this.marker.setLatLng([latitude, longitude])
+      //  .setIcon(customIcon)
+      //  .openPopup();
       console.log('Updating map with new coordinates:', latitude, longitude);
     } else {
       console.error('Invalid coordinates:', latitude, longitude);
