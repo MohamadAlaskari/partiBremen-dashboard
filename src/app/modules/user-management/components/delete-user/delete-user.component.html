@@ -1,0 +1,80 @@
+<app-toast></app-toast>
+
+<a routerLink="/user-management">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
+    viewBox="0 0 16 16">
+    <path fill-rule="evenodd"
+      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8" />
+  </svg>
+</a>
+
+<app-section-header [title]="title" time=""></app-section-header>
+
+
+
+<div class="alert alert-warning">
+  <h6>Are you sure you want to delete this user?</h6>
+</div>
+<div class="row g-3 mb-3">
+  <!--Created At-->
+  <div class="form-floating col-md-6">
+    <input type="email" [value]="user.createdAt " class="form-control" id="floatingInputDisabled"
+      placeholder="name@example.com" disabled>
+    <label for="floatingInputDisabled">Created At</label>
+  </div>
+  <!--Updated At-->
+  <div class="form-floating col-md-6">
+    <input type="email" [value]="user.updatedAt " class="form-control" id="floatingInputDisabled"
+      placeholder="name@example.com" disabled>
+    <label for="floatingInputDisabled">Updated At</label>
+  </div>
+  <!--name-->
+  <div class="form-floating col-md-3 ">
+    <input type="email" [value]="user.name " class="form-control" id="floatingInputDisabled"
+      placeholder="name@example.com" disabled>
+    <label for="floatingInputDisabled">Name</label>
+  </div>
+
+  <!--surname-->
+  <div class="form-floating col-md-3 ">
+    <input type="email" [value]="user.surname " class="form-control" id="floatingInputDisabled"
+      placeholder="name@example.com" disabled>
+    <label for="floatingInputDisabled">Surname</label>
+  </div>
+
+  <!--Date of Birth-->
+  <div class="form-floating col-md-3 ">
+    <input type="email" [value]="user.dob " class="form-control" id="floatingInputDisabled"
+      placeholder="name@example.com" disabled>
+    <label for="floatingInputDisabled">Date of Birth</label>
+  </div>
+  <!--Role-->
+  <div class="form-floating col-md-3 ">
+    <input type="email" [value]="user.role " class="form-control" id="floatingInputDisabled"
+      placeholder="name@example.com" disabled>
+    <label for="floatingInputDisabled">Role</label>
+  </div>
+
+  <!--email-->
+  <div class="form-floating col-md-6 ">
+    <input type="email" [value]="user.email " class="form-control" id="floatingInputDisabled"
+      placeholder="name@example.com" disabled>
+    <label for="floatingInputDisabled">Email address</label>
+  </div>
+
+  <!--password-->
+  <div class="form-floating col-md-6  ">
+    <input type="email" [value]="user.password " class="form-control" id="floatingInputDisabled"
+      placeholder="name@example.com" disabled>
+    <label for="floatingInputDisabled">password</label>
+  </div>
+
+
+
+
+</div>
+
+<div class="d-grid gap-4 d-md-block">
+  <button (click)="onCancel()" class="btn btn-outline-dark">Cancel</button>
+  <button (click)="onDelete()" class="btn btn-danger mx-md-3">Delete User</button>
+</div>
