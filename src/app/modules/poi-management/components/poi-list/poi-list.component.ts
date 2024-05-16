@@ -1,28 +1,28 @@
-import { Component } from '@angular/core';
-import {Poi} from "../../../../shared/models/poi.model";
-import {Updatepoi} from "../../../../shared/models/updatepoi.model";
-import {Subscription} from "rxjs";
-import {PoiManagementService} from "../../services/poi-management.service";
-import {ToastService} from "../../../../shared/services/toast.service";
-import {CounterState} from "../../../../shared/components/state-counter/state-counter.component";
-import {MatTableDataSource} from "@angular/material/table";
-import {PoiManagementComponent} from "../poi-management/poi-management.component";
+// poi-list.component.ts
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
+import { PoiManagementService } from '../../services/poi-management.service';
+import { ToastService } from '../../../../shared/services/toast.service';
 import { Router } from '@angular/router';
+import { Poi } from '../../../../shared/models/poi.model';
 
 @Component({
   selector: 'app-poi-list',
   templateUrl: './poi-list.component.html',
-  styleUrl: './poi-list.component.scss'
+  styleUrls: ['./poi-list.component.scss']
 })
-export class PoiListComponent {
+export class PoiListComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
 
   // Datenquelle für Material Table.
   dataSource = new MatTableDataSource<Poi>();
 
-  constructor(protected poiManagementService: PoiManagementService,
-              private toastService: ToastService,
-              private router: Router) { }
+  constructor(
+    protected poiManagementService: PoiManagementService,
+    private toastService: ToastService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.poiManagementService.loadPois();
@@ -39,11 +39,10 @@ export class PoiListComponent {
     );
   }
 
-
   showPoi(poi: any) {
     this.poiManagementService.currentPoi = this.poiManagementService.loadPoiById(poi.id)
+    this.router.navigate(['poi-management/anzeige']);
   }
-
 
   getActiveCount(): number {
     return this.poiManagementService.pois.filter(item => item.active === true).length;

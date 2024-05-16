@@ -30,9 +30,9 @@ const routes: Routes = [
   },
   {
     path: 'poi-management',
-    component: PoiManagementComponent,
-  //  canActivate: [AuthGuard],
+    loadChildren: () => import('./modules/poi-management/poi-management.module').then(m => m.PoiManagementModule),
   },
+  //  canActivate: [AuthGuard],
   {
     path: 'comment-management',
     component: CommentManagementComponent,

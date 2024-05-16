@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { PoiManagementService } from '../../services/poi-management.service';
 import {ToastService} from "../../../../shared/services/toast.service";
-import {Subscription} from "rxjs";
-import {User} from "../../../../shared/models/user.model";
-import {Poi} from "../../../../shared/models/poi.model";
+
 
 @Component({
   selector: 'app-poi-management',

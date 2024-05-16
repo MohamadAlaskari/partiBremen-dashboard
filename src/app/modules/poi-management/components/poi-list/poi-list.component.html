@@ -28,7 +28,7 @@
       <tbody>
         @for (poi of filteredItems; track poi.id) {
 
-          <tr (dblclick)="showPoi(poi)">
+          <tr (dblclick)="showPoi(poi)" >
             <td>{{poi.titel}}</td>
             <td>{{poi.createdAt | date:'short'}}</td>
             <td>{{poi.updatedAt | date:'short'}}</td>
