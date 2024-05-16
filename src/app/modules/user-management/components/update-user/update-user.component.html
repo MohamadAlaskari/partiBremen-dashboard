@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="addNewModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade" id="updatNewModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -114,8 +114,7 @@
 
         <button type="reset" (click)="onCancel()" class="btn btn-outline-dark" data-bs-dismiss="modal">close</button>
         <button type="submit" (click)="onSubmit()" class="btn btn-dark mx-md-3" [disabled]="!userForm.valid"
-          data-bs-dismiss="modal" >Add New
-          User</button>
+          data-bs-dismiss="modal">update user</button>
       </div>
     </div>
   </div>

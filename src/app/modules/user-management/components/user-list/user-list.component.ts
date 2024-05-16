@@ -12,6 +12,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnDestroy {
+  action = { action: '', userId: '' };
+  inhaltConfimModel = {
+    title: 'Delete User',
+    body: 'Sind Sie sicher, dass Sie diese Aktion ausführen möchten?',
+    result: false,
+  };
   users: User[] = [];
   originalUsers: User[] = [];
   tabConfig = [
@@ -53,6 +59,8 @@ export class UserListComponent implements OnDestroy {
       this.userManagementService.getUsers().subscribe({
         next: (users) => {
           this.originalUsers = users;
+          this.updateCounters();
+
           this.applyFilters(); // Initial filter application after loading users
           this.toastService.show(
             'success',
@@ -68,15 +76,37 @@ export class UserListComponent implements OnDestroy {
     );
   }
 
+  deleteUser(userId: string): void {
+    this.subscriptions.add(
+      this.userManagementService.deleteUser(userId).subscribe({
+        next: () => {
+          this.toastService.show(
+            'success',
+            'Success',
+            'User deleted successfully'
+          );
+          this.loadUsers(); // Neu laden der Benutzerliste
+        },
+        error: (err) => {
+          console.error('Failed to delete user', err);
+          this.toastService.show('error', 'Error', 'Failed to delete user');
+        },
+      })
+    );
+  }
+
   updateCounters(): void {
-    const activeUsers = this.users.filter((user) => user.active);
-    const adminUsers = this.users.filter((user) => user.role === 'ADMIN');
-    const verifiedUsers = this.users.filter((user) => user.verified);
+    const activeUsers = this.originalUsers.filter((user) => user.active);
+    const adminUsers = this.originalUsers.filter(
+      (user) => user.role === 'ADMIN'
+    );
+    const verifiedUsers = this.originalUsers.filter((user) => user.verified);
+
     this.counters = [
       { count: activeUsers.length, label: 'Active' },
       { count: adminUsers.length, label: 'Admins' },
       { count: verifiedUsers.length, label: 'Verified' },
-      { count: this.users.length, label: 'Total Users' },
+      { count: this.originalUsers.length, label: 'Total Users' },
     ];
   }
 
@@ -115,9 +145,31 @@ export class UserListComponent implements OnDestroy {
   addUser(): void {
     this.router.navigate(['/user-management/add-user']);
   }
-  handleUserAction(event: { action: string; userId: number }): void {
+  handleUserAction(event: { action: string; userId: string }): void {
     console.log('Action:', event.action, 'User ID:', event.userId);
-    // Führen Sie hier die Logik aus, um die Aktion zu verarbeiten (z.B. Navigation, Aufrufen von Services, etc.)
+
+    switch (event.action) {
+      case 'delete':
+        if (this.inhaltConfimModel.result) {
+          this.deleteUser(event.userId);
+          console.log('deleted');
+        }
+        break;
+      case 'update':
+        this.action = event;
+        break;
+      default:
+        console.log('no action vorhanden');
+        break;
+    }
+  }
+  handleConfirmModalResult(result: boolean) {
+    if (result) {
+      // Logik zum Verarbeiten der Bestätigung
+      this.inhaltConfimModel.result = result;
+    } else {
+      this.inhaltConfimModel.result = result;
+    }
   }
 
   ngOnDestroy(): void {
