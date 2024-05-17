@@ -3,6 +3,7 @@ import { ApiService } from '../../../../core/Services/api.service';
 import { Observable } from 'rxjs';
 import { User } from '../../../../shared/models/user.model';
 import { environment } from '../../../../../environment';
+import { Poi } from '../../../../shared/models/partiBremen.model';
 
 @Injectable({
   providedIn: 'root',
@@ -35,5 +36,9 @@ export class UserManagementService {
     return this.apiService.delete<any>(
       `${this.userEndpoints.delete}/${userId}`
     );
+  }
+
+  getPois(): Observable<Poi[]> {
+    return this.apiService.get<Poi[]>(`/poi`);
   }
 }

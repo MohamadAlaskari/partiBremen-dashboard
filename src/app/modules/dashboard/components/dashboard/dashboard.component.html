@@ -1,142 +1,155 @@
-<div class="projects-section" >
+<div class="projects-section ">
   <div class="projects-section-header">
     <p>Dashboard</p>
-  
+
   </div>
   <div class="projects-section-line">
     <div class="projects-container">
-        <div class="project-card" style=" border-left: 5px solid #ff6600; ">
-            <div class="card-content">
-                <h3>Users <i class="bi bi-7-circle"></i></h3> 
-                <p>101</p>
-            </div>
+      <div class="project-card" style=" border-left: 5px solid #ff6600; ">
+        <div class="card-content">
+          <h3>Users <i class="bi bi-7-circle"></i></h3>
+          <p>101</p>
         </div>
-        <div class="project-card" style=" border-left: 5px solid #007bff; ">
-            <div class="card-content">
-                <h3>Poi</h3>
-                <p>12</p>
-            </div>
+      </div>
+      <div class="project-card" style=" border-left: 5px solid #007bff; ">
+        <div class="card-content">
+          <h3>Poi</h3>
+          <p>12</p>
         </div>
-        <div class="project-card" style=" border-left: 5px solid #09a01d; ">
-            <div class="card-content">
-                <h3>comments</h3>
-                <p>52</p>
-            </div>
+      </div>
+      <div class="project-card" style=" border-left: 5px solid #09a01d; ">
+        <div class="card-content">
+          <h3>comments</h3>
+          <p>52</p>
         </div>
-        <div class="project-card" style=" border-left: 5px solid #df0f0f; ">
-            <div class="card-content">
-                <h3>surveys</h3>
-                <p>7</p>
-            </div>
+      </div>
+      <div class="project-card" style=" border-left: 5px solid #df0f0f; ">
+        <div class="card-content">
+          <h3>surveys</h3>
+          <p>7</p>
         </div>
-    </div>
-</div>
-
-
-
-  <div class="project-boxes jsGridView">
-
-  
-    <div class="project-box-wrapper">
-      <div class="project-box" style="background-color: #f7e6d6;">
-       
-        <div class="project-box-content-header">
-          <div class="chart-container" #poiChart></div>
-        </div>
-
       </div>
     </div>
-    <div class="project-box-wrapper">
-      <div class="project-box" style="background-color:  #fcfcff;">
-       
-        <div class="project-box-content-header">
+  </div>
+  <div class="row ">
+    <div class="col-md-7">
+      <div class="card dashboard-card">
+        <div class="card-body">
+          <h5 class="card-title">Dashboard</h5>
+          <div class="chart-menu">
+            <button class="chart-menu-button" (click)="showChart('poi')">POI Chart</button>
+            <button class="chart-menu-button" (click)="showChart('user')">User Chart</button>
+          </div>
+          <div class="chart-container" [hidden]="selectedChart !== 'poi'" #poiChart></div>
+          <div class="chart-container" [hidden]="selectedChart !== 'user'" #userChart></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="card dashboard-card">
+        <div class="card-body">
+          <h5 class="card-title">Top 10 Poi by voting</h5>
           <div class="dashboard-section">
-            <h2>Top 10 Poi by voting</h2>
             <ul class="user-list">
-                <li>
-                    <span class="user-name">POI 1</span>
-                    <span class="user-points">5000</span>
-                </li>
-                <li>
-                    <span class="user-name">POI 2</span>
-                    <span class="user-points">4800</span>
-                </li>
-                <li>
-                  <span class="user-name">POI 2</span>
-                  <span class="user-points">4800</span>
+              <li>
+                <span class="user-name">POI 1</span>
+                <span class="user-points">5000</span>
               </li>
               <li>
                 <span class="user-name">POI 2</span>
                 <span class="user-points">4800</span>
-            </li>
-            <li>
-              <span class="user-name">POI 2</span>
-              <span class="user-points">4800</span>
-          </li>
-          <li>
-            <span class="user-name">User 2</span>
-            <span class="user-points">4800</span>
-        </li>
-        <li>
-          <span class="user-name">User 2</span>
-          <span class="user-points">4800</span>
-      </li>
-            </ul>
-        </div>
-        
-        </div>
-
-      </div>
-    </div>
-    <div class="project-box-wrapper">
-      <div class="project-box" style="background-color:  #fcfcff;">
-       
-        <div class="project-box-content-header">
-        </div>
-        <div class="dashboard-section">
-          <h2>Top 10 Users by Points</h2>
-          <ul class="user-list">
-              <li>
-                  <span class="user-name">User 1</span>
-                  <span class="user-points">5000</span>
               </li>
               <li>
-                  <span class="user-name">User 2</span>
-                  <span class="user-points">4800</span>
+                <span class="user-name">POI 2</span>
+                <span class="user-points">4800</span>
+              </li>
+              <li>
+                <span class="user-name">POI 2</span>
+                <span class="user-points">4800</span>
+              </li>
+              <li>
+                <span class="user-name">POI 2</span>
+                <span class="user-points">4800</span>
               </li>
               <li>
                 <span class="user-name">User 2</span>
                 <span class="user-points">4800</span>
-            </li>
-            <li>
-              <span class="user-name">User 2</span>
-              <span class="user-points">4800</span>
-          </li>
-          <li>
-            <span class="user-name">User 2</span>
-            <span class="user-points">4800</span>
-        </li>
-        <li>
-          <span class="user-name">User 2</span>
-          <span class="user-points">4800</span>
-      </li>
-      <li>
-        <span class="user-name">User 2</span>
-        <span class="user-points">4800</span>
-    </li>
-          </ul>
-      </div>
-      
+              </li>
+              <li>
+                <span class="user-name">User 2</span>
+                <span class="user-points">4800</span>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="project-box-wrapper">
-      <div class="project-box" style="background-color: #f7e6d6;">
-       
-        <div class="project-box-content-header">
-          <div class="chart-container" #userChart></div>
-        </div>
 
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card dashboard-card">
+        <div class="card-body">
+          <h2>Age Distribution</h2>
+          <div class="chart-container" #ageChart></div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card dashboard-card">
+        <div class="card-body">
+          <h5 class="card-title">Top 10 Poi by voting</h5>
+          <div class="dashboard-section">
+            <ul class="user-list">
+              <li>
+                <span class="user-name">POI 1</span>
+                <span class="user-points">5000</span>
+              </li>
+              <li>
+                <span class="user-name">POI 2</span>
+                <span class="user-points">4800</span>
+              </li>
+              <li>
+                <span class="user-name">POI 2</span>
+                <span class="user-points">4800</span>
+              </li>
+              <li>
+                <span class="user-name">POI 2</span>
+                <span class="user-points">4800</span>
+              </li>
+              <li>
+                <span class="user-name">POI 2</span>
+                <span class="user-points">4800</span>
+              </li>
+              <li>
+                <span class="user-name">User 2</span>
+                <span class="user-points">4800</span>
+              </li>
+              <li>
+                <span class="user-name">User 2</span>
+                <span class="user-points">4800</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card dashboard-card">
+        <div class="card-body">
+          <h2>Divm</h2>
+          <div class="dashboard-section">
+            <!-- Your list content here -->
+            <ul class="user-list">
+              <!-- List items -->
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+
+
 </div>

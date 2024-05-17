@@ -7,11 +7,12 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { AddUserComponent } from './components/add-user/add-user.component';
-
-import { MatIconModule } from '@angular/material/icon';
 import { ViewUserComponent } from './components/view-user/view-user.component';
 import { UserTableComponent } from './components/user-table/user-table.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
+import { DeleteUserComponent } from './components/delete-user/delete-user.component';
+
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { UpdateUserComponent } from './components/update-user/update-user.compon
     ViewUserComponent,
     UserTableComponent,
     UpdateUserComponent,
+    DeleteUserComponent,
   ],
   imports: [
     CommonModule,

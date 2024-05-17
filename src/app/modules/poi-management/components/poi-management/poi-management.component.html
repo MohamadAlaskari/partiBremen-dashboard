@@ -1,70 +1,11 @@
-<div class="projects-section">
-  <div class="projects-section-header">
-    <p>POI Management</p>
-  </div>
+<div class="poi-managment-section">
+  <div class="projects-section">
 
-  <div class="projects-section-line">
-    <div class="projects-status">
-      <div class="item-status">
-        <span class="status-number">{{getActiveCount()}}</span>
-        <span class="status-type">Aktiv</span>
-      </div>
-      <div class="item-status">
-        <span class="status-number">{{getInactiveCount()}}</span>
-        <span class="status-type">Inaktiv</span>
-      </div>
-      <div class="item-status">
-        <span class="status-number">{{pois.length}}</span>
-        <span class="status-type">Insgesamt</span>
-      </div>
-    </div>
-    <div class="view-actions active">
-      <div class="search-wrapper">
-        <input class="search-input" type="text" [(ngModel)]="searchTerm" placeholder="Suche...">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
-             stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-search"
-             viewBox="0 0 24 24">
-          <defs></defs>
-          <circle cx="11" cy="11" r="8"></circle>
-          <path d="M21 21l-4.35-4.35"></path>
-        </svg>
-      </div>
-    </div>
-  </div>
+    <app-section-header [title]="title_poiManagment" time=""></app-section-header>
 
-  <div class="project-boxes jsGridView">
-    <div class="project-box-wrapper">
-      <table class="table table-striped table-hover user-list fixed-header">
-        <thead>
-        <th>Name</th>
-        <th>Erstellungsdatum</th>
-        <th>letzte Änderung</th>
-        <th>Beschreibung</th>
-        <th>Aktiv?</th>
-        <th></th>
-        </thead>
-        <tbody>
-        @for (poi of filteredItems; track poi.id) {
 
-        <tr>
-            <td>{{poi.titel}}</td>
-            <td>{{poi.createdAt | date:'short'}}</td>
-            <td>{{poi.updatedAt | date:'short'}}</td>
-            <td>{{poi.description}}</td>
-            <td>{{poi.active}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="text-right">
-              <button class="button tiny" (click)="showPoi(poi)">View Poi</button>
-              <button class="button alert tiny">Delete</button>
-            </td>
-          </tr>
-        }
-        </tbody>
-      </table>
-    </div>
+    <app-poi-list></app-poi-list>
+
+
   </div>
 </div>

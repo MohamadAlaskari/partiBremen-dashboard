@@ -1,4 +1,5 @@
-import {User} from "./user.model";
+// src/app/shared/models/poi.model.ts
+import { User } from './user.model';
 
 export class Poi {
   constructor(
@@ -7,15 +8,14 @@ export class Poi {
     public updatedAt: string,
     public description: string,
     public active: boolean,
+    public latitude: number,
+    public longitude: number,
     public creator: User,
     public reports: Report[],
     public surveys: Survey[],
     public votings: Voting[],
     public comments: Comment[],
-    public voting: Voting[],
-    public titel: string,
-    public longitude: number,
-    public latitude: number,
+    public titel: string
   ) {}
 }
 
@@ -52,8 +52,8 @@ export class Voting {
     public createdAt: string,
     public updatedAt: string,
     public voteType: string,
-    public votedSurvey: Survey,
-    public votedComment: Comment,
+    public votedSurvey: Survey | null,
+    public votedComment: Comment | null,
     public votedPoi: string,
     public voter: User
   ) {}
@@ -70,7 +70,6 @@ export class Comment {
     public votings: string[],
     public comments: string[],
     public reports: string[],
-    public voting: string[],
     public actualcomment: string
   ) {}
 }

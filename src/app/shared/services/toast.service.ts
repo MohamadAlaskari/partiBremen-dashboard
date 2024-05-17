@@ -16,7 +16,7 @@ export class ToastService {
   ) {
     const toast: Toast = { id: this.currentId++, type, title, message };
     this.toastSubject.next([...this.toastSubject.value, toast]);
-    setTimeout(() => this.closeToast(toast.id), 7000);
+    setTimeout(() => this.closeToast(toast.id), 3000);
   }
 
   getToasts() {

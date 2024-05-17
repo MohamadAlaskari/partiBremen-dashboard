@@ -19,12 +19,14 @@ export const environment = {
     },
     comments: {
       getAll: '/comment',
+      delete: '/comment',
     },
     pois: {
       findAll: '/poi',
       findOnly: '/poi/Only',
       findById: '/poi',
       update: '/poi',
+      delete: '/poi',
     },
   },
 };

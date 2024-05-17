@@ -1,12 +1,4 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-  Inject,
-  PLATFORM_ID,
-} from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 declare var ApexCharts: any; // Declare ApexCharts to avoid TypeScript errors
@@ -19,6 +11,9 @@ declare var ApexCharts: any; // Declare ApexCharts to avoid TypeScript errors
 export class DashboardComponent implements OnInit, AfterViewInit {
   @ViewChild('poiChart') poiChart!: ElementRef;
   @ViewChild('userChart') userChart!: ElementRef;
+  @ViewChild('ageChart') ageChart!: ElementRef;
+
+  selectedChart: string = 'poi'; // Default to POI chart
 
   Pois = [
     { title: 'Poi 1', votes: 100 },
@@ -28,12 +23,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     { title: 'Poi 5', votes: 120 },
   ];
   users = [
-    { name: 'User 1', points: 500 },
-    { name: 'User 2', points: 700 },
-    { name: 'User 3', points: 300 },
-    { name: 'User 4', points: 600 },
-    { name: 'User 5', points: 400 },
+    { name: 'User 1', points: 500, age: 25 },
+    { name: 'User 2', points: 700, age: 35 },
+    { name: 'User 3', points: 300, age: 60 },
+    { name: 'User 4', points: 600, age: 45 },
+    { name: 'User 5', points: 400, age: 70 },
   ];
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit() {}
@@ -42,6 +38,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     if (isPlatformBrowser(this.platformId)) {
       this.renderChart();
       this.renderUserChart();
+      this.renderAgeChart();
     }
   }
 
@@ -69,6 +66,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       chart.render();
     });
   }
+
   private renderUserChart() {
     import('apexcharts').then((ApexCharts) => {
       const options: any = {
@@ -92,5 +90,33 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       );
       chart.render();
     });
+  }
+
+  private renderAgeChart() {
+    import('apexcharts').then((ApexCharts) => {
+      const ageGroups = {
+        'under 30': this.users.filter((user) => user.age < 30).length,
+        '30-60': this.users.filter((user) => user.age >= 30 && user.age <= 60).length,
+        '60 plus': this.users.filter((user) => user.age > 60).length,
+      };
+
+      const options: any = {
+        chart: {
+          type: 'pie',
+        },
+        labels: Object.keys(ageGroups),
+        series: Object.values(ageGroups),
+      };
+
+      const chart = new ApexCharts.default(
+        this.ageChart.nativeElement,
+        options
+      );
+      chart.render();
+    });
+  }
+
+  showChart(chartType: string) {
+    this.selectedChart = chartType;
   }
 }

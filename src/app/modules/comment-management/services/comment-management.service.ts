@@ -17,4 +17,8 @@ export class CommentManagementService {
     return this.apiService.get<Comment[]>(`${this.endpoints.getAll}`);
   }
 
+  deleteComment(commentId: string): Observable<Comment> {
+    return this.apiService.delete<any>(`${this.endpoints.delete}/${commentId}`);
+  }
+
 }

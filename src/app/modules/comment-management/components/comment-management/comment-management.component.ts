@@ -1,35 +1,35 @@
-import { Component } from '@angular/core';
+// comment-management.component.ts
+
+import { Component, OnDestroy, OnInit, EventEmitter } from '@angular/core';
 import { CommentManagementService } from '../../services/comment-management.service';
-import { Subscription } from 'rxjs/internal/Subscription';
+import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
-import { CounterState } from '../../../../shared/components/state-counter/state-counter.component';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { Comment } from '../../../../shared/models/comment.model';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-comment-management',
   templateUrl: './comment-management.component.html',
-  styleUrl: './comment-management.component.scss'
+  styleUrls: ['./comment-management.component.scss']
 })
+export class CommentManagementComponent implements OnInit, OnDestroy {
 
-export class CommentManagementComponent {
+  comments: Comment[] = [];
+  dataSource = new MatTableDataSource<Comment>();
+
+  private subscriptions: Subscription = new Subscription();
 
   constructor(
     private commentManagementService: CommentManagementService,
     private toastService: ToastService
   ) {}
 
-  comments: any[] = [];
+  ngOnInit(): void {
+    this.loadComments();
+  }
 
-  counters: CounterState[] = [];
-
-  dataSource = new MatTableDataSource<Comment>();
-
-  private subscriptions: Subscription = new Subscription();
-
-  ngOnInit() {
-      this.loadComments();
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   loadComments(): void {
@@ -38,19 +38,55 @@ export class CommentManagementComponent {
         next: (comments) => {
           this.comments = comments;
           this.dataSource.data = comments;
-          this.toastService.show(
-            'success',
-            'Success',
-            'Comments loaded successfully'
-          );
+          this.toastService.show('success', 'Success', 'Comments loaded successfully');
         },
         error: (err) => {
-          console.error('Failed to load users', err);
-
-          this.toastService.show('error', 'Error', 'Failed to load users');
+          console.error('Failed to load comments', err);
+          this.toastService.show('error', 'Error', 'Failed to load comments');
         },
       })
     );
+  }
+
+  selectedCommentId: string | null = null;
+
+  toggleDropdown(commentId: string): void {
+    if(this.selectedCommentId === commentId) {
+      this.selectedCommentId = null;
+    }
+    else {
+      this.selectedCommentId = commentId;
+    }
+  }
+
+  editComment(comment: Comment): void {
+
+  }
+
+  updateComment(comment: Comment): void {
+
+  }
+
+  deleteComment(commentID: string): void {
+    this.subscriptions.add(
+      this.commentManagementService.deleteComment(commentID).subscribe({
+        next: () => {
+          this.comments = this.comments.filter((comment) => comment.id !== commentID);
+          this.toastService.show(
+            'success',
+            'Success',
+            'Comment deleted successfully'
+          );
+        },
+        error: (error) => {
+          this.toastService.show(
+            'error',
+            'Error',
+            `Error deleting comment: ${error.message}`
+          );
+        },
+      })
+    )
   }
 
 }

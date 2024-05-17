@@ -7,18 +7,19 @@ import { PoiManagementComponent } from './modules/poi-management/components/poi-
 import { CommentManagementComponent } from './modules/comment-management/components/comment-management/comment-management.component';
 import { AuthGuard } from './modules/auth/guards/auth.guard';
 import { isAuthenticatedGuard } from './modules/auth/guards/isAuthenticated.guard';
+import { ViewUserComponent } from './modules/user-management/components/view-user/view-user.component';
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-   // canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
 
   {
     path: 'dashboard',
     component: DashboardComponent,
-   // canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'user-management',
@@ -26,17 +27,21 @@ const routes: Routes = [
       import('./modules/user-management/user-management.module').then(
         (m) => m.UserManagementModule
       ),
-   // canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'poi-management',
-    component: PoiManagementComponent,
-  //  canActivate: [AuthGuard],
+
+    loadChildren: () =>
+      import('./modules/poi-management/poi-management.module').then(
+        (m) => m.PoiManagementModule
+      ),
+    //  canActivate: [AuthGuard],
   },
   {
     path: 'comment-management',
     component: CommentManagementComponent,
-   // canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' }, // Fallback-Route

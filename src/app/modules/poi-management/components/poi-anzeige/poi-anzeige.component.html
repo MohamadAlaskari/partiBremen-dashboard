@@ -1,15 +1,27 @@
-<form action="#" method="post">
-  <label for="input1">Name:</label>
-  <input type="text" id="input1" name="input1" value={{poiName}}><br><br>
+<div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+  <form action="#" method="post" style="flex: 1 1 400px; min-width: 300px;" *ngIf="poiManagementService.currentPoi">
+    <p>ID:          {{poiManagementService.currentPoi.id}}</p>
 
-  <label for="input4">Beschreibung</label>
-  <input type="text" id="input4" name="input4" value={{poiBeschreibung}}><br><br>
+    <label for="input1">Name:  </label><br>
+    <input type="text" id="input1" name="input1" [(ngModel)]="poiManagementService.currentPoi.titel"><br><br>
 
-  <label for="input2">Adresse:</label>
-  <input type="text" id="input2" name="input2" value={{poiAdresse}}><br><br>
+    <label for="input4">Beschreibung:  </label><br>
+    <input type="text" id="input4" name="input4" [(ngModel)]="poiManagementService.currentPoi.description"><br><br>
 
-  <label for="input3">Status:</label>
-  <input type="text" id="input3" name="input3" value={{poiStatus}}}><br><br>
+    <label for="input2">Aktiv?: </label>
+    <input type="checkbox" id="input2" name="input2" [(ngModel)]="poiManagementService.currentPoi.active"><br><br>
 
-  <button type="submit">Absenden</button>
-</form>
+    <p>Creator:     {{poiManagementService.currentPoi.creator.name + " " + poiManagementService.currentPoi.creator.surname}}</p>
+
+    <p>created at:  {{poiManagementService.currentPoi.createdAt | date:'short'}}</p>
+
+    <p>updated at:  {{poiManagementService.currentPoi.updatedAt | date:'short'}}</p>
+
+    <p>long/lat:    {{poiManagementService.currentPoi.longitude}} / {{poiManagementService.currentPoi.latitude}}</p>
+
+    <button type="submit" (click)="updatePoi()">Update</button>
+    <button class="button alert tiny" (click)="deletePoi()">Delete</button>
+  </form>
+
+  <div id="map" style="height: 400px; width: 100%; flex: 1 1 300px; min-width: 300px;"></div>
+</div>
