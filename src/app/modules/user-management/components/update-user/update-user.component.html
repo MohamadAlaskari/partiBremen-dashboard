@@ -87,7 +87,7 @@
   <!--Email-->
   <div class="col-md-6">
     <div class="form-floating">
-      <input type="email" class="form-control" id="email" placeholder="" formControlName="email"
+      <input type="email" class="form-control" id="email" placeholder="" formControlName="email" autocomplete="current-Email"Email
         [class.is-invalid]="userForm.get('email')!.invalid && userForm.get('email')!.touched  || userFormSubmitted"
         [class.is-valid]="userForm.get('email')!.valid && userForm.get('email')!.touched  || userFormSubmitted">
       <label for="email" class="form-label">Email*</label>
@@ -102,7 +102,7 @@
   <!--Password-->
   <div class="col-md-6">
     <div class="form-floating">
-      <input type="password" class="form-control" id="password" placeholder="" formControlName="password"
+      <input type="password" class="form-control" id="password" placeholder="" formControlName="password" autocomplete="current-password"
         [class.is-invalid]="userForm.get('password')!.invalid && userForm.get('password')!.touched  || userFormSubmitted"
         [class.is-valid]="userForm.get('password')!.valid && userForm.get('password')!.touched  || userFormSubmitted">
       <label for="password" class="form-label">Password*</label>

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { User } from '../../../../shared/models/user.model';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { UserManagementService } from '../../services/user-management-service/user-management.service';
@@ -14,7 +13,6 @@ export class DeleteUserComponent {
   title: string = 'Delete User';
   user!: User;
   id: string | null = null;
-  userForm!: FormGroup;
   userFormSubmitted: boolean = false;
 
   // Mapping von Rollen zu ihren entsprechenden Zahlenwerten
@@ -35,6 +33,9 @@ export class DeleteUserComponent {
   ) {}
 
   ngOnInit(): void {
+    this.extractIdFromRoute();
+  }
+  private extractIdFromRoute(): void {
     this.route.paramMap.subscribe((params) => {
       this.id = params.get('id');
       if (this.id) {
@@ -43,33 +44,11 @@ export class DeleteUserComponent {
     });
   }
 
-  private initForm(): void {
-    this.userForm = new FormGroup({
-      name: new FormControl(this.user.name, Validators.required),
-      surname: new FormControl(this.user.surname, Validators.required),
-      dob: new FormControl(this.user.dob, Validators.required),
-      email: new FormControl(this.user.email, [
-        Validators.required,
-        Validators.email,
-      ]),
-      password: new FormControl('', Validators.required),
-      verified: new FormControl(this.user.verified),
-      role: new FormControl(
-        this.getRoleValue(this.user.role || 'DEFAULT'),
-        Validators.required
-      ),
-      active: new FormControl(this.user.active),
-    });
-  }
-
   // Methode zur Konvertierung der Rollenbezeichnung in die entsprechende Zahl
-  private getRoleValue(role: string): number {
-    return this.roleMapping[role] || 0; // Fallback auf 0 (DEFAULT) falls die Rolle nicht gefunden wird
-  }
+
   private loadUser(id: string): void {
     this.userService.getUserById(id).subscribe((user: User) => {
       this.user = user;
-      this.initForm();
     });
   }
 
@@ -98,7 +77,6 @@ export class DeleteUserComponent {
   }
 
   onCancel(): void {
-    this.userForm.reset();
     this.router.navigate(['/user-management']);
   }
 }

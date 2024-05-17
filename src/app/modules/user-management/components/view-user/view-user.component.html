@@ -1,6 +1,63 @@
-<app-section-header title="User Management " time=""></app-section-header>
+<div class=" ">
+  <a routerLink="/user-management">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8" />
+    </svg>
+  </a>
 
-<app-section-header [title]="title" time=""></app-section-header>
+  <app-section-header [title]="title" time=""></app-section-header>
 
-<p>{{id}}</p>
-<app-toast></app-toast>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">{{ user.role }}</h6>
+          <h5 class="card-title">{{ user.name }} {{ user.surname }}</h5>
+          <p class="card-text text-secondary small mb-1" style="opacity: 0.8;">{{ user.email }}</p>
+          <p class="card-text text-secondary small mb-1" style="opacity: 0.8;">Date of Birth: {{ user.dob }}</p>
+          <span class="badge" [ngClass]="user.active ? 'bg-success' : 'bg-danger'">
+            {{ user.active ? 'Active' : 'Inactive' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="accordion" id="poiAccordion">
+        <div *ngFor="let poi of pois" class="accordion-item">
+          <h2 class="accordion-header" id="heading{{ poi.id }}">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + poi.id" aria-expanded="false" [attr.aria-controls]="'collapse' + poi.id">
+              {{ poi.titel }}
+            </button>
+          </h2>
+          <div [id]="'collapse' + poi.id" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading' + poi.id" data-bs-parent="#poiAccordion">
+            <div class="accordion-body">
+              <p class="card-text">Description: {{ poi.description }}</p>
+              <p class="card-text">Latitude: {{ poi.latitude }}</p>
+              <p class="card-text">Longitude: {{ poi.longitude }}</p>
+              <p class="card-text">Created At: {{ poi.createdAt }}</p>
+              <p class="card-text">Updated At: {{ poi.updatedAt }}</p>
+
+              <!-- Voting system -->
+              <div class="voting">
+                <button (click)="vote(poi.id, 'like')">Like</button> {{ getVoteCount(poi.id, 'like') }} Likes
+                <button (click)="vote(poi.id, 'dislike')">Dislike</button> {{ getVoteCount(poi.id, 'dislike') }} Dislikes
+              </div>
+
+              <!-- Comments -->
+              <div class="comments">
+                <h5>Comments</h5>
+                <div *ngFor="let comment of poi.comments">
+                  <p>{{ comment.actualcomment }} <small>{{ comment.createdAt | date:'short' }}</small></p>
+                </div>
+                <input type="text" #commentText placeholder="Add a comment" />
+                <button (click)="addComment(poi.id, commentText.value); commentText.value=''">Add Comment</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div id="map" style="height: 500px;"></div>
+    </div>
+  </div>
+</div>
