@@ -1,12 +1,10 @@
-<div class="tabs">
-
-  @for (tab of tabs; track $index) {
-
-  <input type="radio" [id]="'radio-' + ($index + 1)" name="tabs" (click)="onTabChange(tab.value)" [checked]="$index === 0" />
-  <label class="tab" [for]="'radio-' + ($index + 1)">{{tab.label}}</label>
-  }
-
-
+<div class="tabs" [attr.data-instance]="instanceId">
+  <ng-container *ngFor="let tab of tabs; let index = index; trackBy: trackByIndex">
+    <input type="radio" [id]="instanceId + '-radio-' + (index + 1)" [name]="instanceId + '-tabs'"
+      (click)="onTabChange(tab.value, index)" [checked]="index === 0" />
+    <label class="tab" [for]="instanceId + '-radio-' + (index + 1)">
+      {{tab.label}}
+    </label>
+  </ng-container>
   <span class="glider"></span>
-
 </div>
