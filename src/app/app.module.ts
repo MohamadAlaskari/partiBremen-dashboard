@@ -14,6 +14,7 @@ import { UserManagementModule } from './modules/user-management/user-management.
 import { MatIconModule } from '@angular/material/icon';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { PoiManagementModule } from './modules/poi-management/poi-management.module';
+import { ReportManagementModule } from './modules/report-management/report-management.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { PoiManagementModule } from './modules/poi-management/poi-management.mod
     DashboardModule,
     UserManagementModule,
     PoiManagementModule,
+    ReportManagementModule,
     MatIconModule,
     AppRoutingModule,
   ],
