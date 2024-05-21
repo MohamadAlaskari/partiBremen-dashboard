@@ -11,6 +11,19 @@
   width: 40px;
   height: 40px;
 }
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-color: #eea8a8;
+  color: #333;
+  font-size: 1.1em;
+  font-weight: bold;
+ // margin-right: 16px;
+}
 .message-content {
   padding-left: 16px;
   width: 100%;
