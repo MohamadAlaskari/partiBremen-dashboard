@@ -1,19 +1,28 @@
 <app-toast></app-toast>
 
 @if(isAuthenticated()){
-
 <app-sidenav></app-sidenav>
 
-<div class="app-container">
+<div class="app-container d-flex flex-column bg-light"  >
 
   <app-header></app-header>
 
-  <div class="app-content">
-    <div class="main-section">
+  <div class="app-content d-flex flex-column overflow-hidden">
+    <div class=" d-flex gap-2 me-3 ">
 
-      <router-outlet />
+      <div class="col-9 main-section overflow-hidden rounded-5 bg-white py-5 px-3">
 
+        <router-outlet />
+
+      </div>
+      <div class=" col-md-3 report-notifications bg-white rounded-5 overflow-hidden">
+        <div class="py-5 px-3">
+
+          <app-report-notifications></app-report-notifications>
+        </div>
+      </div>
     </div>
+
     <app-footer></app-footer>
   </div>
 </div>
