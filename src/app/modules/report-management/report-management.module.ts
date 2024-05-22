@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
 import { ReportManagementService } from './services/report-management.service';
+import { ReportManagementRoutingModule } from './report-management-routing.module';
 
 @NgModule({
   declarations: [ReportManagementComponent],
@@ -14,6 +15,7 @@ import { ReportManagementService } from './services/report-management.service';
     SharedModule,
     ReactiveFormsModule,
     MatIconModule,
+    ReportManagementRoutingModule,
   ],
   providers: [ReportManagementService],
 })
