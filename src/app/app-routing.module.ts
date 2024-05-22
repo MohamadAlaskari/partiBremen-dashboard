@@ -10,13 +10,16 @@ import { ReportManagementComponent } from './modules/report-management/component
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent,
+    loadChildren: () =>
+      import('./modules/auth/auth.module').then((m) => m.AuthModule),
     // canActivate: [AuthGuard],
   },
-
   {
     path: 'dashboard',
-    component: DashboardComponent,
+    loadChildren: () =>
+      import('./modules/dashboard/dashboard.module').then(
+        (m) => m.DashboardModule
+      ),
     // canActivate: [AuthGuard],
   },
   {
@@ -43,7 +46,10 @@ const routes: Routes = [
   },
   {
     path: 'comment-management',
-    component: CommentManagementComponent,
+    loadChildren: () =>
+      import('./modules/comment-management/comment-management.module').then(
+        (m) => m.CommentManagementModule
+      ),
     // canActivate: [AuthGuard],
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
