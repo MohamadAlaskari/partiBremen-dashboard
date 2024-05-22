@@ -4,10 +4,10 @@
   <app-tabs [tabs]="tabConfig" (tabChanged)="handleTabChange($event)"></app-tabs>
 </div>
 
-<div class="messages bt-4">
+<div class="messages bt-4 overflow-y-scroll  ">
 
 
-  <div class="message-box d-flex align-items-start" *ngFor="let notification of notifications">
+  <div class="  message-box d-flex align-items-start" *ngFor="let notification of notifications">
     <div class="avatar">
       <ng-container *ngIf="notification.reporterAvatar; else noImage">
         <img [src]="notification.reporterAvatar" alt="profile image">
