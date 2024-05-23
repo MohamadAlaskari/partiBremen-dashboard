@@ -8,15 +8,16 @@
 
 
   <div class="  message-box d-flex align-items-start" *ngFor="let notification of notifications">
-    <div class="avatar">
-      <ng-container *ngIf="notification.reporterAvatar; else noImage">
-        <img [src]="notification.reporterAvatar" alt="profile image">
-      </ng-container>
-      <ng-template #noImage>
-        <div class="initials">
-          {{ getInitials(notification.reporterName) }}
-        </div>
-      </ng-template>
+    <div class="avatar d-flex align-items-center justify-content-center rounded-circle">
+      @if (notification.reporterAvatar) {
+      <img [src]="notification.reporterAvatar" alt="profile image">
+
+      }@else{
+      <div class="initials">
+        {{ getInitials(notification.reporterName) }}
+      </div>
+      }
+
     </div>
     <div class="message-content">
       <div class="message-header">
