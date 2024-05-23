@@ -3,8 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserManagementService } from '../../services/user-management-service/user-management.service';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../../../../shared/models/user.model';
-import { timeout } from 'rxjs';
+import { User } from '../../../../core/models/partiBremen.model';
 
 @Component({
   selector: 'app-update-user',
@@ -20,12 +19,12 @@ export class UpdateUserComponent {
 
   // Mapping von Rollen zu ihren entsprechenden Zahlenwerten
   roleMapping: { [key: string]: number } = {
-    "DEFAULT": 0,
-    "USER": 1,
-    "CREATOR": 2,
-    "MODERATOR": 3,
-    "ADMIN": 4,
-    "DECIDER": 5
+    DEFAULT: 0,
+    USER: 1,
+    CREATOR: 2,
+    MODERATOR: 3,
+    ADMIN: 4,
+    DECIDER: 5,
   };
 
   constructor(
@@ -65,7 +64,6 @@ export class UpdateUserComponent {
 
   // Methode zur Konvertierung der Rollenbezeichnung in die entsprechende Zahl
   private getRoleValue(role: string): number {
-  
     return this.roleMapping[role] || 0; // Fallback auf 0 (DEFAULT) falls die Rolle nicht gefunden wird
   }
   private loadUser(id: string): void {

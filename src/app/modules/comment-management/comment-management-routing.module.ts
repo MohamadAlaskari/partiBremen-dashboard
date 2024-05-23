@@ -8,4 +8,4 @@ const routes: Routes = [{ path: '', component: CommentManagementComponent }];
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class CommentManagementRoutingModule { }
+export class CommentManagementRoutingModule {}

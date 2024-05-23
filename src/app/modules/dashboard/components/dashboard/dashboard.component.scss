@@ -294,6 +294,11 @@
   transition: background-color 0.3s, box-shadow 0.3s;
   border-left: 5px solid #007bff;
 }
+.dark.project-card {
+  background-color: #343a40; /* Dark mode background color */
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1); /* Dark mode box shadow */
+  border-left: 5px solid #17a2b8; /* Dark mode border color */
+}
 .dashboard-section {
   background-color: #f8f9fa;
   padding: 20px;
@@ -916,3 +921,42 @@
     top: 10px;
   }
 }
+.dashboard-card {
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card .card-body {
+  padding: 20px;
+}
+
+.chart-menu {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+
+.chart-menu-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.chart-menu-button:not(:last-child) {
+  margin-right: 0;
+}
+
+.chart-menu-button:hover {
+  background-color: #0056b3;
+}
+
+.chart-container {
+  margin-top: 20px; /* Adjust margin-top as needed */
+}
+

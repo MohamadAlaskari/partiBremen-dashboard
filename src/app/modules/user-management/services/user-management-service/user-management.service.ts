@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../../../core/Services/api.service';
 import { Observable } from 'rxjs';
-import { User } from '../../../../shared/models/user.model';
 import { environment } from '../../../../../environment';
-import { Poi } from '../../../../shared/models/partiBremen.model';
+import { User, Poi } from '../../../../core/models/partiBremen.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserManagementService {
   private userEndpoints = environment.endpoints.users;
+  private poiEndpoints = environment.endpoints.pois;
 
   constructor(private apiService: ApiService) {}
 
@@ -17,8 +17,10 @@ export class UserManagementService {
     return this.apiService.get<User[]>(`${this.userEndpoints.findAll}`);
   }
 
-  getUserById(id: string): Observable<User> {
-    return this.apiService.get<User>(`${this.userEndpoints.findById}/${id}`);
+  getUserById(userId: string): Observable<User> {
+    return this.apiService.get<User>(
+      `${this.userEndpoints.findById}/${userId}`
+    );
   }
 
   createUser(user: User): Observable<User> {
@@ -39,6 +41,11 @@ export class UserManagementService {
   }
 
   getPois(): Observable<Poi[]> {
-    return this.apiService.get<Poi[]>(`/poi`);
+    return this.apiService.get<Poi[]>(`${this.poiEndpoints.findAll}`);
+  }
+  getPoisByUserId(userId: string): Observable<Poi[]> {
+    return this.apiService.get<Poi[]>(
+      `${this.poiEndpoints.findByUserId}/${userId}`
+    );
   }
 }

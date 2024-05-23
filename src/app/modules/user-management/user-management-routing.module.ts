@@ -17,6 +17,7 @@ const routes: Routes = [
       },
     ],
   },
+
   {
     path: 'delete-user/:id',
     component: DeleteUserComponent,

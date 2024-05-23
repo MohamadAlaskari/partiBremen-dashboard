@@ -2,23 +2,29 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './modules/auth/components/login/login.component';
 import { DashboardComponent } from './modules/dashboard/components/dashboard/dashboard.component';
-import { UserManagementComponent } from './modules/user-management/components/user-management/user-management.component';
-import { PoiManagementComponent } from './modules/poi-management/components/poi-management/poi-management.component';
 import { CommentManagementComponent } from './modules/comment-management/components/comment-management/comment-management.component';
 import { AuthGuard } from './modules/auth/guards/auth.guard';
 import { isAuthenticatedGuard } from './modules/auth/guards/isAuthenticated.guard';
-import { ViewUserComponent } from './modules/user-management/components/view-user/view-user.component';
+import { ReportManagementComponent } from './modules/report-management/components/report-management/report-management.component';
 
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent,
+    loadChildren: () =>
+      import('./modules/auth/auth.module').then((m) => m.AuthModule),
     // canActivate: [AuthGuard],
   },
-
   {
     path: 'dashboard',
-    component: DashboardComponent,
+    loadChildren: () =>
+      import('./modules/dashboard/dashboard.module').then(
+        (m) => m.DashboardModule
+      ),
+    // canActivate: [AuthGuard],
+  },
+  {
+    path: 'report-management',
+    component: ReportManagementComponent,
     // canActivate: [AuthGuard],
   },
   {
@@ -40,7 +46,10 @@ const routes: Routes = [
   },
   {
     path: 'comment-management',
-    component: CommentManagementComponent,
+    loadChildren: () =>
+      import('./modules/comment-management/comment-management.module').then(
+        (m) => m.CommentManagementModule
+      ),
     // canActivate: [AuthGuard],
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
