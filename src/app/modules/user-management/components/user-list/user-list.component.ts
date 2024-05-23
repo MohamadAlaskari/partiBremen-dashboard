@@ -1,7 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UserManagementService } from '../../services/user-management-service/user-management.service';
-import { User } from '../../../../shared/models/user.model';
+import { User } from '../../../../core/models/partiBremen.model';
+
 import { ToastService } from '../../../../shared/services/toast.service';
 import { CounterState } from '../../../../shared/components/state-counter/state-counter.component';
 import { Router } from '@angular/router';

@@ -25,6 +25,7 @@ export const environment = {
       findAll: '/poi',
       findOnly: '/poi/Only',
       findById: '/poi',
+      findByUserId:'/poi/user',
       update: '/poi',
       delete: '/poi',
     },

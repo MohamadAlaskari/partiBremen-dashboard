@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-user-table',
@@ -26,6 +26,4 @@ export class UserTableComponent {
     // Initialisieren Sie das Zustandsarray mit false für jedes Element
     this.users.forEach(() => this.dropdownStates.push(false));
   }
-
-
 }

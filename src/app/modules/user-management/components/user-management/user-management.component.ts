@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserManagementService } from '../../services/user-management-service/user-management.service';
-import { User } from '../../../../shared/models/user.model';
+import { User } from '../../../../core/models/partiBremen.model';
+
 import { Subscription } from 'rxjs';
 import { ToastService } from '../../../../shared/services/toast.service';
 

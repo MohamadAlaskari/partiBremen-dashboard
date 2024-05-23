@@ -8,8 +8,9 @@ import {
   Poi,
   Comment,
   Voting,
+  Report,
   Survey,
-} from '../../../../shared/models/partiBremen.model';
+} from '../../../../core/models/partiBremen.model';
 import { loadLeaflet } from '../../../../utils/leaflet-browser';
 
 @Component({
@@ -57,6 +58,7 @@ export class ViewUserComponent {
       await this.initializeMap();
     });
   }
+  private loadUserPois(){}
 
   private async initializeMap(): Promise<void> {
     if (this.map) {

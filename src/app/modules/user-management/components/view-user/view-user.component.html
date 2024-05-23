@@ -1,4 +1,5 @@
 <div class=" ">
+
   <a routerLink="/user-management">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
       viewBox="0 0 16 16">
@@ -6,13 +7,14 @@
         d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8" />
     </svg>
   </a>
+  <app-section-header  [title]="title" time=""></app-section-header>
 
-  <app-section-header [title]="title" time=""></app-section-header>
 
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-6">
       <div class="card mb-3">
         <div class="card-body">
+
           <h6 class="card-subtitle mb-2 text-muted">{{ user.role }}</h6>
           <h5 class="card-title">{{ user.name }} {{ user.surname }}</h5>
           <p class="card-text text-secondary small mb-1" style="opacity: 0.8;">{{ user.email }}</p>
@@ -22,12 +24,8 @@
           </span>
         </div>
       </div>
-
-
     </div>
-    <div class="col-md-9">
 
-    </div>
     <div class="row">
       <div class="col-md-6">
         <div class="accordion" id="poiAccordion">
