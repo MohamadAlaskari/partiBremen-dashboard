@@ -40,10 +40,11 @@ export class Report {
     public updatedAt: string,
     public kommentar: string,
     public title: string,
-    public reporter: User,
-    public reportedUser: User,
-    public reportedPoi: string,
-    public reportedComment: Comment
+    public reporterId: string,
+    public reportedUserId: string | null,
+    public reportedPoiId: string | null,
+    public reportedCommentId: string | null,
+    public status: 'PENDING' | 'DISMISSED' | 'RESOLVED' | 'REVIEWED'
   ) {}
 }
 

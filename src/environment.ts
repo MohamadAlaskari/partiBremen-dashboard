@@ -22,6 +22,16 @@ export const environment = {
       update: '/user',
       delete: '/user',
     },
+    report: {
+      findAll: '/report',
+      findById: '/report',
+      create: 'report',
+      findRebortsByRebortedUserId: '/reports/user',
+      findRebortsByRebortedPoiId: '/reports/comment',
+      findRebortsByRebortedCommentId: '/reports/poi',
+      update: '/report/update',
+      delete: '/report',
+    },
     comments: {
       getAll: '/comment',
       delete: '/comment',

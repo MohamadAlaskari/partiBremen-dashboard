@@ -1,27 +1,29 @@
 <app-section-header [title]="title_clientMessages" time=""></app-section-header>
 <div class="d-flex justify-content-center align-content-center py-2">
-
   <app-tabs [tabs]="tabConfig" (tabChanged)="handleTabChange($event)"></app-tabs>
 </div>
 
-<div class="messages bt-4 overflow-y-scroll  ">
-
-
-  <div class="  message-box d-flex align-items-start" *ngFor="let notification of notifications">
+<div class="messages bt-4 overflow-y-scroll">
+  <div class="message-box d-flex align-items-start" *ngFor="let notification of filteredNotifications"
+    (click)="navigateToReport(notification.id)">
     <div class="avatar d-flex align-items-center justify-content-center rounded-circle">
-      @if (notification.reporterAvatar) {
-      <img [src]="notification.reporterAvatar" alt="profile image">
 
-      }@else{
+      @if(false){
+      <img [src]="" alt="profile image">
+
+      }@else {
       <div class="initials">
-        {{ getInitials(notification.reporterName) }}
+        <div class="initials">{{ getInitials(getUserById(notification.reporterId)?.name || '',
+          getUserById(notification.reporterId)?.surname || '') }}</div>
       </div>
+
       }
 
     </div>
     <div class="message-content">
       <div class="message-header">
-        <div class="name">{{ notification.reporterName }}</div>
+        <div class="name">{{ getUserById(notification.reporterId)?.name }} {{
+          getUserById(notification.reporterId)?.surname }}</div>
         <div class="star-checkbox">
           <input type="checkbox" [id]="'star-' + notification.id">
           <label [for]="'star-' + notification.id">
@@ -36,16 +38,10 @@
         </div>
       </div>
       <p class="message-line">
-        <strong>Reported Item:</strong> {{ notification.reportedItemTitle }}
+        <strong>{{ getReportedItemType(notification) }}:</strong> {{ notification.title }}
       </p>
-      <p class="message-line">
-        {{ notification.comment }}
-      </p>
-      <p class="message-line time">
-        {{ notification.date }}
-      </p>
+      <p class="message-line">{{ notification.kommentar }}</p>
+      <p class="message-line time">{{ notification.createdAt | date: 'MMM d, y, h:mm a' }}</p>
     </div>
   </div>
-
-
 </div>
