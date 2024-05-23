@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserManagementService } from '../../services/user-management-service/user-management.service';
 import { ToastService } from '../../../../shared/services/toast.service';
-import * as L from 'leaflet';
 import {
   User,
   Poi,
@@ -11,8 +10,8 @@ import {
   Report,
   Survey,
 } from '../../../../core/models/partiBremen.model';
-import { loadLeaflet } from '../../../../utils/leaflet-browser';
-
+import * as mapboxgl from 'mapbox-gl'; // Korrekt importieren
+import { environment } from '../../../../../environment';
 @Component({
   selector: 'app-view-user',
   templateUrl: './view-user.component.html',
@@ -24,16 +23,24 @@ export class ViewUserComponent {
   user!: User;
   userPois: Poi[] = [];
   selectedPoi: Poi | null = null;
-  map: L.Map | null = null;
-  markers: { [key: string]: L.Marker } = {};
+
+  map!: mapboxgl.Map;
+  markers: { [key: string]: mapboxgl.Marker } = {};
 
   constructor(
     private route: ActivatedRoute,
     private userService: UserManagementService,
     private toastService: ToastService
   ) {}
+
   ngOnInit(): void {
     this.extractIdFromRoute();
+  }
+
+  ngOnDestroy(): void {
+    if (this.map) {
+      this.map.remove();
+    }
   }
 
   private extractIdFromRoute(): void {
@@ -47,9 +54,14 @@ export class ViewUserComponent {
   }
 
   private loadUser(id: string): void {
-    this.userService.getUserById(id).subscribe((user: User) => {
-      this.user = user;
-    });
+    this.userService.getUserById(id).subscribe(
+      (user: User) => {
+        this.user = user;
+      },
+      (error) => {
+        this.toastService.show('error', 'Error', 'Error loading user');
+      }
+    );
   }
 
   private loadUserPois(userId: string): void {
@@ -57,7 +69,6 @@ export class ViewUserComponent {
       next: (userPois: Poi[]) => {
         this.userPois = userPois;
         this.initializeMap(); // Map initialisieren, nachdem die POIs geladen wurden
-        console.log('user userPois: ', this.userPois);
       },
       error: (error) => {
         console.log('Error loading user POIs: ', error);
@@ -66,44 +77,125 @@ export class ViewUserComponent {
     });
   }
 
-  private async initializeMap(): Promise<void> {
-    if (this.map) {
-      this.map.remove();
-    }
-
-    const L = await loadLeaflet();
-
-    this.map = L.map('map').setView([53.0792962, 8.8016936], 13);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-    }).addTo(this.map);
-
-    const defaultIcon = L.icon({
-      iconUrl:
-        'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-      shadowUrl:
-        'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41],
+  // mapbox
+  private initializeMap(): void {
+    this.map = new mapboxgl.Map({
+      accessToken: environment.mapbox.accessToken,
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v12',
+      center: [8.8016936, 53.0792962],
+      zoom: 9,
     });
 
+    // Add navigation control (zoom and rotation controls)
+    this.map.addControl(new mapboxgl.NavigationControl());
+
+    // Add full screen control
+    this.map.addControl(new mapboxgl.FullscreenControl());
+
+    // Add custom 3D toggle control
+    const toggle3DControl = this.create3DToggleControl();
+    this.map.addControl(toggle3DControl);
+
+    this.map.on('load', () => {
+      this.addMarkersToMap();
+    });
+  }
+
+  private addMarkersToMap(): void {
     this.userPois.forEach((poi) => {
-      if (this.map) {
-        const marker = L.marker([poi.latitude, poi.longitude], {
-          icon: defaultIcon,
-        })
-          .addTo(this.map)
-          .bindPopup(`<b>${poi.titel}</b><br>${poi.description}`)
-          .on('click', () => {
-            this.selectedPoi = poi;
-            this.toggleAccordion(poi.id);
-          });
-        this.markers[poi.id] = marker;
-      }
+      const color = poi.active ? '#5ee560' : '#e55e5e';
+      const el = document.createElement('div');
+      el.className = 'marker';
+      el.style.backgroundColor = color;
+      el.style.width = '15px';
+      el.style.height = '15px';
+      el.style.borderRadius = '50%';
+
+      const marker = new mapboxgl.Marker(el)
+        .setLngLat([poi.longitude, poi.latitude])
+        .setPopup(
+          new mapboxgl.Popup().setHTML(
+            `<b>${poi.titel}</b><br>${poi.description}`
+          )
+        )
+        .addTo(this.map);
+
+      this.markers[poi.id] = marker;
     });
+  }
+
+  private create3DToggleControl() {
+    const controlDiv = document.createElement('div');
+    controlDiv.className = 'mapboxgl-ctrl';
+
+    const button = document.createElement('button');
+    button.textContent = 'Toggle 3D';
+    button.onclick = () => this.toggle3DMode();
+    controlDiv.appendChild(button);
+
+    return {
+      onAdd: () => controlDiv,
+      onRemove: () => controlDiv.parentNode?.removeChild(controlDiv),
+    };
+  }
+
+  private toggle3DMode(): void {
+    const layerId = '3d-buildings';
+
+    if (this.map.getLayer(layerId)) {
+      // Schalte die Sichtbarkeit der 3D-Gebäude-Schicht um
+      const visibility = this.map.getLayoutProperty(layerId, 'visibility');
+      this.map.setLayoutProperty(
+        layerId,
+        'visibility',
+        visibility === 'visible' ? 'none' : 'visible'
+      );
+      console.log('3D visibility toggled:', visibility);
+    } else {
+      // Füge die Quelle nur hinzu, wenn sie nicht bereits vorhanden ist
+      if (!this.map.getSource('composite')) {
+        this.map.addSource('composite', {
+          type: 'vector',
+          url: 'mapbox://mapbox.mapbox-streets-v8',
+        });
+      }
+      // Füge die 3D-Gebäude-Schicht hinzu
+      this.map.addLayer({
+        id: layerId,
+        source: 'composite',
+        'source-layer': 'building',
+        filter: ['==', 'extrude', 'true'],
+        type: 'fill-extrusion',
+        minzoom: 15,
+        paint: {
+          'fill-extrusion-color': '#aaa',
+          'fill-extrusion-height': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            15,
+            0,
+            15.05,
+            ['get', 'height'],
+          ],
+          'fill-extrusion-base': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            15,
+            0,
+            15.05,
+            ['get', 'min_height'],
+          ],
+          'fill-extrusion-opacity': 0.6,
+        },
+        layout: {
+          visibility: 'visible',
+        },
+      });
+      console.log('3D buildings layer added');
+    }
   }
 
   private toggleAccordion(poiId: string): void {
@@ -160,6 +252,7 @@ export class ViewUserComponent {
     }
     return 0;
   }
+
   countUserPois(): number {
     return this.userPois.length;
   }

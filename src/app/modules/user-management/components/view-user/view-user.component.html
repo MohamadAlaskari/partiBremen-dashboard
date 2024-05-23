@@ -14,7 +14,7 @@
     <div class="col-md-6">
       <div class="card mb-3">
         <div class="card-body">
-
+          @if(user){
           <h6 class="card-subtitle mb-2 text-muted">{{ user.role }}</h6>
           <h5 class="card-title">{{ user.name }} {{ user.surname }}</h5>
           <p class="card-text text-secondary small mb-1" style="opacity: 0.8;">{{ user.email }}</p>
@@ -22,6 +22,10 @@
           <span class="badge" [ngClass]="user.active ? 'bg-success' : 'bg-danger'">
             {{ user.active ? 'Active' : 'Inactive' }}
           </span>
+          }@else{
+          <p>es könnte kein user</p>
+          }
+
         </div>
       </div>
     </div>
