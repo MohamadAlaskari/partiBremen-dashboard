@@ -13,22 +13,62 @@
   <div class="row">
     <div class="col-md-6">
       <div class="card mb-3">
-        <div class="card-body">
-          @if(user){
-          <h6 class="card-subtitle mb-2 text-muted">{{ user.role }}</h6>
-          <h5 class="card-title">{{ user.name }} {{ user.surname }}</h5>
-          <p class="card-text text-secondary small mb-1" style="opacity: 0.8;">{{ user.email }}</p>
-          <p class="card-text text-secondary small mb-1" style="opacity: 0.8;">Date of Birth: {{ user.dob }}</p>
-          <span class="badge" [ngClass]="user.active ? 'bg-success' : 'bg-danger'">
-            {{ user.active ? 'Active' : 'Inactive' }}
-          </span>
-          }@else{
-          <p>es könnte kein user</p>
-          }
+        <div class="card-body ">
+          <div class="message-box d-flex align-items-start">
+
+            @if(user){
+            <div class="">
+              <div class="avatar d-flex align-items-center justify-content-center rounded-circle">
+                @if (false) {
+                <img [src]="" alt="profile image">
+
+                }@else{
+                <div class="initials">
+                  {{ getInitials(user.name, user.surname) }}
+                </div>
+                }
+              </div>
+            </div>
+            <div class="">
+              <h6 class="card-subtitle mb-2 text-muted">{{ user.role }}</h6>
+
+              <h5 class="card-title fw-bolder mb-0">{{ user.name }} {{ user.surname }}
+                @if (user.verified) {
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0040ff"
+                  class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                </svg>
+                } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-check-circle" viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                  <path
+                    d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05" />
+                </svg>
+                }
+              </h5>
+
+              <p class="card-text text-secondary small mb-1" style="opacity: 0.8;">{{ user.email }}</p>
+              <p class="card-text text-secondary small mb-1" style="opacity: 0.8;">Date of Birth: {{ user.dob }}</p>
+              <span class="badge mb-3" [ngClass]="user.active ? 'bg-success' : 'bg-danger'">
+                {{ user.active ? 'Active' : 'Inactive' }}
+              </span>
+
+              <app-state-counter [states]="counters"></app-state-counter>
+            </div>
+
+
+
+            }@else{
+            <p>Could not load user information.</p>
+            }
+          </div>
 
         </div>
       </div>
     </div>
+
 
     <div class="row">
       <div class="col-md-6">

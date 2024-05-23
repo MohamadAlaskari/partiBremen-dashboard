@@ -13,6 +13,7 @@ import {
 import * as mapboxgl from 'mapbox-gl'; // Korrekt importieren
 import { environment } from '../../../../../environment';
 import { MapboxService } from '../../services/mapbox-service/mapbox.service';
+import { CounterState } from '../../../../shared/components/state-counter/state-counter.component';
 @Component({
   selector: 'app-view-user',
   templateUrl: './view-user.component.html',
@@ -22,6 +23,7 @@ export class ViewUserComponent {
   title: string = 'View User';
   id: string | null = null;
   user!: User;
+  counters: CounterState[] = [];
   userPois: Poi[] = [];
   selectedPoi: Poi | null = null;
 
@@ -65,6 +67,7 @@ export class ViewUserComponent {
     this.userService.getPoisByUserId(userId).subscribe({
       next: (userPois: Poi[]) => {
         this.userPois = userPois;
+        this.updateCounters();
         this.initializeMap(); // Map initialisieren, nachdem die POIs geladen wurden
       },
       error: (error) => {
@@ -142,5 +145,23 @@ export class ViewUserComponent {
 
   countUserPois(): number {
     return this.userPois.length;
+  }
+
+  updateCounters(): void {
+    this.counters = [
+      { count: this.userPois.length, label: 'POIs' },
+      { count: 20, label: 'Credit' },
+      { count: 100, label: 'Comments' },
+    ];
+  }
+
+  getInitials(name: string, surname: string): string {
+    const names = name.split(' ');
+    const surnames = surname.split(' ');
+
+    const fname = names.map((n) => n.charAt(0).toUpperCase()).join('');
+    const fsurname = surnames.map((n) => n.charAt(0).toUpperCase()).join('');
+
+    return fname + fsurname;
   }
 }

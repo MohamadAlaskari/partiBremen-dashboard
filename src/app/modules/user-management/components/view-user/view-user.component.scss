@@ -1,3 +1,26 @@
+.message-box {
+  border-top: 1px solid var(--message-box-border);
+  padding: 16px;
+  width: 100%;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #eea8a8;
+  color: #333;
+  font-size: 1em;
+  font-weight: bold;
+  // margin-right: 16px;
+  img {
+    border-radius: 50%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    width: 40px;
+    height: 40px;
+  }
+}
+
 .mapboxgl-ctrl {
   position: relative;
   display: flex;
@@ -21,8 +44,6 @@
 .mapboxgl-ctrl button:hover {
   background: #005f7a;
 }
-
-
 
 //marker
 .marker {
