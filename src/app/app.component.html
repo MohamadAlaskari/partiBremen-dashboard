@@ -1,35 +1,32 @@
 <app-toast></app-toast>
 
-@if(isAuthenticated()){
-<app-sidenav></app-sidenav>
+<ng-container *ngIf="isAuthenticated()">
+  <app-sidenav></app-sidenav>
 
-<div class="app-container d-flex flex-column bg-light">
+  <div class="app-container d-flex flex-column bg-light">
+    <app-header (toggleNotifications)="toggleNotifications()"></app-header>
 
-  <app-header></app-header>
+    <div class="app-content d-flex flex-column overflow-hidden">
+      <div class="row">
 
-  <div class="app-content d-flex flex-column overflow-hidden">
-    <div class="d-md-flex gap-2 me-3 ">
-
-      <div class="col-md-8 main-section  rounded-5 bg-white py-5 px-3">
-
-        <router-outlet />
-
-      </div>
-      <div class=" col-md-4 ">
-        <div class="report-rotifications py-5 px-3 bg-white rounded-5 overflow-hidden ">
-
-          <app-report-notifications></app-report-notifications>
+        <div class="col-md-4" [@fadeInOut] *ngIf="showNotifications || !isAuthenticated()">
+          <div class="report-notifications py-5 px-3 bg-white rounded-5 overflow-hidden">
+            <app-report-notifications></app-report-notifications>
+          </div>
         </div>
+        <div class="main-section rounded-5 bg-white py-5 px-3" [@fadeInOut] [ngClass]="{'col-md-12': !showNotifications, 'col-md-8': showNotifications}">
+          <router-outlet></router-outlet>
+        </div>
+
       </div>
     </div>
 
     <app-footer></app-footer>
   </div>
-</div>
-}@else {
+</ng-container>
 
-<div class="login-container">
-  <app-login></app-login>
-</div>
-
-}
+<ng-container *ngIf="!isAuthenticated()">
+  <div class="login-container">
+    <app-login></app-login>
+  </div>
+</ng-container>
