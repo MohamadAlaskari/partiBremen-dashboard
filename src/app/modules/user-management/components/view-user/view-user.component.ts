@@ -37,7 +37,7 @@ export class ViewUserComponent {
   ngOnInit(): void {
     this.extractIdFromRoute();
   }
-
+  ngAfterViewInit(): void {}
   ngOnDestroy(): void {
     this.mapboxService.map?.remove();
   }
