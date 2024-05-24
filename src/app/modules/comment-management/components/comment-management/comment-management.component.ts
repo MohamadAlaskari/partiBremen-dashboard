@@ -59,12 +59,27 @@ export class CommentManagementComponent implements OnInit, OnDestroy {
     }
   }
 
-  editComment(comment: Comment): void {
-
-  }
-
-  updateComment(comment: Comment): void {
-
+  editComment(commentID: string, comment: Comment): void {
+    this.subscriptions.add(
+      this.commentManagementService.editComment(commentID, comment).subscribe({
+        next: (editedComment) => {
+          let index = this.comments.findIndex((comment) => comment.id === editedComment.id);
+          this.comments[index] = editedComment;
+          this.toastService.show(
+            'success',
+            'Success',
+            'Comment deleted successfully'
+          );
+        },
+        error: (error) => {
+          this.toastService.show(
+            'error',
+            'Error',
+            `Error deleting comment: ${error.message}`
+          );
+        },
+      })
+    )
   }
 
   deleteComment(commentID: string): void {

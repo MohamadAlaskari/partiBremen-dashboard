@@ -5,7 +5,7 @@
     <table>
       <thead>
         <tr>
-          <th>ID</th>
+          <th>Comment ID</th>
           <th>Comment</th>
           <th>Created At</th>
           <th>Updated At</th>
@@ -17,8 +17,8 @@
           <tr>
             <td>{{ comment.id }}</td>
             <td>{{ comment.actualcomment }}</td>
-            <td>{{ comment.createdAt }}</td>
-            <td>{{ comment.updatedAt }}</td>
+            <td>{{ comment.createdAt | date: 'short' }}</td>
+            <td>{{ comment.updatedAt | date: 'short' }}</td>
             <td>
               <div class="dropdown">
                 <button type="button" class="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="toggleDropdown(comment.id)">
@@ -29,7 +29,7 @@
                   </svg>
                 </button>
                 <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <li><a class="dropdown-item" (click)="editComment(comment)">Edit</a></li>
+                  <li><a class="dropdown-item" (click)="editComment(comment.id, comment)">Edit</a></li>
                   <li><a class="dropdown-item" (click)="deleteComment(comment.id)">Delete</a></li>
                 </ul>
               </div>

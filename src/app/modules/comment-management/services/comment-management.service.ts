@@ -21,4 +21,8 @@ export class CommentManagementService {
     return this.apiService.delete<any>(`${this.endpoints.delete}/${commentId}`);
   }
 
+  editComment(commentID: string, comment: Comment): Observable<Comment> {
+    return this.apiService.put<Comment>(`${this.endpoints.edit}/${commentID}`, comment)
+  }
+
 }
