@@ -67,7 +67,6 @@ export class MapboxService {
       this.markers[poi.id] = marker;
     });
   }
-
   toggle3DMode(): void {
     const layerId = '3d-buildings';
 
@@ -78,6 +77,12 @@ export class MapboxService {
         'visibility',
         visibility === 'visible' ? 'none' : 'visible'
       );
+
+      // Reset the pitch and bearing when 3D is turned off
+      if (visibility === 'visible') {
+        this.map.easeTo({ pitch: 0, bearing: 0 });
+      }
+
       console.log('3D visibility toggled:', visibility);
     } else {
       if (!this.map.getSource('composite')) {
@@ -119,6 +124,10 @@ export class MapboxService {
           visibility: 'visible',
         },
       });
+
+      // Set the pitch and bearing to give a 3D perspective
+      this.map.easeTo({ pitch: 60, bearing: -20 });
+
       console.log('3D buildings layer added');
     }
   }
