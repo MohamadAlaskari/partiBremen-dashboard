@@ -39,7 +39,8 @@
             "styles": [
               "src/styles.scss",
               "node_modules/leaflet/dist/leaflet.css",
-              "node_modules/mapbox-gl/dist/mapbox-gl.css"
+              "node_modules/mapbox-gl/dist/mapbox-gl.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css"
             ],
             "scripts": [
               "node_modules/leaflet/dist/leaflet.js"

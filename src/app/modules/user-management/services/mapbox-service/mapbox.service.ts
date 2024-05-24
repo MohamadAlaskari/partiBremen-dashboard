@@ -23,8 +23,9 @@ export class MapboxService {
       zoom: zoom,
     });
 
-    // Add navigation control (zoom and rotation controls)
-    this.map.addControl(new mapboxgl.NavigationControl());
+    // Add navigation control (zoom and rotation controls) to the left
+    const nav = new mapboxgl.NavigationControl();
+    this.map.addControl(nav, 'top-left');
 
     // Add full screen control
     this.map.addControl(new mapboxgl.FullscreenControl());
@@ -32,6 +33,16 @@ export class MapboxService {
     // Add custom 3D toggle control
     const toggle3DControl = this.create3DToggleControl();
     this.map.addControl(toggle3DControl);
+
+    // Add geolocate control to the map
+    const geolocateControl = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      trackUserLocation: true,
+      showUserLocation: true,
+    });
+    this.map.addControl(geolocateControl);
   }
 
   addMarkers(pois: Poi[]): void {
@@ -117,7 +128,12 @@ export class MapboxService {
     controlDiv.className = 'mapboxgl-ctrl';
 
     const button = document.createElement('button');
-    button.textContent = 'Toggle 3D';
+    button.innerHTML = '<i class="bi bi-badge-3d-fill"></i>'; // Bootstrap icon for buildings
+    //button.style.background = '#555';
+    button.style.border = 'none';
+    button.style.width = '30px';
+    button.style.height = '30px';
+    button.style.cursor = 'pointer';
     button.onclick = () => this.toggle3DMode();
     controlDiv.appendChild(button);
 
