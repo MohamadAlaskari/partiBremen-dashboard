@@ -25,14 +25,14 @@ export class MapboxService {
 
     // Add navigation control (zoom and rotation controls) to the left
     const nav = new mapboxgl.NavigationControl();
-    this.map.addControl(nav, 'top-left');
+    this.map.addControl(nav, 'bottom-right');
 
     // Add full screen control
     this.map.addControl(new mapboxgl.FullscreenControl());
 
     // Add custom 3D toggle control
     const toggle3DControl = this.create3DToggleControl();
-    this.map.addControl(toggle3DControl);
+    this.map.addControl(toggle3DControl, 'top-right');
 
     // Add geolocate control to the map
     const geolocateControl = new mapboxgl.GeolocateControl({
@@ -42,7 +42,11 @@ export class MapboxService {
       trackUserLocation: true,
       showUserLocation: true,
     });
-    this.map.addControl(geolocateControl);
+    this.map.addControl(geolocateControl, 'bottom-right');
+
+    // Add style switcher control
+    const styleSwitcherControl = this.createStyleSwitcherControl();
+    this.map.addControl(styleSwitcherControl, 'top-left');
   }
 
   addMarkers(pois: Poi[]): void {
@@ -67,6 +71,7 @@ export class MapboxService {
       this.markers[poi.id] = marker;
     });
   }
+
   toggle3DMode(): void {
     const layerId = '3d-buildings';
 
@@ -132,19 +137,65 @@ export class MapboxService {
     }
   }
 
+  changeMapStyle(style: string): void {
+    this.map.setStyle(`mapbox://styles/mapbox/${style}`);
+    // Re-add the 3D layer if it was added
+    this.map.on('style.load', () => {
+      const layerId = '3d-buildings';
+      if (this.map.getLayer(layerId)) {
+        this.map.setLayoutProperty(layerId, 'visibility', 'visible');
+      }
+    });
+  }
+
+  toggleStreetViewMode(): void {
+    this.map.easeTo({
+      pitch: 80,
+      bearing: 0,
+      center: this.map.getCenter(),
+      zoom: this.map.getZoom(),
+    });
+  }
+
   private create3DToggleControl() {
     const controlDiv = document.createElement('div');
-    controlDiv.className = 'mapboxgl-ctrl';
+    controlDiv.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
 
     const button = document.createElement('button');
     button.innerHTML = '<i class="bi bi-badge-3d-fill"></i>'; // Bootstrap icon for buildings
-    //button.style.background = '#555';
+    button.style.background = 'white';
     button.style.border = 'none';
     button.style.width = '30px';
     button.style.height = '30px';
     button.style.cursor = 'pointer';
     button.onclick = () => this.toggle3DMode();
     controlDiv.appendChild(button);
+
+    return {
+      onAdd: () => controlDiv,
+      onRemove: () => controlDiv.parentNode?.removeChild(controlDiv),
+    };
+  }
+
+  private createStyleSwitcherControl() {
+    const controlDiv = document.createElement('div');
+    controlDiv.className = 'mapboxgl-ctrl mapboxgl-ctrl-group style-switcher';
+
+    const styles = [
+      { id: 'satellite-streets-v12', label: 'Satellite', icon: 'satellite' },
+      { id: 'light-v10', label: 'Light', icon: 'light' },
+      { id: 'dark-v10', label: 'Dark', icon: 'dark' },
+      { id: 'streets-v12', label: 'Streets', icon: 'streets' },
+      { id: 'outdoors-v11', label: 'Outdoors', icon: 'outdoors' },
+    ];
+
+    styles.forEach((style) => {
+      const button = document.createElement('button');
+      button.className = `style-button ${style.icon}`;
+      button.title = style.label;
+      button.onclick = () => this.changeMapStyle(style.id);
+      controlDiv.appendChild(button);
+    });
 
     return {
       onAdd: () => controlDiv,
