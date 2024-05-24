@@ -1,8 +1,7 @@
-<div class="app-sidebar bg-light">
-  <div class="icon-menu">
-    <span class="app-icon"></span>
-  </div>
-  <div class="sidebar-content">
+<div class="app-sidebar" *ngIf="!hidden">
+
+
+  <div class="sidebar-content" [ngClass]="{'show-sidebar': showSidebar}">
 
     <!-- Dashboard icon-->
     <a routerLink="/dashboard" routerLinkActive="active" class="sidebar-content-link">

@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+
 import { Router } from '@angular/router';
 import { User } from '../../models/user.model';
 import { AuthService } from '../../../modules/auth/services/auth.service';
@@ -11,8 +12,12 @@ import { ToastService } from '../../services/toast.service';
 })
 export class HeaderComponent {
   @Output() toggleNotifications = new EventEmitter<void>();
+  @Output() sidebarToggled = new EventEmitter<void>();
   onClickToggleNotifications() {
     this.toggleNotifications.emit();
+  }
+  toggleSidebar() {
+    this.sidebarToggled.emit();
   }
   title = 'Parti Bremen';
   currentUser: User | null = null;

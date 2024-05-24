@@ -20,7 +20,11 @@ import { trigger, transition, style, animate } from '@angular/animations';
 })
 export class AppComponent  implements OnInit{
   showNotifications: boolean = true;
+  isSidebarHidden = false;
 
+  onSidebarToggled() {
+    this.isSidebarHidden = !this.isSidebarHidden;
+  }
   toggleNotifications() {
     this.showNotifications = !this.showNotifications;
   }

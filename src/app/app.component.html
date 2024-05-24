@@ -1,27 +1,27 @@
 <app-toast></app-toast>
 
 <ng-container *ngIf="isAuthenticated()">
-  <app-sidenav></app-sidenav>
+  <div class="app-wrapper" [ngClass]="{'expanded': isSidebarHidden}">
+    <app-sidenav [hidden]="isSidebarHidden"></app-sidenav>
 
-  <div class="app-container d-flex flex-column bg-light">
-    <app-header (toggleNotifications)="toggleNotifications()"></app-header>
+    <div class="app-container d-flex flex-column bg-light" [ngClass]="{'expanded': isSidebarHidden}">
+      <app-header (toggleNotifications)="toggleNotifications()" (sidebarToggled)="onSidebarToggled()"></app-header>
 
-    <div class="app-content d-flex flex-column overflow-hidden">
-      <div class="row">
-
-        <div class="col-md-4" [@fadeInOut] *ngIf="showNotifications || !isAuthenticated()">
-          <div class="report-notifications py-5 px-3 bg-white rounded-5 overflow-hidden">
-            <app-report-notifications></app-report-notifications>
+      <div class="app-content d-flex flex-column overflow-hidden">
+        <div class="row">
+          <div class="col-md-4" [@fadeInOut] *ngIf="showNotifications || !isAuthenticated()">
+            <div class="report-notifications py-5 px-3 bg-white rounded-5 overflow-hidden">
+              <app-report-notifications></app-report-notifications>
+            </div>
+          </div>
+          <div class="main-section rounded-5 bg-white py-5 px-3" [@fadeInOut] [ngClass]="{'col-md-12': !showNotifications, 'col-md-8': showNotifications}">
+            <router-outlet></router-outlet>
           </div>
         </div>
-        <div class="main-section rounded-5 bg-white py-5 px-3" [@fadeInOut] [ngClass]="{'col-md-12': !showNotifications, 'col-md-8': showNotifications}">
-          <router-outlet></router-outlet>
-        </div>
-
       </div>
-    </div>
 
-    <app-footer></app-footer>
+      <app-footer></app-footer>
+    </div>
   </div>
 </ng-container>
 
