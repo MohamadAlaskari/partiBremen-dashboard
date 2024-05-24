@@ -31,7 +31,7 @@ export class ViewUserComponent {
     private route: ActivatedRoute,
     private userService: UserManagementService,
     private toastService: ToastService,
-    private mapboxService: MapboxService // Hinzufügen des Mapbox-Services
+    private mapboxService: MapboxService
   ) {}
 
   ngOnInit(): void {
@@ -68,7 +68,7 @@ export class ViewUserComponent {
       next: (userPois: Poi[]) => {
         this.userPois = userPois;
         this.updateCounters();
-        this.initializeMap(); // Map initialisieren, nachdem die POIs geladen wurden
+        this.initializeMap();
       },
       error: (error) => {
         console.log('Error loading user POIs: ', error);
@@ -86,6 +86,14 @@ export class ViewUserComponent {
 
   private toggle3DMode(): void {
     this.mapboxService.toggle3DMode();
+  }
+
+  private toggleStreetViewMode(): void {
+    this.mapboxService.toggleStreetViewMode();
+  }
+
+  private changeMapStyle(style: string): void {
+    this.mapboxService.changeMapStyle(style);
   }
 
   private toggleAccordion(poiId: string): void {
@@ -124,8 +132,8 @@ export class ViewUserComponent {
       new Date().toISOString(),
       new Date().toISOString(),
       voteType,
-      null, // Adjust here if necessary
-      null, // Adjust hier if necessary
+      null,
+      null,
       poiId,
       this.user
     );

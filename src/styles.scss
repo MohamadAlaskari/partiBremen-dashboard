@@ -131,3 +131,127 @@ $alert-border-radius: 5px;
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }
+
+//map style
+
+.mapboxgl-ctrl {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  padding: 0px;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.mapboxgl-ctrl button {
+  background: #0078a8;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.mapboxgl-ctrl button:hover {
+  background: #005f7a;
+}
+
+//marker
+.marker {
+  display: inline-block;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  background-color: green; /* default color, can be overridden */
+  position: relative;
+  border: 3px solid #000;
+
+  z-index: 1;
+}
+
+.marker::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  background-color: inherit;
+  border-radius: 50%;
+  opacity: 0.5;
+  transform: translate(-50%, -50%);
+  animation: pulsate 3s infinite ease-in;
+}
+
+@keyframes pulsate {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+}
+.style-switcher {
+  display: flex;
+  flex-direction: column; /* Ändere dies auf row für eine horizontale Anzeige */
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+  padding: 5px;
+  position: relative;
+  top: 0px;
+  right: 0px;
+  z-index: 1;
+}
+
+.style-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #f0f0f0; /* Füge eine Hintergrundfarbe hinzu */
+}
+
+.satellite {
+  background: url("https://images.unsplash.com/photo-1500333070776-343c73e1eb4a?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8ODJ8fG1hcHxlbnwwfHwwfHx8MA%3D%3D")
+    no-repeat center center;
+  background-size: cover;
+}
+
+.style-button.light {
+  background: url("https://images.unsplash.com/photo-1521661488642-d86e85a90de2?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bWFwJTIwb3V0ZG9vcnxlbnwwfHwwfHx8MA%3D%3D")
+    no-repeat center center;
+  background-size: cover;
+}
+
+.style-button.dark {
+  background: url("https://images.unsplash.com/photo-1521661488642-d86e85a90de2?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bWFwJTIwb3V0ZG9vcnxlbnwwfHwwfHx8MA%3D%3D")
+    no-repeat center center;
+  background-size: cover;
+}
+
+.style-button.streets {
+  background: url("https://images.unsplash.com/photo-1521661488642-d86e85a90de2?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bWFwJTIwb3V0ZG9vcnxlbnwwfHwwfHx8MA%3D%3D")
+    no-repeat center center;
+  background-size: cover;
+}
+
+.style-button.outdoors {
+  background: url("https://images.unsplash.com/photo-1521661488642-d86e85a90de2?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bWFwJTIwb3V0ZG9vcnxlbnwwfHwwfHx8MA%3D%3D")
+    no-repeat center center;
+  background-size: cover;
+}
