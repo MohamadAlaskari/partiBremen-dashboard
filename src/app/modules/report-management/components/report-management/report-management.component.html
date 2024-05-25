@@ -11,7 +11,8 @@
     <p><strong>Reported POI ID:</strong> {{ report.reportedPoiId }}</p>
     <p><strong>Reported Comment ID:</strong> {{ report.reportedCommentId }}</p>
     <p><strong>Reporter ID:</strong> {{ report.reporterId }}</p>
-    <p><strong>Reporter :</strong> {{ reporter.name }} {{ reporter.surname }}</p>
+
+    <p *ngIf="reporter"><strong>Reporter :</strong> {{ reporter.name }} {{ reporter.surname }}</p>
 
     <p><strong>Created At:</strong> {{ report.createdAt | date: 'short' }}</p>
     <p><strong>Updated At:</strong> {{ report.updatedAt | date: 'short' }}</p>
@@ -30,7 +31,7 @@
         Set to Resolved
       </button>
     </div>
-    
+
   </div>
 
   <div *ngIf="reports.length > 0" class="mt-5">

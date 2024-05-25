@@ -68,7 +68,6 @@ export class ReportManagementComponent {
       this.reportService.getReportByReportId(reportId).subscribe({
         next: (report: Report) => {
           this.report = report;
-          this.updateReportStatusToReviewed(report);
           this.loadReporter(report.reporterId);
         },
         error: (error) => {

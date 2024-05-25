@@ -5,6 +5,7 @@ import { UserManagementService } from '../../../modules/user-management/services
 import { ToastService } from '../../services/toast.service';
 import { Router } from '@angular/router';
 import { error } from 'console';
+import { Subscription, interval, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-report-notifications',
@@ -16,6 +17,7 @@ export class ReportNotificationsComponent {
   notifications: Report[] = [];
   filteredNotifications: Report[] = [];
   usersMap: Map<string, User> = new Map();
+  private pollingSubscription!: Subscription;
 
   tabConfig = [
     { label: 'View All', value: 'all' },
@@ -32,21 +34,29 @@ export class ReportNotificationsComponent {
   ) {}
 
   ngOnInit(): void {
-    this.loadReports();
+    this.startPolling();
   }
 
-  loadReports(): void {
-    this.reportService.getReports().subscribe({
-      next: (reports: Report[]) => {
-        this.notifications = reports;
-        this.filterNotifications(this.currentTabFilter);
-        this.loadUsersForReports();
-      },
-      error: (error) => {
-        console.error('Error loading reports:', error);
-        this.toastService.show('error', 'Error', 'Error loading reports');
-      },
-    });
+  ngOnDestroy(): void {
+    if (this.pollingSubscription) {
+      this.pollingSubscription.unsubscribe();
+    }
+  }
+
+  startPolling(): void {
+    this.pollingSubscription = interval(1000) // Intervall in Millisekunden, hier alle 1 Sekunden
+      .pipe(switchMap(() => this.reportService.getReports()))
+      .subscribe({
+        next: (reports: Report[]) => {
+          this.notifications = reports;
+          this.filterNotifications(this.currentTabFilter);
+          this.loadUsersForReports();
+        },
+        error: (error) => {
+          console.error('Error loading reports:', error);
+          this.toastService.show('error', 'Error', 'Error loading reports');
+        },
+      });
   }
 
   private loadUsersForReports(): void {
@@ -106,6 +116,7 @@ export class ReportNotificationsComponent {
   getUserById(userId: string): User | undefined {
     return this.usersMap.get(userId);
   }
+
   navigateToReport(reportId: string): void {
     this.router.navigate(['/report-management', reportId]);
   }
