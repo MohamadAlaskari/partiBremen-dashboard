@@ -29,7 +29,10 @@
     font-size: 20px;
     line-height: 24px;
     font-weight: 700;
-     margin: 0 32px;
+    margin: 0 32px;
+  }
+  &-icon {
+    cursor: pointer;
   }
 }
 
@@ -58,7 +61,7 @@
     opacity: 1;
   }
 }
-.notification-btn{
+.notification-btn {
   background-color: var(--button-bg);
   color: #fff;
 }
