@@ -4,6 +4,7 @@ import { Report, User } from '../../../core/models/partiBremen.model';
 import { UserManagementService } from '../../../modules/user-management/services/user-management-service/user-management.service';
 import { ToastService } from '../../services/toast.service';
 import { Router } from '@angular/router';
+import { error } from 'console';
 
 @Component({
   selector: 'app-report-notifications',
@@ -53,15 +54,15 @@ export class ReportNotificationsComponent {
       this.notifications.map((report) => report.reporterId)
     );
     userIds.forEach((userId) => {
-      this.userService.getUserById(userId).subscribe(
-        (user: User) => {
+      this.userService.getUserById(userId).subscribe({
+        next: (user: User) => {
           this.usersMap.set(userId, user);
         },
-        (error) => {
+        error: (error) => {
           console.error('Error loading user:', error);
           this.toastService.show('error', 'Error', 'Error loading user');
-        }
-      );
+        },
+      });
     });
   }
 
