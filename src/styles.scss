@@ -171,34 +171,39 @@ $alert-border-radius: 5px;
   z-index: 1;
 }
 
-.marker::before {
+.pulsate::before {
   content: "";
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   background-color: inherit;
   border-radius: 50%;
-  opacity: 0.5;
+  opacity: 0.6;
   transform: translate(-50%, -50%);
-  animation: pulsate 1.5s infinite ease-in-out;
+  animation: pulsate 1.5s infinite ease-in;
 }
 
 @keyframes pulsate {
   0% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1.3);
+    opacity: 0.6;
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(1);
     opacity: 0;
   }
+  75% {
+    transform: translate(-50%, -50%) scale(5);
+    opacity: 0.2;
+  }
   100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1.3);
+    opacity: 0.6;
   }
 }
+
 .style-switcher {
   display: flex;
   flex-direction: column; /* Ändere dies auf row für eine horizontale Anzeige */
@@ -266,4 +271,5 @@ $alert-border-radius: 5px;
   left: 50%;
   margin-left: -25%;
   top: 10px;
+  background-color: #005e38;
 }

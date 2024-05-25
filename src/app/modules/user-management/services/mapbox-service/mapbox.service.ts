@@ -31,7 +31,6 @@ export class MapboxService {
     });
     this.map.addControl(geocoder, 'top-left');
 
-
     // Add navigation control (zoom and rotation controls) to the left
     const nav = new mapboxgl.NavigationControl();
     this.map.addControl(nav, 'bottom-right');
@@ -67,6 +66,13 @@ export class MapboxService {
       el.style.width = '15px';
       el.style.height = '15px';
       el.style.borderRadius = '50%';
+
+      if (
+        poi.votings.filter((vote) => vote.voteType === 'UP').length > 3 &&
+        poi.active
+      ) {
+        el.classList.add('pulsate');
+      }
 
       const marker = new mapboxgl.Marker(el)
         .setLngLat([poi.longitude, poi.latitude])
