@@ -1,9 +1,6 @@
 import {
   Component,
-  ElementRef,
-  Inject,
-  PLATFORM_ID,
-  ViewChild,
+ 
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserManagementService } from '../../services/user-management-service/user-management.service';
@@ -17,10 +14,9 @@ import {
   Survey,
 } from '../../../../core/models/partiBremen.model';
 
-import { MapboxService } from '../../services/mapbox-service/mapbox.service';
+import { MapboxService } from '../../../../shared/services/mapbox-service/mapbox.service';
 import { CounterState } from '../../../../shared/components/state-counter/state-counter.component';
 import * as bootstrap from 'bootstrap'; // Importiere Bootstrap
-import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-view-user',

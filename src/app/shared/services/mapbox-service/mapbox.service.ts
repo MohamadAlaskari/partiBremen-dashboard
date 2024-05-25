@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
-import { environment } from '../../../../../environment';
-import { Poi } from '../../../../core/models/partiBremen.model';
+import { environment } from '../../../../environment';
+import { Poi } from '../../../core/models/partiBremen.model';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 @Injectable({
@@ -57,7 +57,12 @@ export class MapboxService {
     this.map.addControl(styleSwitcherControl, 'top-left');
   }
 
-  addMarkers(pois: Poi[]): void {
+  addMarkers(pois: Poi | Poi[]): void {
+    // Wenn pois kein Array ist, konvertiere es in ein Array mit einem Element
+    if (!Array.isArray(pois)) {
+      pois = [pois];
+    }
+
     pois.forEach((poi) => {
       const color = poi.active ? '#5ee560' : '#e55e5e';
       const el = document.createElement('div');

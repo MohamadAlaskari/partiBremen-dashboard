@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environment';
 import { ApiService } from '../../../core/Services/api.service';
 import { Observable } from 'rxjs';
+import { Report } from '../../../core/models/partiBremen.model';
 
 @Injectable({
   providedIn: 'root',
