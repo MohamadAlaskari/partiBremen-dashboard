@@ -28,12 +28,14 @@ textarea {
 
   &-content {
     padding: 16px 0 24px 0;
+
   }
 }
 
 .main-section {
   padding: 32px;
-  overflow-y: hidden;
+
+  overflow-y: auto;
 }
 
 .login-container {

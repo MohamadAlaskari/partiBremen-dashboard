@@ -4,8 +4,8 @@
   <div class="app-wrapper" [ngClass]="{'expanded': isSidebarHidden}">
     <app-sidenav [hidden]="isSidebarHidden"></app-sidenav>
 
+    <app-header (toggleNotifications)="toggleNotifications()" (sidebarToggled)="onSidebarToggled()"></app-header>
     <div class="app-container d-flex flex-column bg-light" [ngClass]="{'expanded': isSidebarHidden}">
-      <app-header (toggleNotifications)="toggleNotifications()" (sidebarToggled)="onSidebarToggled()"></app-header>
 
       <div class="app-content d-flex flex-column overflow-hidden">
         <div class="row">
@@ -14,13 +14,15 @@
               <app-report-notifications></app-report-notifications>
             </div>
           </div>
-          <div class="main-section rounded-5 bg-white py-5 px-3" [@fadeInOut] [ngClass]="{'col-md-12': !showNotifications, 'col-md-8': showNotifications}">
+          <div class="main-section rounded-5 bg-white py-5 px-5" [@fadeInOut] [ngClass]="{'col-md-12': !showNotifications, 'col-md-8': showNotifications}">
             <router-outlet></router-outlet>
           </div>
         </div>
       </div>
+<div class="footer rounded-top-5 bg-white py-5 px-5">
 
-      <app-footer></app-footer>
+  <app-footer></app-footer>
+</div>
     </div>
   </div>
 </ng-container>

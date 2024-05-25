@@ -1,8 +1,16 @@
+
 .messages {
   .message-box {
     border-top: 1px solid var(--message-box-border);
     padding: 16px;
     width: 100%;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    &:hover {
+      transform:  translateY(2px) ;
+
+    }
 
     .avatar {
       width: 40px;

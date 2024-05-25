@@ -1,47 +1,53 @@
-<app-section-header [title]="title_clientMessages" time=""></app-section-header>
-<div class="d-flex justify-content-center align-content-center py-2">
-  <app-tabs [tabs]="tabConfig" (tabChanged)="handleTabChange($event)"></app-tabs>
-</div>
+<div class="report-notification-section">
 
-<div class="messages bt-4 overflow-y-scroll">
-  <div class="message-box d-flex align-items-start" *ngFor="let notification of filteredNotifications"
-    (click)="navigateToReport(notification.id)">
-    <div class="avatar d-flex align-items-center justify-content-center rounded-circle">
 
-      @if(false){
-      <img [src]="" alt="profile image">
 
-      }@else {
-      <div class="initials">
-        <div class="initials">{{ getInitials(getUserById(notification.reporterId)?.name || '',
-          getUserById(notification.reporterId)?.surname || '') }}</div>
-      </div>
 
-      }
+  <app-section-header [title]="title_clientMessages" time=""></app-section-header>
+  <div class="d-flex justify-content-center align-content-center py-2">
+    <app-tabs [tabs]="tabConfig" (tabChanged)="handleTabChange($event)"></app-tabs>
+  </div>
 
-    </div>
-    <div class="message-content">
-      <div class="message-header">
-        <div class="name">{{ getUserById(notification.reporterId)?.name }} {{
-          getUserById(notification.reporterId)?.surname }}</div>
-        <div class="star-checkbox">
-          <input type="checkbox" [id]="'star-' + notification.id">
-          <label [for]="'star-' + notification.id">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="feather feather-star">
-              <polygon
-                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-              </polygon>
-            </svg>
-          </label>
+  <div class="messages bt-4 overflow-y-auto">
+    <div class="message-box hover d-flex align-items-start" *ngFor="let notification of filteredNotifications"
+      (click)="navigateToReport(notification.id)">
+      <div class="avatar d-flex align-items-center justify-content-center rounded-circle">
+
+        @if(false){
+        <img [src]="" alt="profile image">
+
+        }@else {
+        <div class="initials">
+          <div class="initials">{{ getInitials(getUserById(notification.reporterId)?.name || '',
+            getUserById(notification.reporterId)?.surname || '') }}</div>
         </div>
+
+        }
+
       </div>
-      <p class="message-line">
-        <strong>{{ getReportedItemType(notification) }}:</strong> {{ notification.title }}
-      </p>
-      <p class="message-line">{{ notification.kommentar }}</p>
-      <p class="message-line time">{{ notification.createdAt | date: 'MMM d, y, h:mm a' }}</p>
+      <div class="message-content">
+        <div class="message-header">
+          <div class="name">{{ getUserById(notification.reporterId)?.name }} {{
+            getUserById(notification.reporterId)?.surname }}</div>
+          <div class="star-checkbox">
+            <input type="checkbox" [id]="'star-' + notification.id">
+            <label [for]="'star-' + notification.id">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-star">
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                </polygon>
+              </svg>
+            </label>
+          </div>
+        </div>
+        <p class="message-line">
+          <strong>{{ getReportedItemType(notification) }}:</strong> {{ notification.title }}
+        </p>
+        <p class="message-line">{{ notification.kommentar }}</p>
+        <p class="message-line time">{{ notification.createdAt | date: 'MMM d, y, h:mm a' }}</p>
+      </div>
     </div>
   </div>
 </div>

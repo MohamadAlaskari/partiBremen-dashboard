@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './report-management.component.scss'
 })
 export class ReportManagementComponent {
-
+title:string='Report Managemant'
 }

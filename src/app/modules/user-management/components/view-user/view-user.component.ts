@@ -1,4 +1,10 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Inject,
+  PLATFORM_ID,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserManagementService } from '../../services/user-management-service/user-management.service';
 import { ToastService } from '../../../../shared/services/toast.service';
@@ -10,10 +16,12 @@ import {
   Report,
   Survey,
 } from '../../../../core/models/partiBremen.model';
-import * as mapboxgl from 'mapbox-gl'; // Korrekt importieren
-import { environment } from '../../../../../environment';
+
 import { MapboxService } from '../../services/mapbox-service/mapbox.service';
 import { CounterState } from '../../../../shared/components/state-counter/state-counter.component';
+import * as bootstrap from 'bootstrap'; // Importiere Bootstrap
+import { isPlatformBrowser } from '@angular/common';
+
 @Component({
   selector: 'app-view-user',
   templateUrl: './view-user.component.html',
@@ -69,6 +77,7 @@ export class ViewUserComponent {
         this.userPois = userPois;
         this.updateCounters();
         this.initializeMap();
+        this.selectedPoi = this.userPois[0];
       },
       error: (error) => {
         console.log('Error loading user POIs: ', error);
@@ -76,6 +85,7 @@ export class ViewUserComponent {
       },
     });
   }
+  private onMarkerClick(poi: Poi): void {}
 
   private initializeMap(): void {
     this.mapboxService.initializeMap('map', [8.8016936, 53.0792962], 9);
