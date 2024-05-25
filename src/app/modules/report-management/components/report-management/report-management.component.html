@@ -1,1 +1,52 @@
 <app-section-header [title]="title" time=""></app-section-header>
+
+<div class="container mt-3">
+
+  <div *ngIf="report">
+    <h2>Report Details</h2>
+    <p><strong>Title:</strong> {{ report.title }}</p>
+    <p><strong>Comment:</strong> {{ report.kommentar }}</p>
+    <p><strong>Status:</strong> {{ report.status }}</p>
+    <p><strong>Reported User ID:</strong> {{ report.reportedUserId }}</p>
+    <p><strong>Reported POI ID:</strong> {{ report.reportedPoiId }}</p>
+    <p><strong>Reported Comment ID:</strong> {{ report.reportedCommentId }}</p>
+    <p><strong>Reporter ID:</strong> {{ report.reporterId }}</p>
+    <p><strong>Reporter :</strong> {{ reporter.name }} {{ reporter.surname }}</p>
+
+    <p><strong>Created At:</strong> {{ report.createdAt | date: 'short' }}</p>
+    <p><strong>Updated At:</strong> {{ report.updatedAt | date: 'short' }}</p>
+
+    <div class="btn-group" role="group" aria-label="Report Actions">
+      <button type="button" class="btn btn-primary" (click)="updateReportStatusToReviewed(report)">
+        Set to Reviewed
+      </button>
+      <button type="button" class="btn btn-warning" (click)="updateReportStatusToPending(report)">
+        Set to Pending
+      </button>
+      <button type="button" class="btn btn-danger" (click)="updateReportStatusToDismissed(report)">
+        Set to Dismissed
+      </button>
+      <button type="button" class="btn btn-success" (click)="updateReportStatusToResolved(report)">
+        Set to Resolved
+      </button>
+    </div>
+    
+  </div>
+
+  <div *ngIf="reports.length > 0" class="mt-5">
+    <h2>Related Reports</h2>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let rep of reports">
+        <p><strong>Title:</strong> {{ rep.title }}</p>
+        <p><strong>Comment:</strong> {{ rep.kommentar }}</p>
+        <p><strong>Status:</strong> {{ rep.status }}</p>
+        <p><strong>Reported User ID:</strong> {{ rep.reportedUserId }}</p>
+        <p><strong>Reported POI ID:</strong> {{ rep.reportedPoiId }}</p>
+        <p><strong>Reported Comment ID:</strong> {{ rep.reportedCommentId }}</p>
+        <p><strong>Reporter ID:</strong> {{ rep.reporterId }}</p>
+        <p><strong>Created At:</strong> {{ rep.createdAt | date: 'short' }}</p>
+        <p><strong>Updated At:</strong> {{ rep.updatedAt | date: 'short' }}</p>
+      </li>
+    </ul>
+  </div>
+</div>

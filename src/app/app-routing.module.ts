@@ -1,10 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './modules/auth/components/login/login.component';
-import { DashboardComponent } from './modules/dashboard/components/dashboard/dashboard.component';
-import { CommentManagementComponent } from './modules/comment-management/components/comment-management/comment-management.component';
-import { AuthGuard } from './modules/auth/guards/auth.guard';
-import { isAuthenticatedGuard } from './modules/auth/guards/isAuthenticated.guard';
 import { ReportManagementComponent } from './modules/report-management/components/report-management/report-management.component';
 
 const routes: Routes = [

@@ -45,4 +45,10 @@ export class ReportManagementService {
       report
     );
   }
+  updateReportStatus(reportId: string, status: string): Observable<Report> {
+    return this.apiService.put<Report>(
+      `${this.reportEndePoints.update}/${reportId}`,
+      { status: status }
+    );
+  }
 }
