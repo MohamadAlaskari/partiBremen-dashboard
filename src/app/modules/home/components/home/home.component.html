@@ -1,0 +1,124 @@
+<div>
+  <div class="row">
+    <div class="col-md-6">
+
+    </div>
+    <div class="col-md-6">
+      <div id="map" style="height: 400px;"></div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade"  tabindex="-1" >
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      @if (selectedPoi ) {
+
+
+      <div class="modal-header">
+        <div class="comment-box d-flex align-items-start p-2 w-100">
+
+          <h5 class="modal-title" id="poiModalLabel">{{ selectedPoi.creator.name }} {{ selectedPoi.creator.surname }}
+          </h5>
+
+
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+      </div>
+
+
+      <div class="modal-body">
+        <div class="row">
+
+          <!-- POI Details Section -->
+          <div class="col-md-6">
+            <img
+              [src]="'https://images.unsplash.com/photo-1542386649-58d7ed0249bf?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YnJlbWVufGVufDB8fDB8fHww'"
+              class="img-fluid mb-3 card-img-top" alt="POI image">
+            <h5 class="modal-title" id="poiModalLabel">{{ selectedPoi.titel }}</h5>
+            <p>{{ selectedPoi.description }}</p>
+            <p class="text-secondary small">{{ selectedPoi.createdAt | date:'dd MMM yyyy, HH:mm' }}</p>
+            <div class="d-flex justify-content-between">
+              <div class="d-flex align-items-center svg-bold">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-arrow-up vote-svg" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                    d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5" />
+                </svg>
+                <span class="small-caps-bold">{{ getVoteCount(selectedPoi.id || '', 'UP') }} up</span>
+              </div>
+              <div class="d-flex align-items-center svg-bold">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-arrow-down vote-svg" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                    d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1" />
+                </svg>
+                <span class="small-caps-bold">{{ getVoteCount(selectedPoi.id || '', 'DOWN') }} down</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comments Section -->
+
+          <div class="col-md-6">
+            <h5>Comments</h5>
+            <div class="comment-list overflow-auto" style="max-height: 400px;">
+              @for (comment of selectedPoi.comments; track comment.id) {
+              <!--comments-->
+              <div class="comment-box d-flex align-items-start p-2 w-100">
+                <div class="bg-dark p-1 fw-bold small d-flex align-items-center justify-content-center rounded-circle">
+                  <div class="initials text-white">
+                    {{ getInitials(comment.commenter.name, comment.commenter.surname) }}
+                  </div>
+                </div>
+                <div class="comment-content ps-2">
+                  <h6 class="text-dark mb-0">{{comment.commenter.name}} {{comment.commenter.surname}}</h6>
+                  <p class="small">{{ comment.actualcomment }}</p>
+                  <small class="text-secondary">{{ comment.createdAt | date:'dd MMM yyyy, HH:mm' }}</small>
+                </div>
+              </div>
+
+              <!--add comment-->
+
+              }@empty {
+              <p class="opacity-50">no comments vorhanden yet!</p>
+              }
+
+            </div>
+
+            <!--add comment-->
+            <div class="input-group mb-3">
+              <input type="text" #commentText placeholder="Add a comment" class="form-control"
+                aria-label="Recipient's username" aria-describedby="button-addon2">
+              <button (click)="addComment(selectedPoi.id || '', commentText.value || '')"
+                class="btn btn-outline-secondary" type="button" id="button-addon2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-play-fill" viewBox="0 0 16 16">
+                  <path
+                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393" />
+                </svg>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      } @else {
+      <div class="d-flex align-items-center">
+        <strong role="status">Loading...</strong>
+        <div class="spinner-border ms-auto" aria-hidden="true"></div>
+      </div>
+      }
+
+    </div>
+  </div>
+</div>

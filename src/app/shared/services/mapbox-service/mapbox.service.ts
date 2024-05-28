@@ -12,6 +12,8 @@ export class MapboxService {
   markers: { [key: string]: mapboxgl.Marker } = {};
   is3DMode: boolean = false; // Hinzugefügte Eigenschaft, um den 3D-Modus zu verfolgen
 
+  onMarkerClickCallback: ((poi: Poi) => void) | null = null;
+
   initializeMap(
     container: string,
     center: [number, number],
@@ -88,6 +90,11 @@ export class MapboxService {
         )
         .addTo(this.map);
 
+      marker.getElement().addEventListener('click', () => {
+        if (this.onMarkerClickCallback) {
+          this.onMarkerClickCallback(poi);
+        }
+      });
       this.markers[poi.id] = marker;
     });
   }
@@ -231,5 +238,9 @@ export class MapboxService {
       onAdd: () => controlDiv,
       onRemove: () => controlDiv.parentNode?.removeChild(controlDiv),
     };
+  }
+
+  setOnMarkerClickCallback(callback: (poi: Poi) => void): void {
+    this.onMarkerClickCallback = callback;
   }
 }
