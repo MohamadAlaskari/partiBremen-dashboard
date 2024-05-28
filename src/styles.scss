@@ -132,18 +132,18 @@ $alert-border-radius: 5px;
   border-color: #f5c6cb;
 }
 
-
 .small-caps-bold {
   font-variant: small-caps;
-
 }
 
 .svg-bold {
   font-weight: bold;
 }
 
-
 //map style
+.mapboxgl-popup {
+  z-index: 999;
+}
 
 .mapboxgl-ctrl {
   position: relative;
