@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { UserManagementComponent } from './components/user-management/user-management.component';
 import { UserManagementRoutingModule } from './user-management-routing.module';
 import { UserManagementService } from './services/user-management-service/user-management.service';
@@ -13,6 +13,8 @@ import { UpdateUserComponent } from './components/update-user/update-user.compon
 import { DeleteUserComponent } from './components/delete-user/delete-user.component';
 
 import { MatIconModule } from '@angular/material/icon';
+import { UserBlockComponent } from './components/user-block/user-block.component';
+import { UserBlockService } from './services/user-block/user-block.service';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
     UserTableComponent,
     UpdateUserComponent,
     DeleteUserComponent,
+    UserBlockComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +35,10 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     MatIconModule,
   ],
-  providers: [UserManagementService],
+  providers: [
+    UserManagementService,
+    UserBlockService,
+    DatePipe,
+  ],
 })
 export class UserManagementModule {}

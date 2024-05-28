@@ -291,6 +291,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  white-space: nowrap;
   transition: background-color 0.3s, box-shadow 0.3s;
   border-left: 5px solid #007bff;
 }
@@ -341,6 +342,15 @@
 
 .card-content {
   padding: 20px;
+  color: rgb(10, 10, 10);
+text-align: center;
+  text-decoration: none;
+}
+.nb{
+  font-size: 18px !important;
+}
+.i{
+  margin-right: 8px;
 }
 
 .card-content h3 {
@@ -958,5 +968,17 @@
 
 .chart-container {
   margin-top: 20px; /* Adjust margin-top as needed */
+}
+
+.centred{
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 20px;
+}
+.col {
+  min-height: 90px;
 }
 

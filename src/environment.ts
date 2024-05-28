@@ -21,6 +21,8 @@ export const environment = {
       create: '/user',
       update: '/user',
       delete: '/user',
+      block:'/user/block',
+      unblock:'/user/unblock',
     },
     report: {
       findAll: '/report',
