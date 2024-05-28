@@ -6,33 +6,33 @@
   <div class="projects-section-line">
     <div class="projects-container">
       <div class="project-card" style="border-left: 5px solid #ff6600;">
-        <div class="card-content">
-          <h3>Users</h3>
-          <p>{{ usersCount }}</p>
-        </div>
+          <a  routerLink="/user-management" class="card-content">
+         <h3>  <i class="bi bi-file-person"></i> Users </h3>
+         <p class="nb">{{ usersCount }} </p>
+        </a>
       </div>
       <div class="project-card" style="border-left: 5px solid #007bff;">
-        <div class="card-content">
-          <h3>POI</h3>
-          <p>{{ poisCount }}</p>
-        </div>
+        <a routerLink="/poi-management" class="card-content">
+          <h3><i class="bi bi-file-text"></i>POI</h3>
+          <p class="nb">{{ poisCount }}</p>
+        </a>
       </div>
       <div class="project-card" style=" border-left: 5px solid #09a01d; ">
-        <div class="card-content">
-          <h3>comments</h3>
-          <p>{{ commentscount }}</p>
-        </div>
+        <a routerLink="/comment-management" class="card-content">
+          <h3> <i class="bi bi-chat-dots"></i>comments</h3>
+          <p class="nb">{{ commentscount }}</p>
+        </a>
       </div>
       <div class="project-card" style=" border-left: 5px solid #df0f0f; ">
-        <div class="card-content">
-          <h3>surveys</h3>
-          <p>7</p>
-        </div>
+        <a routerLink="/report-management" class="card-content">
+          <h3><i class="bi bi-exclamation-octagon" ></i>Reports</h3>
+          <p class="nb">7</p>
+        </a>
       </div>
     </div>
   </div>
-  <div class="row ">
-    <div class="col-md-12">
+  <div class="row " class="centred">
+    <div class="col-md-6">
       <div class="card dashboard-card">
         <div class="card-body">
           <h5 class="card-title">Dashboard</h5>
@@ -45,10 +45,27 @@
         </div>
       </div>
     </div>
+    <div class="col-md-4">
+      <div class="card dashboard-card">
+        <div class="card-body">
+          <h5 class="card-title">Top 10 Poi by voting</h5>
+          <div class="dashboard-section">
+            <ul class="user-list">
 
+              <li *ngFor="let poi of getTop10POIs()" class="poi-item">
+                <span class="user-name">{{ poi.title }}</span>
+                <span class="user-points">{{ poi.votes }}</span>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
 
   </div>
-  <div class="row">
+  <div class="row" class="centred">
     <div class="col-md-5">
       <div class="card dashboard-card">
         <div class="card-body">
@@ -77,7 +94,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row" class="centred">
 
     <div class="col-md-5">
       <div class="card dashboard-card">

@@ -11,5 +11,7 @@ export class User {
     public verified: boolean,
     public role: string | null,
     public active: boolean,
+    public blockStatus: string | null,
+    public blockUntilDatum: Date | null,
   ) {}
 }

@@ -38,6 +38,7 @@ export class UserListComponent implements OnDestroy {
     { header: 'Email', key: 'email' },
     { header: 'Date of Birth', key: 'dob' },
     { header: 'Role', key: 'role' },
+    { header: 'Status', key: 'status' },
     { header: 'Active', key: 'active' },
   ];
   searchText: string = '';
