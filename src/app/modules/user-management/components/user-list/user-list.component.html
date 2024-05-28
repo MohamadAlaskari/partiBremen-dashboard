@@ -6,7 +6,7 @@
 
     <app-tabs [tabs]="tabConfig" (tabChanged)="handleTabChange($event)"></app-tabs>
 
-    <div class="search-add-container ">
+    <div class=" d-flex gap-2">
       <div class="search-wrapper">
         <input class="search-input" type="text" placeholder="Search..." [(ngModel)]="searchText"
           (ngModelChange)="filterUsers()">
