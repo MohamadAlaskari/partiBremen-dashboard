@@ -81,10 +81,10 @@ export class Comment {
     public updatedAt: string,
     public commentComment: string,
     public commenter: User,
-    public poI: string,
+    public poi: Poi,
     public votings: string[],
     public comments: string[],
     public reports: string[],
-    public actualcomment: string
+    public actualComment: string
   ) {}
 }

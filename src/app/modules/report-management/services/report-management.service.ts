@@ -51,4 +51,13 @@ export class ReportManagementService {
       { status: status }
     );
   }
+  createReportUser(report: Report): Observable<Report> {
+    return this.apiService.post(`${this.reportEndePoints.create}`, report);
+  }
+  createReportPoi(report: Report): Observable<Report> {
+    return this.apiService.post(`${this.reportEndePoints.create}`, report);
+  }
+  createReportComment(report: Report): Observable<Report> {
+    return this.apiService.post(`${this.reportEndePoints.create}`, report);
+  }
 }

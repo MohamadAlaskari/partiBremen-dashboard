@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../../../../core/Services/api.service';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../environment';
-import { User, Poi } from '../../../../core/models/partiBremen.model';
+import { User, Poi, Comment } from '../../../../core/models/partiBremen.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +10,7 @@ import { User, Poi } from '../../../../core/models/partiBremen.model';
 export class UserManagementService {
   private userEndpoints = environment.endpoints.users;
   private poiEndpoints = environment.endpoints.pois;
+  private commentEndepoints = environment.endpoints.comments;
 
   constructor(private apiService: ApiService) {}
 
@@ -40,6 +41,7 @@ export class UserManagementService {
     );
   }
 
+  //poi-service
   getPois(): Observable<Poi[]> {
     return this.apiService.get<Poi[]>(`${this.poiEndpoints.findAll}`);
   }
@@ -47,5 +49,22 @@ export class UserManagementService {
     return this.apiService.get<Poi[]>(
       `${this.poiEndpoints.findByUserId}/${userId}`
     );
+  }
+  getPoibyId(poiId: string): Observable<Poi> {
+    return this.apiService.get<Poi>(`${this.poiEndpoints.findById}/${poiId}`);
+  }
+
+  //comment service
+  createComment(
+    actualComment: string,
+    commenterId: string,
+    poiId: string
+  ): Observable<Comment> {
+    const body = {
+      actualComment: actualComment,
+      commenterId: commenterId,
+      poiId: poiId,
+    };
+    return this.apiService.post<Comment>(this.commentEndepoints.create, body);
   }
 }

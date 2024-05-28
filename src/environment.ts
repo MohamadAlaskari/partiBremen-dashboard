@@ -35,6 +35,7 @@ export const environment = {
     comments: {
       getAll: '/comment',
       delete: '/comment',
+      create: '/comment',
     },
     pois: {
       findAll: '/poi',
