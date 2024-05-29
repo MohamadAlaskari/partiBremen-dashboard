@@ -16,6 +16,7 @@ export class UserBlockService {
 
   blockUser(userId: string, blockUntilDatum?: Date): Observable<User> {
     console.log("apilast",blockUntilDatum);
+      
     return this.apiService.post<User>(
       `${this.userEndpoints.block}/${userId}`,
       { blockUntilDatum: blockUntilDatum }
