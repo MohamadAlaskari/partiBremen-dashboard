@@ -28,6 +28,7 @@ export class ViewUserComponent {
   userPois: Poi[] = [];
   selectedPoi: Poi | null = null; // Initialize as null
   comment!: Comment;
+  poiClicked: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -52,6 +53,9 @@ export class ViewUserComponent {
         this.loadUser(this.id);
         this.loadUserPois(this.id);
       }
+      this.mapboxService.setOnMarkerClickCallback(
+        this.onMarkerClick.bind(this)
+      );
     });
   }
 
@@ -156,5 +160,10 @@ export class ViewUserComponent {
 
   selectPoi(poiId: string) {
     this.loadPoiByPoiID(poiId);
+  }
+  private onMarkerClick(poi: Poi): void {
+    this.poiClicked = true;
+    this.selectedPoi = poi;
+    console.log('selected poi: ', this.selectedPoi);
   }
 }
