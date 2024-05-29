@@ -158,6 +158,15 @@ input.mapboxgl-ctrl-geocoder--input {
   padding: 5px 3px;
   width: 100%;
 }
+svg.mapboxgl-ctrl-geocoder--icon.mapboxgl-ctrl-geocoder--icon-loading {
+  display: none;
+}
+svg.mapboxgl-ctrl-geocoder--icon.mapboxgl-ctrl-geocoder--icon-close {
+  display: none;
+}
+.mapboxgl-ctrl-geocoder--pin-right {
+  display: none;
+}
 //search suggestions
 ul.suggestions {
   list-style: none;
