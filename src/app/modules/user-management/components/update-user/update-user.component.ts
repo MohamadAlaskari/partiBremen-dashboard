@@ -4,6 +4,7 @@ import { UserManagementService } from '../../services/user-management-service/us
 import { ToastService } from '../../../../shared/services/toast.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../../../core/models/partiBremen.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-update-user',
@@ -16,6 +17,7 @@ export class UpdateUserComponent {
   id: string | null = null;
   userForm!: FormGroup;
   userFormSubmitted: boolean = false;
+  private subscription: Subscription = new Subscription();
 
   // Mapping von Rollen zu ihren entsprechenden Zahlenwerten
   roleMapping: { [key: string]: number } = {
@@ -48,17 +50,10 @@ export class UpdateUserComponent {
       name: new FormControl(this.user.name, Validators.required),
       surname: new FormControl(this.user.surname, Validators.required),
       dob: new FormControl(this.user.dob, Validators.required),
-      email: new FormControl(this.user.email, [
-        Validators.required,
-        Validators.email,
-      ]),
-      password: new FormControl('', Validators.required),
-      verified: new FormControl(this.user.verified),
       role: new FormControl(
         this.getRoleValue(this.user.role || 'DEFAULT'),
         Validators.required
       ),
-      active: new FormControl(this.user.active),
     });
   }
 
@@ -77,34 +72,35 @@ export class UpdateUserComponent {
     if (this.userForm.valid) {
       const updatedUser = { ...this.user, ...this.userForm.value };
       // Log the data being sent
-      console.log('Submitting updated user:', updatedUser);
-      this.userService.updateUser(this.user.id, updatedUser).subscribe({
-        next: () => {
-          console.log('user updated');
-          this.toastService.show(
-            'success',
-            'Success',
-            'User updated successfully'
-          );
-          setTimeout(() => {
-            this.router.navigate(['/user-management']);
-          }, 1000);
-        },
-        error: (error) => {
-          this.toastService.show(
-            'error',
-            'Error',
-            'Failed to update user. Please try again later'
-          );
-
-          console.error('Error updating user:', error);
-        },
-      });
+      this.subscription.add(
+        this.userService.updateUser(this.user.id, updatedUser).subscribe({
+          next: () => {
+            this.toastService.show(
+              'success',
+              'Success',
+              'User updated successfully'
+            );
+            setTimeout(() => {
+              this.router.navigate(['/user-management']);
+            }, 500);
+          },
+          error: (error) => {
+            this.toastService.show(
+              'error',
+              'Error',
+              'Failed to update user. Please try again later'
+            );
+          },
+        })
+      );
     }
   }
 
   onCancel(): void {
     this.userForm.reset();
     this.router.navigate(['/user-management']);
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
