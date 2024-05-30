@@ -22,6 +22,9 @@ export class MapComponent {
     if (changes['height']) {
       this.adjustMapHeight();
     }
+    if (changes['pois']) {
+      this.addMarkersToMap();
+    }
   }
 
   ngOnDestroy(): void {

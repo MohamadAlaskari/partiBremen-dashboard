@@ -18,8 +18,8 @@ import { BottomSheetComponent } from './components/bottom-sheet/bottom-sheet.com
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 import { ReportNotificationsComponent } from './components/report-notifications/report-notifications.component';
 import { MapComponent } from './components/map/map.component';
-import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { PoiModalComponent } from './components/poi-modal/poi-modal.component';
 
 @NgModule({
   declarations: [
@@ -35,8 +35,8 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     ConfirmModalComponent,
     ReportNotificationsComponent,
     MapComponent,
-    UserDetailsComponent,
     UserProfileComponent,
+    PoiModalComponent,
   ],
   imports: [
     CommonModule,

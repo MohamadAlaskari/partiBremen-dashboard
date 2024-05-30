@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserDetailsComponent } from './user-details.component';
+import { PoiModalComponent } from './poi-modal.component';
 
-describe('UserDetailsComponent', () => {
-  let component: UserDetailsComponent;
-  let fixture: ComponentFixture<UserDetailsComponent>;
+describe('PoiModalComponent', () => {
+  let component: PoiModalComponent;
+  let fixture: ComponentFixture<PoiModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [UserDetailsComponent]
+      declarations: [PoiModalComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(UserDetailsComponent);
+    fixture = TestBed.createComponent(PoiModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
