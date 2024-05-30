@@ -47,5 +47,11 @@ export const environment = {
       update: '/poi',
       delete: '/poi',
     },
+    surveys: {
+      findAll: '/survey',
+      findById: '/survey',
+      update: '/survey',
+      delete: '/survey',
+    }
   },
 };

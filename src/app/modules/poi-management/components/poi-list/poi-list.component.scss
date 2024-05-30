@@ -46,7 +46,7 @@
   background-color: var(--search-area-bg);
   color: var(--font-color-primary);
 
-  &:placeholder {
+  &::placeholder {
     color: var(--font-color-primary);
     opacity: 0.6;
   }

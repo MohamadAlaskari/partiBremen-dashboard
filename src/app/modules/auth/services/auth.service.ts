@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../../core/Services/api.service';
-import { User } from '../../../shared/models/user.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../../environment';
+import {User} from "../../../core/models/partiBremen.model";
 
 @Injectable({
   providedIn: 'root',
