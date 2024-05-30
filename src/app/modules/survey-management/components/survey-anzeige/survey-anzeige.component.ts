@@ -1,42 +1,42 @@
-import {Component, Inject, PLATFORM_ID} from '@angular/core';
-import {BehaviorSubject, Subscription} from "rxjs";
-import {ToastService} from "../../../../shared/services/toast.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Survey} from "../../../../core/models/partiBremen.model";
-import {SurveyManagementService} from "../../services/survey-management.service";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { ToastService } from '../../../../shared/services/toast.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Survey } from '../../../../core/models/partiBremen.model';
+import { SurveyManagementService } from '../../services/survey-management.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-survey-anzeige',
   templateUrl: './survey-anzeige.component.html',
-  styleUrl: './survey-anzeige.component.scss'
+  styleUrl: './survey-anzeige.component.scss',
 })
 export class SurveyAnzeigeComponent {
   private subscriptions: Subscription = new Subscription();
   private currentSurveySubject = new BehaviorSubject<any>(null);
-  protected currentSurvey: any = null
-  private id: string | null = ''
+  protected currentSurvey: any = null;
+  private id: string | null = '';
   surveyForm!: FormGroup;
 
   constructor(
     protected surveyManagementService: SurveyManagementService,
     private toastService: ToastService,
     private router: Router,
-    private route : ActivatedRoute,
+    private route: ActivatedRoute
   ) {}
-
+/*
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
       this.id = params.get('id');
       if (this.id) {
-        this.loadSurvey(this.id)
+        this.loadSurvey(this.id);
       }
     });
   }
 
-  private loadSurvey(id : string) {
+  private loadSurvey(id: string) {
     this.surveyManagementService.getSurveyById(id).subscribe(
-      (survey : Survey) => {
+      (survey: Survey) => {
         this.currentSurvey = survey;
       },
       (error) => {
@@ -45,14 +45,13 @@ export class SurveyAnzeigeComponent {
     );
   }
 
-
   ngOnDestroy() {
-    this.currentSurvey = null
+    this.currentSurvey = null;
     this.subscriptions.unsubscribe();
   }
 
   private initForm(): void {
-    /**
+
     this.surveyForm = new FormGroup({
       titel: new FormControl(this.currentSurvey.titel, Validators.required),
       description: new FormControl(this.currentSurvey.description, Validators.required),
@@ -62,34 +61,36 @@ export class SurveyAnzeigeComponent {
       longitude: new FormControl(this.currentSurvey.longitude, Validators.required),
       img: new FormControl(this.currentSurvey.img),
     });
-      **/
+    
   }
 
   updatePoi(): void {
-    this.initForm()
+    this.initForm();
     if (this.surveyForm.valid) {
-      const updatedSurvey = { ...this.currentSurvey, ...this.surveyForm.value};
+      const updatedSurvey = { ...this.currentSurvey, ...this.surveyForm.value };
       // Log the data being sent
       this.subscriptions.add(
-        this.surveyManagementService.updateSurvey(this.currentSurvey.id, updatedSurvey).subscribe({
-          next: () => {
-            this.toastService.show(
-              'success',
-              'Success',
-              'POI updated successfully'
-            );
-            setTimeout(() => {
-              this.router.navigate(['/poi-management']);
-            }, 500);
-          },
-          error: (error) => {
-            this.toastService.show(
-              'error',
-              'Error',
-              'Failed to update POI. Please try again later'
-            );
-          },
-        })
+        this.surveyManagementService
+          .updateSurvey(this.currentSurvey.id, updatedSurvey)
+          .subscribe({
+            next: () => {
+              this.toastService.show(
+                'success',
+                'Success',
+                'POI updated successfully'
+              );
+              setTimeout(() => {
+                this.router.navigate(['/poi-management']);
+              }, 500);
+            },
+            error: (error) => {
+              this.toastService.show(
+                'error',
+                'Error',
+                'Failed to update POI. Please try again later'
+              );
+            },
+          })
       );
     }
   }
@@ -98,8 +99,8 @@ export class SurveyAnzeigeComponent {
     const survey = await this.getSurveyById(this.currentSurvey.id);
     const surveyId = survey?.id;
 
-    console.log("POI ID:", surveyId);
-    console.log("POI Data:", survey);
+    console.log('POI ID:', surveyId);
+    console.log('POI Data:', survey);
 
     if (!surveyId || !survey) {
       console.error('PoiId or Poi is missing, cannot update');
@@ -107,12 +108,14 @@ export class SurveyAnzeigeComponent {
     }
 
     this.subscriptions.add(
-      this.surveyManagementService.updateSurvey(surveyId, survey).subscribe(() => {
-          console.log("POI updated successfully");
+      this.surveyManagementService.updateSurvey(surveyId, survey).subscribe(
+        () => {
+          console.log('POI updated successfully');
         },
-        error => {
+        (error) => {
           console.error('Could not update Survey', error);
-        })
+        }
+      )
     );
   }
 
@@ -168,4 +171,6 @@ export class SurveyAnzeigeComponent {
   navigateToPoi(id: string) {
     this.router.navigate(['anzeige', id]);
   }
+
+  */
 }
