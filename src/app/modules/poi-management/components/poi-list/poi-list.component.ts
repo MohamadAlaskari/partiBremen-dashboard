@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { PoiManagementService } from '../../services/poi-management.service';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { Router } from '@angular/router';
-import { Poi } from '../../../../shared/models/poi.model';
+import {Poi} from "../../../../core/models/partiBremen.model";
 
 @Component({
   selector: 'app-poi-list',
@@ -39,30 +39,8 @@ export class PoiListComponent implements OnInit, OnDestroy {
     );
   }
 
-  showPoi(poi: any) {
-    this.poiManagementService.currentPoi = this.poiManagementService.loadPoiById(poi.id)
-    this.waitForCurrentPoi()
-    this.router.navigate(['poi-management/anzeige']);
-  }
-
-  private waitForCurrentPoi(): Promise<any> {
-    return new Promise(resolve => {
-      const intervalId = setInterval(() => {
-        const currentPoi = this.poiManagementService.currentPoi;
-        if (currentPoi) {
-          clearInterval(intervalId);
-          resolve(currentPoi);
-        }
-      }, 500); // Prüfen Sie jede Sekunde
-    });
-  }
-
-  getActiveCount(): number {
-    return this.poiManagementService.pois.filter(item => item.active === true).length;
-  }
-
-  getInactiveCount(): number {
-    return this.poiManagementService.pois.filter(item => item.active === false).length;
+  showPoi(id: string) {
+    this.router.navigate(['poi-management/anzeige', id]);
   }
 
   ngOnDestroy(): void {

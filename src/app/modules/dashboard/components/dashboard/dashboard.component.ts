@@ -1,9 +1,8 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { UserManagementService } from '../../../user-management/services/user-management-service/user-management.service';
-import { User } from '../../../../core/models/partiBremen.model';
+import {Poi, User} from '../../../../core/models/partiBremen.model';
 import { PoiManagementService } from '../../../poi-management/services/poi-management.service';
-import { Poi } from '../../../../shared/models/poi.model';
 import { CommentManagementService } from '../../../comment-management/services/comment-management.service';
 import { Comment } from '../../../../shared/models/comment.model';
 import Chart from 'chart.js/auto';

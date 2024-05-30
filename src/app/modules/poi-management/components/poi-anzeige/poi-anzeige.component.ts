@@ -1,11 +1,10 @@
 import { Component, Inject, PLATFORM_ID, OnInit, OnDestroy } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
 import { PoiManagementService } from "../../services/poi-management.service";
 import { Subscription } from "rxjs";
 import { ToastService } from "../../../../shared/services/toast.service";
-import { Updatepoi } from "../../../../shared/models/updatepoi.model";
-import {Poi} from "../../../../shared/models/poi.model";
-import {User} from "../../../../shared/models/user.model";
+import {ActivatedRoute, Router} from "@angular/router";
+import {MapboxService} from "../../../../shared/services/mapbox-service/mapbox.service";
+import {Poi} from "../../../../core/models/partiBremen.model";
 
 @Component({
   selector: 'app-poi-anzeige',
@@ -13,108 +12,69 @@ import {User} from "../../../../shared/models/user.model";
   styleUrls: ['./poi-anzeige.component.scss']
 })
 export class PoiAnzeigeComponent implements OnInit, OnDestroy {
-  private map: any;
-  private marker: any;
   private subscriptions: Subscription = new Subscription();
-  private L: any; // Klassenvariable für Leaflet
+  protected currentPoi: any = null
+  private id: string | null = ''
 
   constructor(
     protected poiManagementService: PoiManagementService,
     @Inject(PLATFORM_ID) private platformId: any,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router,
+    private route : ActivatedRoute,
+    private mapboxService : MapboxService,
   ) {}
 
   ngOnInit() {
-    this.subscriptions.add(
-      this.poiManagementService.currentPoi$.subscribe((currentPoi: any) => {
-        console.log('currentPoi received:', currentPoi);
-        if (this.map) {
-          this.updateMap();
-        } else {
-          this.startMap();
-        }
-      })
-    );
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.unsubscribe();
-  }
-
-  startMap(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      import('leaflet').then(L => {
-        this.initMap(L);
-        this.L = L
-      }).catch(err => {
-        console.error('Leaflet konnte nicht geladen werden:', err);
-      });
-    }
-  }
-
-  private createCustomIcon(L: any): any {
-    return L.icon({
-      iconUrl: 'assets/marker-icon.png', // Pfad zu deinem Bild
-      iconSize: [38, 95], // Größe des Icons
-      iconAnchor: [22, 94], // Punkt im Icon, der den Marker positioniert
-      popupAnchor: [-3, -76] // Punkt, von dem das Popup zeigt
-      // shadowUrl: 'assets/images/marker-shadow.png', // Optional, wenn du einen Schatten verwenden möchtest
-      // shadowSize: [50, 64], // Größe des Schattens
-      // shadowAnchor: [4, 62]  // Punkt im Schatten, der den Schatten positioniert
+    this.route.paramMap.subscribe((params) => {
+      this.id = params.get('id');
+      if (this.id) {
+        this.loadPoi(this.id)
+        this.waitForCurrentPoi()
+      }
     });
   }
 
-  private initMap(L: any): void {
-    const currentPoi = new Poi("1", "12.05.2002", "12.05.2002", "y", true,
-      new User("1", "12.05.2002", "12.05.2002", "Ja", "no",  new Date(), "ewfw@gmail.com", "y", true, null, true,"UNBLOCKED",null),
-      [],[],[],[],[], "y", 3, 3)
-    if (currentPoi) {
-      let latitude = currentPoi.latitude;
-      let longitude = currentPoi.longitude;
-
-      if (!isNaN(latitude) && !isNaN(longitude)) {
-        console.log('Initializing map with coordinates:', latitude, longitude);
-
-        this.map = L.map('map').setView([latitude, longitude], 15);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(this.map);
-
-        const customIcon = this.createCustomIcon(L);
-
-        //this.marker = L.marker([latitude, longitude], { icon: customIcon }).addTo(this.map)
-        //  .openPopup();
-      } else {
-        console.error('Invalid coordinates:', latitude, longitude);
-      }
-    } else {
-      console.error('currentPoi is null or undefined');
-    }
+  private initializeMap(poi: Poi): void {
+    this.mapboxService.initializeMap('map', [8.8016936, 53.0792962], 9);
+    this.mapboxService.map.on('load', () => {
+      this.mapboxService.addMarkers([poi]);
+    });
   }
 
-  protected updateMap(): void {
-    const currentPoi = this.poiManagementService.currentPoi;
-    let latitude = currentPoi.latitude;
-    let longitude = currentPoi.longitude;
-
-    if (!isNaN(latitude) && !isNaN(longitude)) {
-      this.map.setView([latitude, longitude], 15);
-
-      const customIcon = this.createCustomIcon(this.L);
-      //this.marker.setLatLng([latitude, longitude])
-      //  .setIcon(customIcon)
-      //  .openPopup();
-      console.log('Updating map with new coordinates:', latitude, longitude);
-    } else {
-      console.error('Invalid coordinates:', latitude, longitude);
-    }
+  waitForCurrentPoi(): Promise<void> {
+    return new Promise((resolve) => {
+      const checkPoi = () => {
+        if (this.currentPoi !== null) {
+          this.initializeMap(this.currentPoi)
+        } else {
+          setTimeout(checkPoi, 100); // prüft alle 100ms
+        }
+      };
+      checkPoi();
+    });
   }
 
-  updatePoi(): void {
-    const currentPoi = this.poiManagementService.currentPoi;
-    const poiId = currentPoi?.id;
-    const poi = new Updatepoi(currentPoi.titel, currentPoi.description, currentPoi.active, currentPoi.creator.id, currentPoi.latitude, currentPoi.longitude);
+  private loadPoi(id : string) {
+      this.poiManagementService.getPoiByID(id).subscribe(
+        (poi: Poi) => {
+          this.currentPoi = poi;
+        },
+        (error) => {
+          this.toastService.show('error', 'Error', 'Error loading Poi');
+        }
+      );
+  }
+
+
+  ngOnDestroy() {
+    this.currentPoi = null
+    this.subscriptions.unsubscribe();
+  }
+
+  async updatePoi(): Promise<void> {
+    const poi = await this.poiManagementService.loadPoiById(this.currentPoi.id);
+    const poiId = poi?.id;
 
     console.log("POI ID:", poiId);
     console.log("POI Data:", poi);
@@ -135,7 +95,7 @@ export class PoiAnzeigeComponent implements OnInit, OnDestroy {
   }
 
   deletePoi(): void {
-    const poiId = this.poiManagementService.currentPoi?.id;
+    const poiId = this.currentPoi?.id;
     if (!poiId) {
       console.error('POI ID is missing, cannot delete');
       return;
@@ -145,7 +105,7 @@ export class PoiAnzeigeComponent implements OnInit, OnDestroy {
       this.poiManagementService.deletePoi(poiId).subscribe({
         next: () => {
           this.poiManagementService.loadPois();
-          this.poiManagementService.currentPoi = null;
+          this.currentPoi = null;
           this.toastService.show(
             'success',
             'Success',
@@ -161,5 +121,21 @@ export class PoiAnzeigeComponent implements OnInit, OnDestroy {
         },
       })
     );
+  }
+
+  navigateToUser(id: string) {
+    this.router.navigate(['view-user', id]);
+  }
+
+  navigateToComments() {
+    this.router.navigate(['comments', this.poiManagementService.getComments(this.currentPoi.id)]);
+  }
+
+  navigateToSurveys() {
+    this.router.navigate(['poi-management/surveys', this.currentPoi.id]);
+  }
+
+  navigateToReports() {
+    this.router.navigate(['reports', this.currentPoi.id]);
   }
 }
