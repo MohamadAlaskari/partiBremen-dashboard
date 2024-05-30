@@ -1,7 +1,8 @@
-<div class="project-boxes jsGridView" *ngIf="this.surveys">
+<div class="project-boxes jsGridView" *ngIf="this.surveyManagementService.surveys">
 
+  <app-section-header [title]="title_surveyManagment" time=""></app-section-header>
 
-  <app-state-counter [states]="this.surveyCounters"></app-state-counter>
+  <app-state-counter [states]="this.surveyManagementService.counters"></app-state-counter>
 
   <div class="search-wrapper">
     <input class="search-input" type="text" [(ngModel)]="searchTerm" placeholder="Suche...">
@@ -21,8 +22,8 @@
       <th>Erstellungsdatum</th>
       <th>letzte Änderung</th>
       <th>Beschreibung</th>
+      <th>Expires at</th>
       <th>Creator</th>
-      <th>Expired?</th>
       </thead>
       <tbody>
         @for (survey of filteredItems; track survey.id) {
@@ -32,8 +33,8 @@
             <td>{{survey.createdAt | date:'short'}}</td>
             <td>{{survey.updatedAt | date:'short'}}</td>
             <td>{{survey.beschreibung}}</td>
-            <td *ngIf="survey.creator">{{ survey.creator.name }} {{ survey.creator.surname }}</td>
             <td>{{survey.expiresAt | date:'short'}}</td>
+            <td *ngIf="survey.creator">{{ survey.creator.name }} {{ survey.creator.surname }}</td>
           </tr>
         }
       </tbody>

@@ -1,10 +1,11 @@
 import { Component, Inject, PLATFORM_ID, OnInit, OnDestroy } from '@angular/core';
 import { PoiManagementService } from "../../services/poi-management.service";
-import { Subscription } from "rxjs";
+import {BehaviorSubject, Subscription} from "rxjs";
 import { ToastService } from "../../../../shared/services/toast.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MapboxService} from "../../../../shared/services/mapbox-service/mapbox.service";
 import {Poi} from "../../../../core/models/partiBremen.model";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-poi-anzeige',
@@ -15,6 +16,8 @@ export class PoiAnzeigeComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   protected currentPoi: any = null
   private id: string | null = ''
+  private currentPoiSubject = new BehaviorSubject<any>(null);
+  poiForm!: FormGroup;
 
   constructor(
     protected poiManagementService: PoiManagementService,
@@ -32,6 +35,18 @@ export class PoiAnzeigeComponent implements OnInit, OnDestroy {
         this.loadPoi(this.id)
         this.waitForCurrentPoi()
       }
+    });
+  }
+
+  private initForm(): void {
+    this.poiForm = new FormGroup({
+      titel: new FormControl(this.currentPoi.titel, Validators.required),
+      description: new FormControl(this.currentPoi.description, Validators.required),
+      active: new FormControl(this.currentPoi.active, Validators.required),
+      creatorId: new FormControl(this.currentPoi.creator.id, Validators.required),
+      latitude: new FormControl(this.currentPoi.latitude, Validators.required),
+      longitude: new FormControl(this.currentPoi.longitude, Validators.required),
+      img: new FormControl(this.currentPoi.img),
     });
   }
 
@@ -72,26 +87,33 @@ export class PoiAnzeigeComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  async updatePoi(): Promise<void> {
-    const poi = await this.poiManagementService.loadPoiById(this.currentPoi.id);
-    const poiId = poi?.id;
-
-    console.log("POI ID:", poiId);
-    console.log("POI Data:", poi);
-
-    if (!poiId || !poi) {
-      console.error('PoiId or Poi is missing, cannot update');
-      return;
-    }
-
-    this.subscriptions.add(
-      this.poiManagementService.updatePoi(poiId, poi).subscribe(() => {
-          console.log("POI updated successfully");
-        },
-        error => {
-          console.error('Could not update POI', error);
+  updatePoi(): void {
+    this.initForm()
+    if (this.poiForm.valid) {
+      const updatedPoi = { ...this.currentPoi, ...this.poiForm.value};
+      // Log the data being sent
+      this.subscriptions.add(
+        this.poiManagementService.updatePoi(this.currentPoi.id, updatedPoi).subscribe({
+          next: () => {
+            this.toastService.show(
+              'success',
+              'Success',
+              'POI updated successfully'
+            );
+            setTimeout(() => {
+              this.router.navigate(['/poi-management']);
+            }, 500);
+          },
+          error: (error) => {
+            this.toastService.show(
+              'error',
+              'Error',
+              'Failed to update POI. Please try again later'
+            );
+          },
         })
-    );
+      );
+    }
   }
 
   deletePoi(): void {
@@ -104,7 +126,7 @@ export class PoiAnzeigeComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.poiManagementService.deletePoi(poiId).subscribe({
         next: () => {
-          this.poiManagementService.loadPois();
+          this.poiManagementService.getPois();
           this.currentPoi = null;
           this.toastService.show(
             'success',
@@ -135,7 +157,20 @@ export class PoiAnzeigeComponent implements OnInit, OnDestroy {
     this.router.navigate(['poi-management/surveys', this.currentPoi.id]);
   }
 
-  navigateToReports() {
-    this.router.navigate(['reports', this.currentPoi.id]);
+  async getPoiById(poiId: string): Promise<Poi> {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.add(
+        this.poiManagementService.getPoiByID(poiId).subscribe({
+          next: (poi) => {
+            this.currentPoiSubject.next(poi);
+            resolve(poi); // Return the poi object
+          },
+          error: (err) => {
+            console.error('Error loading POI:', err);
+            reject(err); // Reject the promise in case of an error
+          },
+        })
+      );
+    });
   }
 }

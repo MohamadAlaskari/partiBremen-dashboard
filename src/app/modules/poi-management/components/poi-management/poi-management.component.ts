@@ -8,7 +8,7 @@ import { ToastService } from '../../../../shared/services/toast.service';
   styleUrl: './poi-management.component.scss',
 })
 export class PoiManagementComponent {
-  title_poiManagment: string = 'POI Management';
+  protected title_poiManagment: string = 'POI Management';
 
   constructor(
     private poiManagementService: PoiManagementService,
