@@ -58,7 +58,7 @@
 
   <!-- Map -->
   <div class="col-md-7">
-    <div id="map" style="height: 280px;"></div>
+    <app-map [pois]="userPois" [height]="400" (selectedPoi)="onMarkerClick($event)"></app-map>
   </div>
 </div>
 
