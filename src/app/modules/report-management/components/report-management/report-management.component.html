@@ -1,53 +1,233 @@
 <app-section-header [title]="title" time=""></app-section-header>
 
-<div class="container mt-3">
+<div class="blog-single gray-bg">
+  <div class="container">
+    <div class="row align-items-start">
+      <div class="col-lg-8 m-15px-tb">
+        <article class="article">
 
-  <div *ngIf="report">
-    <h2>Report Details</h2>
-    <p><strong>Title:</strong> {{ report.title }}</p>
-    <p><strong>Comment:</strong> {{ report.kommentar }}</p>
-    <p><strong>Status:</strong> {{ report.status }}</p>
-    <p><strong>Reported User ID:</strong> {{ report.reportedUserId }}</p>
-    <p><strong>Reported POI ID:</strong> {{ report.reportedPoiId }}</p>
-    <p><strong>Reported Comment ID:</strong> {{ report.reportedCommentId }}</p>
-    <p><strong>Reporter ID:</strong> {{ report.reporterId }}</p>
 
-    <p *ngIf="reporter"><strong>Reporter :</strong> {{ reporter.name }} {{ reporter.surname }}</p>
+          <div class="card-body p-0" *ngIf="showReportedSection">
+            <div class="col col-lg-12 col-md-12 mb-lg-0" *ngIf="reported">
+              <div class="card mb-3" style="border-radius: .5rem;">
+                <div class="row g-0">
+                  <div class="col-md-4 gradient-custom text-center text-white"
+                    style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                    <img
+                      src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small_2x/user-profile-icon-free-vector.jpg"
+                      alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+                    <h5 style="color: black;">{{reported.name}} {{reported.surname}}</h5>
+                    <p style="color: black;">xxxxxxx</p>
+                    <i class="far fa-edit mb-5"></i>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body p-4">
+                      <h6>Information</h6>
+                      <hr class="mt-0 mb-4">
+                      <div class="row pt-1">
+                        <div class="col-6 mb-3">
+                          <h6>Email</h6>
+                          <p class="text-muted">{{reported.email}}</p>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <h6>Dob</h6>
+                          <p class="text-muted">{{reported.dob}}</p>
+                        </div>
+                      </div>
+                      <hr class="mt-0 mb-4">
+                      <div class="row pt-1">
+                        <div class="col-6 mb-3">
+                          <h6>Created at</h6>
+                          <p class="text-muted">{{reported.createdAt}}</p>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <h6>role</h6>
+                          <p class="text-muted">{{reported.role}}</p>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <h6>status</h6>
+                          <p class="text-muted">{{reported.blockStatus}}</p>
+                        </div>
+                      </div>
 
-    <p><strong>Created At:</strong> {{ report.createdAt | date: 'short' }}</p>
-    <p><strong>Updated At:</strong> {{ report.updatedAt | date: 'short' }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-0" *ngIf="showPoiSection">
+            <div class="row">
+              <div class="col-lg-6 col-md-12 col-sm-12 image-container" *ngIf="Poi">
+                <img
+                  src="https://images.unsplash.com/photo-1542386649-58d7ed0249bf?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YnJlbWVufGVufDB8fDB8fHww"
+                  class="img-fluid mb-3 card-img-top" alt="POI image">
 
-    <div class="btn-group" role="group" aria-label="Report Actions">
-      <button type="button" class="btn btn-primary" (click)="updateReportStatusToReviewed(report)">
-        Set to Reviewed
-      </button>
-      <button type="button" class="btn btn-warning" (click)="updateReportStatusToPending(report)">
-        Set to Pending
-      </button>
-      <button type="button" class="btn btn-danger" (click)="updateReportStatusToDismissed(report)">
-        Set to Dismissed
-      </button>
-      <button type="button" class="btn btn-success" (click)="updateReportStatusToResolved(report)">
-        Set to Resolved
-      </button>
+                <div class="article-title">
+                  <h5>{{ Poi.titel }}</h5>
+                  <div class="media" style="white-space: nowrap !important;">
+                    <div class="avatar">
+                      <img
+                        src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small_2x/user-profile-icon-free-vector.jpg"
+                        title="" alt="">
+                    </div>
+                    <div class="media-body">
+                      <label>{{ Poi.creator.name }} {{ Poi.creator.surname }}</label>
+                      <span>
+                        <p class="text-secondary small">{{ Poi.createdAt | date:'dd MMM yyyy, HH:mm' }}</p>
+                      </span>
+
+                    </div>
+                  </div>
+                  <p>{{ Poi.description }}</p>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-12 col-sm-12 p-3">
+                <h5>Comments</h5>
+                <div class="comment-list overflow-auto" style="max-height: 400px;">
+                  <ng-container *ngIf="Poi && Poi.comments.length > 0; else noComments">
+                    <div *ngFor="let comment of Poi.comments; trackBy: trackById">
+                      <div class="comment-box d-flex align-items-start p-2 w-100"
+                        [ngClass]="{'highlighted-comment': comment.id === repcomment}">
+                        <ng-container *ngIf="comment.id === repcomment">
+                          {{ setuser(comment.id, comment.commenter.id) }}
+                        </ng-container>
+
+                        <div class="comment-content ps-2">
+                          <h6 class="text-dark mb-0">{{ comment.commenter.name }} {{ comment.commenter.surname }}</h6>
+                          <p class="small">{{ comment.actualcomment }}</p>
+                          <small class="text-secondary">{{ comment.createdAt | date:'dd MMM yyyy, HH:mm' }}</small>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-template #noComments>
+                    <p class="opacity-50">no comments vorhanden yet!</p>
+                  </ng-template>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+        </article>
+        <div class="contact-form article-comment" style="text-align: center;">
+          <h4>Action to make</h4>
+<div *ngIf="report.status !== 'RESOLVED'">
+
+
+          <h6 *ngIf="repcomment">Do you want to delete the reported comment ? <a class="link" (click)="deletecomment(repcomment)">
+              delete the comment </a> </h6>
+
+
+          <h6 *ngIf="reppoi">Do you want to delete the related Poi ? <a class="link" (click)="deletepoi(reppoi)"> delete the poi </a>
+          </h6>
+
+          <h6 *ngIf="repuser">Do you want to block the related user ? <a class="link"(click)="blockuser(repuser)"> Block user </a>
+          </h6>
+
+        </div>
+
+          <div class="container mt-3">
+
+            <div class="btn-group" role="group" aria-label="Report Actions">
+              <button type="button" class="blpx-btn theme" (click)="updateReportStatusToReviewed(report)"
+                *ngIf="report.status !== 'REVIEWED'">
+                Set Reports to Reviewed
+              </button>
+
+              <button type="button" class="rdpx-btn theme" (click)="updateReportStatusToDismissed(report)"
+                *ngIf="report.status !== 'DISMISSED'">
+                Set Reports to Dismissed
+              </button>
+
+              <button type="button" class="px-btn theme" (click)="updateReportStatusToResolved(report)"
+                *ngIf="report.status !== 'RESOLVED'">
+                Set Reports to Resolved
+              </button>
+            </div>
+
+
+
+
+          </div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="col-lg-4 m-15px-tb blog-aside">
+        <!-- Author -->
+        <div class="widget widget-author">
+          <div class="widget-title">
+            <h3>Report</h3>
+          </div>
+
+
+
+
+          <div class="widget-body">
+            <div class="media align-items-center" style=" display: flex;
+            align-items: center;">
+              <div class="avatar">
+                <img
+                  src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small_2x/user-profile-icon-free-vector.jpg"
+                  title="" alt="">
+              </div>
+              <div class="media-body" style="margin-left:-12px ;">
+                <h6>
+                  {{ reporter.name }} {{ reporter.surname }}
+                </h6>
+              </div>
+            </div>
+            <h5>Report Details</h5>
+            <p><strong>Title:</strong> {{ report.title }}</p>
+            <p><strong>Comment:</strong> {{ report.kommentar }}</p>
+            <p><strong>Status:</strong> {{ report.status }}</p>
+
+            <p><strong>Created At:</strong> {{ report.createdAt | date: 'short' }}</p>
+          </div>
+
+        </div>
+
+        <div class="widget widget-author" *ngIf="reports.length > 0">
+          <div class="widget-title">
+            <h3>Related Reports</h3>
+          </div>
+
+
+
+          <div class="widget-body" *ngFor="let rep of reports">
+            <div class="media align-items-center">
+              <div class="avatar">
+                <img
+                  src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small_2x/user-profile-icon-free-vector.jpg"
+                  title="" alt="">
+              </div>
+              <div class="media-body">
+                <h6>
+                  <p *ngIf="reporter"></p>
+                </h6>
+              </div>
+            </div>
+            <h2>Report Details</h2>
+            <p><strong>Title:</strong> {{ rep.title }}</p>
+            <p><strong>Comment:</strong> {{ rep.kommentar }}</p>
+            <p><strong>Status:</strong> {{ rep.status }}</p>
+
+            <p><strong>Created At:</strong> {{ rep.createdAt | date: 'short' }}</p>
+          </div>
+
+        </div>
+
+
+
+      </div>
     </div>
-
   </div>
-
-  <div *ngIf="reports.length > 0" class="mt-5">
-    <h2>Related Reports</h2>
-    <ul class="list-group">
-      <li class="list-group-item" *ngFor="let rep of reports">
-        <p><strong>Title:</strong> {{ rep.title }}</p>
-        <p><strong>Comment:</strong> {{ rep.kommentar }}</p>
-        <p><strong>Status:</strong> {{ rep.status }}</p>
-        <p><strong>Reported User ID:</strong> {{ rep.reportedUserId }}</p>
-        <p><strong>Reported POI ID:</strong> {{ rep.reportedPoiId }}</p>
-        <p><strong>Reported Comment ID:</strong> {{ rep.reportedCommentId }}</p>
-        <p><strong>Reporter ID:</strong> {{ rep.reporterId }}</p>
-        <p><strong>Created At:</strong> {{ rep.createdAt | date: 'short' }}</p>
-        <p><strong>Updated At:</strong> {{ rep.updatedAt | date: 'short' }}</p>
-      </li>
-    </ul>
-  </div>
-</div>
