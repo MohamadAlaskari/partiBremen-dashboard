@@ -66,7 +66,7 @@ export class PoiAnzeigeComponent implements OnInit, OnDestroy {
 
   private initMap(L: any): void {
     const currentPoi = new Poi("1", "12.05.2002", "12.05.2002", "y", true,
-      new User("1", "12.05.2002", "12.05.2002", "Ja", "no",  new Date(), "ewfw@gmail.com", "y", true, null, true),
+      new User("1", "12.05.2002", "12.05.2002", "Ja", "no",  new Date(), "ewfw@gmail.com", "y", true, null, true,"UNBLOCKED",null),
       [],[],[],[],[], "y", 3, 3)
     if (currentPoi) {
       let latitude = currentPoi.latitude;

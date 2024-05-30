@@ -21,10 +21,23 @@ export const environment = {
       create: '/user',
       update: '/user',
       delete: '/user',
+      block:'/user/block',
+      unblock:'/user/unblock',
+    },
+    report: {
+      findAll: '/report',
+      findById: '/report',
+      create: 'report',
+      findRebortsByRebortedUserId: '/reports/user',
+      findRebortsByRebortedPoiId: '/reports/comment',
+      findRebortsByRebortedCommentId: '/reports/poi',
+      update: '/report/update',
+      delete: '/report',
     },
     comments: {
       getAll: '/comment',
       delete: '/comment',
+      create: '/comment',
     },
     pois: {
       findAll: '/poi',

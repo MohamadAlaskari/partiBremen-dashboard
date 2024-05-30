@@ -131,3 +131,195 @@ $alert-border-radius: 5px;
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }
+
+.small-caps-bold {
+  font-variant: small-caps;
+}
+
+.svg-bold {
+  font-weight: bold;
+}
+
+//map style
+.mapboxgl-popup {
+  z-index: 999;
+}
+//search icon
+svg.mapboxgl-ctrl-geocoder--icon.mapboxgl-ctrl-geocoder--icon-search {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+}
+.mapboxgl-ctrl.mapboxgl-ctrl-attrib.mapboxgl-compact {
+  display: none;
+}
+//search input
+input.mapboxgl-ctrl-geocoder--input {
+  padding: 5px 3px;
+  width: 100%;
+}
+svg.mapboxgl-ctrl-geocoder--icon.mapboxgl-ctrl-geocoder--icon-loading {
+  display: none;
+}
+svg.mapboxgl-ctrl-geocoder--icon.mapboxgl-ctrl-geocoder--icon-close {
+  display: none;
+}
+.mapboxgl-ctrl-geocoder--pin-right {
+  display: none;
+}
+//search suggestions
+ul.suggestions {
+  list-style: none;
+  padding: 0px;
+}
+.suggestions li {
+  padding: 10px 15px;
+  border-bottom: 1px solid rgba(68, 68, 68, 0.095);
+  &:hover {
+    background-color: #1f1e1e51;
+  }
+}
+
+.mapboxgl-ctrl {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  padding: 0px;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.mapboxgl-ctrl button {
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.mapboxgl-ctrl button:hover {
+  background: #005f7a;
+}
+
+//marker
+.marker {
+  display: inline-block;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  background-color: green; /* default color, can be overridden */
+  position: relative;
+  border: 3px solid #000;
+
+  z-index: 1;
+}
+
+.pulsate::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  background-color: inherit;
+  border-radius: 50%;
+  opacity: 0.6;
+  transform: translate(-50%, -50%);
+  animation: pulsate 1.5s infinite ease-in;
+}
+
+@keyframes pulsate {
+  0% {
+    transform: translate(-50%, -50%) scale(1.3);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+  75% {
+    transform: translate(-50%, -50%) scale(5);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.3);
+    opacity: 0.6;
+  }
+}
+
+.style-switcher {
+  display: flex;
+  flex-direction: column; /* Ändere dies auf row für eine horizontale Anzeige */
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+  padding: 5px;
+  position: relative;
+  top: 0px;
+  right: 0px;
+  z-index: 1;
+}
+.mapboxgl-ctrl.mapboxgl-ctrl-group.style-switcher {
+  padding: 0;
+}
+.mapboxgl-ctrl.mapboxgl-ctrl-group.style-switcher button {
+  width: 50px;
+  height: 50px;
+}
+.style-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #f0f0f0; /* Füge eine Hintergrundfarbe hinzu */
+}
+
+.style-button.satellite {
+  background: url("https://images.unsplash.com/photo-1508885368104-a4871600f1e0?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTk4fHxtYXAlMjBzdHJlZXR8ZW58MHx8MHx8fDA%3D")
+    no-repeat center center;
+  background-size: cover;
+}
+
+.style-button.light {
+  background: url("https://images.unsplash.com/photo-1581922819941-6ab31ab79afc?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjR8fG1hcHxlbnwwfHwwfHx8MA%3D%3D")
+    no-repeat center center;
+  background-size: cover;
+}
+
+.style-button.dark {
+  background: url("https://images.unsplash.com/photo-1586449480537-3a22cf98b04c?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTI4fHxtYXB8ZW58MHx8MHx8fDA%3D")
+    no-repeat center center;
+  background-size: cover;
+}
+
+.style-button.streets {
+  background: url("https://images.unsplash.com/photo-1712697235813-67e2567b3eed?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTUyfHxjaXR5JTIwbWFwfGVufDB8fDB8fHww")
+    no-repeat center center;
+  background-size: cover;
+}
+
+.style-button.outdoors {
+  background: url("https://images.unsplash.com/photo-1582043675891-0a5e2e6668ee?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTA0fHxtYXB8ZW58MHx8MHx8fDA%3D")
+    no-repeat center center;
+  background-size: cover;
+}
+
+.mapboxgl-ctrl-geocoder {
+  min-width: 100%;
+}
+.geocoder {
+  position: absolute;
+  z-index: 1;
+  width: 50%;
+  left: 50%;
+  margin-left: -25%;
+  top: 10px;
+}

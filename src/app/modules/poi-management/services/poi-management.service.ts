@@ -74,6 +74,9 @@ export class PoiManagementService {
   getPois(): Observable<Poi[]> {
     return this.apiService.get<Poi[]>(`${this.poiEndpoints.findOnly}`);
   }
+  getallpoi(): Observable<Poi[]> {
+    return this.apiService.get<Poi[]>(`${this.poiEndpoints.findAll}`);
+  }
 
   getPoiByID(id: string): Observable<Poi> {
     return this.apiService.get<Poi>(`${this.poiEndpoints.findById}/${id}`);

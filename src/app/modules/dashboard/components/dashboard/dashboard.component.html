@@ -1,155 +1,207 @@
-<div class="projects-section ">
-  <div class="projects-section-header">
-    <p>Dashboard</p>
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
 
   </div>
-  <div class="projects-section-line">
-    <div class="projects-container">
-      <div class="project-card" style=" border-left: 5px solid #ff6600; ">
-        <div class="card-content">
-          <h3>Users <i class="bi bi-7-circle"></i></h3>
-          <p>101</p>
-        </div>
-      </div>
-      <div class="project-card" style=" border-left: 5px solid #007bff; ">
-        <div class="card-content">
-          <h3>Poi</h3>
-          <p>12</p>
-        </div>
-      </div>
-      <div class="project-card" style=" border-left: 5px solid #09a01d; ">
-        <div class="card-content">
-          <h3>comments</h3>
-          <p>52</p>
-        </div>
-      </div>
-      <div class="project-card" style=" border-left: 5px solid #df0f0f; ">
-        <div class="card-content">
-          <h3>surveys</h3>
-          <p>7</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row ">
-    <div class="col-md-7">
-      <div class="card dashboard-card">
-        <div class="card-body">
-          <h5 class="card-title">Dashboard</h5>
-          <div class="chart-menu">
-            <button class="chart-menu-button" (click)="showChart('poi')">POI Chart</button>
-            <button class="chart-menu-button" (click)="showChart('user')">User Chart</button>
-          </div>
-          <div class="chart-container" [hidden]="selectedChart !== 'poi'" #poiChart></div>
-          <div class="chart-container" [hidden]="selectedChart !== 'user'" #userChart></div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-5">
-      <div class="card dashboard-card">
-        <div class="card-body">
-          <h5 class="card-title">Top 10 Poi by voting</h5>
-          <div class="dashboard-section">
-            <ul class="user-list">
-              <li>
-                <span class="user-name">POI 1</span>
-                <span class="user-points">5000</span>
-              </li>
-              <li>
-                <span class="user-name">POI 2</span>
-                <span class="user-points">4800</span>
-              </li>
-              <li>
-                <span class="user-name">POI 2</span>
-                <span class="user-points">4800</span>
-              </li>
-              <li>
-                <span class="user-name">POI 2</span>
-                <span class="user-points">4800</span>
-              </li>
-              <li>
-                <span class="user-name">POI 2</span>
-                <span class="user-points">4800</span>
-              </li>
-              <li>
-                <span class="user-name">User 2</span>
-                <span class="user-points">4800</span>
-              </li>
-              <li>
-                <span class="user-name">User 2</span>
-                <span class="user-points">4800</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
 
-  </div>
+  <!-- Content Row -->
   <div class="row">
-    <div class="col-md-4">
-      <div class="card dashboard-card">
-        <div class="card-body">
-          <h2>Age Distribution</h2>
-          <div class="chart-container" #ageChart></div>
 
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card dashboard-card">
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
         <div class="card-body">
-          <h5 class="card-title">Top 10 Poi by voting</h5>
-          <div class="dashboard-section">
-            <ul class="user-list">
-              <li>
-                <span class="user-name">POI 1</span>
-                <span class="user-points">5000</span>
-              </li>
-              <li>
-                <span class="user-name">POI 2</span>
-                <span class="user-points">4800</span>
-              </li>
-              <li>
-                <span class="user-name">POI 2</span>
-                <span class="user-points">4800</span>
-              </li>
-              <li>
-                <span class="user-name">POI 2</span>
-                <span class="user-points">4800</span>
-              </li>
-              <li>
-                <span class="user-name">POI 2</span>
-                <span class="user-points">4800</span>
-              </li>
-              <li>
-                <span class="user-name">User 2</span>
-                <span class="user-points">4800</span>
-              </li>
-              <li>
-                <span class="user-name">User 2</span>
-                <span class="user-points">4800</span>
-              </li>
-            </ul>
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                Users</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">{{ usersCount }}</div>
+            </div>
+            <div class="col-auto">
+              <i class="bi bi-file-person fa-2x text-gray-300"></i>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-4">
-      <div class="card dashboard-card">
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
         <div class="card-body">
-          <h2>Divm</h2>
-          <div class="dashboard-section">
-            <!-- Your list content here -->
-            <ul class="user-list">
-              <!-- List items -->
-            </ul>
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                POI</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">{{ poisCount }}</div>
+            </div>
+            <div class="col-auto">
+              <i class="bi bi-file-text fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">comments
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">{{ commentscount }}</div>
+            </div>
+            <div class="col-auto">
+              <i class="bi bi-chat-dots  fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Requests Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                Reports</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+            </div>
+            <div class="col-auto">
+              <i class="bi bi-exclamation-octagon fa-2x  text-gray-300"></i>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Content Row -->
 
+  <div class="row">
+
+    <!-- Area Chart -->
+    <div class="col-xl-8 col-lg-7">
+      <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">POI Voting Statistics</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+          <div class="chart-area">
+            <canvas #poiChart></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Pie Chart -->
+    <div class="col-xl-4 col-lg-5">
+      <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">Age Distribution of Users</h6>
+
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+          <div class="chart-pie pt-4 pb-2">
+            <canvas #ageChart></canvas>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Row -->
+  <div class="row">
+
+    <!-- Content Column -->
+    <div class="col-lg-6 mb-4">
+
+      <!-- Project Card Example -->
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Reports</h6>
+        </div>
+        <div class="card-body">
+          <h4 class="small font-weight-bold">Pending <span class="float-right">{{ getStatusPercentage('PENDING')
+              }}%</span></h4>
+          <div class="progress mb-4">
+            <div class="progress-bar bg-danger" role="progressbar" [style.width]="getStatusPercentage('PENDING') + '%'"
+              aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <h4 class="small font-weight-bold">Dismissed <span class="float-right">{{ getStatusPercentage('DISMISSED')
+              }}%</span></h4>
+          <div class="progress mb-4">
+            <div class="progress-bar bg-warning" role="progressbar"
+              [style.width]="getStatusPercentage('DISMISSED') + '%'" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <h4 class="small font-weight-bold">Reviewed <span class="float-right">{{ getStatusPercentage('REVIEWED')
+              }}%</span></h4>
+          <div class="progress mb-4">
+            <div class="progress-bar bg-info" role="progressbar" [style.width]="getStatusPercentage('REVIEWED') + '%'"
+              aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <h4 class="small font-weight-bold">Resolved <span class="float-right">{{ getStatusPercentage('RESOLVED')
+              }}%</span></h4>
+          <div class="progress">
+            <div class="progress-bar bg-success" role="progressbar"
+              [style.width]="getStatusPercentage('RESOLVED') + '%'" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Color System -->
+      <div class="row">
+
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Reports</h6>
+            </div>
+            <div class="card-body">
+              <canvas #reportStatusChart></canvas>
+
+
+            </div>
+          </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-lg-6 mb-4">
+
+      <!-- Illustrations -->
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Most 10 Popular Points of Interest </h6>
+        </div>
+        <div class="card-body">
+          <ul class="user-list">
+            <li *ngFor="let poi of getTop10POIs()" class="poi-item">
+              <span class="poi-title">{{ poi.title }}</span>
+              <span class="poi-votes">{{ poi.votes }}</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Approach -->
+
+
+    </div>
+  </div>
 
 </div>

@@ -12,10 +12,7 @@
   }
 }
 
-.search-add-container {
-  display: flex;
-  align-items: center;
-}
+
 
 .search-wrapper {
   border-radius: 4px;
@@ -26,7 +23,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
   max-width: 430px;
   color: var(--light-font);
   overflow: hidden;

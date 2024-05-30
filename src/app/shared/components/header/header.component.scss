@@ -29,7 +29,10 @@
     font-size: 20px;
     line-height: 24px;
     font-weight: 700;
-    // margin: 0 32px;
+    margin: 0 32px;
+  }
+  &-icon {
+    cursor: pointer;
   }
 }
 
@@ -58,7 +61,7 @@
     opacity: 1;
   }
 }
-.notification-btn{
+.notification-btn {
   background-color: var(--button-bg);
   color: #fff;
 }
@@ -129,5 +132,38 @@
 
   .messages-btn {
     top: 48px;
+  }
+}
+.icon-menu {
+  height: 73px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 2px;
+}
+.app-icon {
+  width: 26px;
+  height: 2px;
+  border-radius: 4px;
+  background-color: var(--font-color-primary);
+  position: relative;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 2px;
+    border-radius: 4px;
+    background-color: var(--font-color-primary);
+    left: 50%;
+    transform: translatex(-50%);
+  }
+
+  &:before {
+    top: -6px;
+  }
+  &:after {
+    bottom: -6px;
   }
 }

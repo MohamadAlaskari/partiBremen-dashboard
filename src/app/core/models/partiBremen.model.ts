@@ -11,7 +11,9 @@ export class User {
     public password: string,
     public verified: boolean,
     public role: string | null,
-    public active: boolean
+    public active: boolean,
+    public blockStatus: string | null,
+    public blockUntilDatum: Date | null
   ) {}
 }
 
@@ -40,10 +42,11 @@ export class Report {
     public updatedAt: string,
     public kommentar: string,
     public title: string,
-    public reporter: User,
-    public reportedUser: User,
-    public reportedPoi: string,
-    public reportedComment: Comment
+    public reporterId: string,
+    public reportedUserId: string | null,
+    public reportedPoiId: string | null,
+    public reportedCommentId: string | null,
+    public status: 'PENDING' | 'DISMISSED' | 'RESOLVED' | 'REVIEWED'
   ) {}
 }
 
@@ -80,7 +83,7 @@ export class Comment {
     public updatedAt: string,
     public commentComment: string,
     public commenter: User,
-    public poI: string,
+    public poi: Poi,
     public votings: string[],
     public comments: string[],
     public reports: string[],
