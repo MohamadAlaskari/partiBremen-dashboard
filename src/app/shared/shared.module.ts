@@ -17,6 +17,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { BottomSheetComponent } from './components/bottom-sheet/bottom-sheet.component';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 import { ReportNotificationsComponent } from './components/report-notifications/report-notifications.component';
+import { MapComponent } from './components/map/map.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ReportNotificationsComponent } from './components/report-notifications/
     BottomSheetComponent,
     ConfirmModalComponent,
     ReportNotificationsComponent,
+    MapComponent,
   ],
   imports: [
     CommonModule,
@@ -51,6 +53,7 @@ import { ReportNotificationsComponent } from './components/report-notifications/
     TabsComponent,
     ConfirmModalComponent,
     ReportNotificationsComponent,
+    MapComponent
   ],
   providers: [ToastService],
 })

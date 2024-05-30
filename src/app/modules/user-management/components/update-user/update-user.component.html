@@ -24,7 +24,7 @@
         [class.is-invalid]="userForm.get('name')!.invalid && userForm.get('name')!.touched"
         [class.is-valid]="userForm.get('name')!.valid && userForm.get('name')!.touched">
       <label for="name" class="form-label">Name*</label>
-      @if(userForm.get('name')!.invalid && userForm.get('name')!.touched || userFormSubmitted){
+      @if(userForm.get('name')!.invalid && userForm.get('name')!.touched ){
       <div class="invalid-feedback">
         Please provide a valid name.
       </div>
@@ -48,11 +48,11 @@
     </div>
   </div>
   <!--Role-->
-  <div class="col-md-4">
+  <div class="col-md-6">
     <div class="form-floating">
       <select class="form-select" id="role" formControlName="role"
-        [class.is-invalid]="userForm.get('role')!.invalid && userForm.get('role')!.touched  || userFormSubmitted"
-        [class.is-valid]="userForm.get('role')!.valid && userForm.get('role')!.touched  || userFormSubmitted">
+        [class.is-invalid]="userForm.get('role')!.invalid && userForm.get('role')!.touched  "
+        [class.is-valid]="userForm.get('role')!.valid && userForm.get('role')!.touched  ">
         <option value="0">Default</option>
         <option value="1">User</option>
         <option value="2">Creator</option>
@@ -61,7 +61,7 @@
         <option value="5">Decider</option>
       </select>
       <label for="role">Role*</label>
-      @if (userForm.get('role')!.invalid && userForm.get('role')!.touched || userFormSubmitted) {
+      @if (userForm.get('role')!.invalid && userForm.get('role')!.touched ) {
       <div class="invalid-feedback">
         Please select a role.
       </div>
@@ -70,13 +70,13 @@
   </div>
 
   <!--Date of Birth-->
-  <div class="col-md-8">
+  <div class="col-md-6">
     <div class="form-floating">
       <input type="date" class="form-control" id="dob" placeholder="" formControlName="dob"
         [class.is-invalid]="userForm.get('dob')!.invalid && userForm.get('dob')!.touched"
         [class.is-valid]="userForm.get('dob')!.valid && userForm.get('dob')!.touched">
       <label for="dob" class="form-label">Date of Birth*</label>
-      @if(userForm.get('dob')!.invalid && userForm.get('dob')!.touched || userFormSubmitted){
+      @if(userForm.get('dob')!.invalid && userForm.get('dob')!.touched ){
       <div class="invalid-feedback">
         Please provide a valid date of birth.
       </div>
@@ -84,35 +84,7 @@
     </div>
   </div>
 
-  <!--Email-->
-  <div class="col-md-6">
-    <div class="form-floating">
-      <input type="email" class="form-control" id="email" placeholder="" formControlName="email" autocomplete="current-Email"Email
-        [class.is-invalid]="userForm.get('email')!.invalid && userForm.get('email')!.touched  || userFormSubmitted"
-        [class.is-valid]="userForm.get('email')!.valid && userForm.get('email')!.touched  || userFormSubmitted">
-      <label for="email" class="form-label">Email*</label>
-      @if ((userForm.get('email')!.invalid && userForm.get('email')!.touched) || userFormSubmitted) {
-      <div class="invalid-feedback">
-        Please provide a valid email.
-      </div>
-      }
-    </div>
-  </div>
 
-  <!--Password-->
-  <div class="col-md-6">
-    <div class="form-floating">
-      <input type="password" class="form-control" id="password" placeholder="" formControlName="password" autocomplete="current-password"
-        [class.is-invalid]="userForm.get('password')!.invalid && userForm.get('password')!.touched  || userFormSubmitted"
-        [class.is-valid]="userForm.get('password')!.valid && userForm.get('password')!.touched  || userFormSubmitted">
-      <label for="password" class="form-label">Password*</label>
-      @if ((userForm.get('password')!.invalid && userForm.get('password')!.touched) || userFormSubmitted) {
-      <div class="invalid-feedback">
-        Please provide a valid password.
-      </div>
-      }
-    </div>
-  </div>
 
   <div class="d-grid gap-4 d-md-block">
 
