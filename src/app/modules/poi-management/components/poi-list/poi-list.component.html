@@ -1,6 +1,7 @@
 
 <div class="project-boxes jsGridView" *ngIf="poiManagementService.pois">
 
+  <app-section-header [title]="title_poiManagment" time=""></app-section-header>
 
   <app-state-counter [states]="this.poiManagementService.counters"></app-state-counter>
 

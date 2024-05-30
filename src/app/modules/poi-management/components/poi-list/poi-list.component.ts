@@ -14,9 +14,7 @@ import {Poi} from "../../../../core/models/partiBremen.model";
 })
 export class PoiListComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
-
-  // Datenquelle für Material Table.
-  dataSource = new MatTableDataSource<Poi>();
+  protected title_poiManagment: string = 'POI Management';
 
   constructor(
     protected poiManagementService: PoiManagementService,
@@ -25,7 +23,20 @@ export class PoiListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.poiManagementService.loadPois();
+    this.getPois();
+  }
+
+  getPois(): void {
+    this.subscriptions.add(
+      this.poiManagementService.getPois().subscribe({
+        next: (pois) => {
+          this.poiManagementService.pois = pois;
+          this.poiManagementService.dataSource.data = pois;
+          this.poiManagementService.updateCounters();
+        },
+        error: (err) => console.error('Error loading POIs:', err),
+      })
+    );
   }
 
   searchTerm: string = '';

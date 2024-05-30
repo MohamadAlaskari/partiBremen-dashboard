@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import {Subscription} from "rxjs";
+import {BehaviorSubject, Subscription} from "rxjs";
 import {MatTableDataSource} from "@angular/material/table";
-import {PoiManagementService} from "../../../poi-management/services/poi-management.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Survey} from "../../../../core/models/partiBremen.model";
+import {Poi, Survey} from "../../../../core/models/partiBremen.model";
 import {CounterState} from "../../../../shared/components/state-counter/state-counter.component";
+import {SurveyManagementService} from "../../services/survey-management.service";
+import {ApiService} from "../../../../core/Services/api.service";
+import {environment} from "../../../../../environment";
 
 @Component({
   selector: 'app-poi-surveys',
@@ -14,34 +16,32 @@ import {CounterState} from "../../../../shared/components/state-counter/state-co
 export class SurveyListComponent {
   private subscriptions: Subscription = new Subscription();
   private id: string | null = ''
-  protected surveys : Survey[] = []
-
-  dataSource = new MatTableDataSource<Survey>();
-  surveyCounters: CounterState[] = [
-    { count: 3, label: 'Aktiv' },
-    { count: 3, label: 'inaktiv' },
-    { count: 3, label: 'Insgesamt' },
-  ];
+  private currentPoiSubject = new BehaviorSubject<any>(null);
+  protected title_surveyManagment: string = "Survey Management";
 
   constructor(
-    protected poiManagementService: PoiManagementService,
+    protected surveyManagementService: SurveyManagementService,
     private router: Router,
     private route: ActivatedRoute,
+    private apiService: ApiService,
   ) {}
 
-  ngOnInit() {
-    this.route.paramMap.subscribe((params) => {
-      this.id = params.get('id');
-      if (this.id) {
-        this.loadSurveys(this.id);
-      }
-    });
-  }
+    ngOnInit() {
+        this.route.paramMap.subscribe((params) => {
+            this.id = params.get('id');
+            if (this.id) {
+                this.loadSurveys(this.id);
+            } else {
+                this.getAllSurveys();
+                this.surveyManagementService.updateCounters();
+            }
+        });
+    }
 
   searchTerm: string = '';
 
   get filteredItems() {
-    return this.surveys.filter(item =>
+    return this.surveyManagementService.surveys.filter(item =>
       Object.values(item).some((value: any) =>
         value !== null &&
         value.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
@@ -49,33 +49,8 @@ export class SurveyListComponent {
     );
   }
 
-  updateCounters(): void {
-    const activesurveys = this.dataSource.filteredData.filter(
-      (survey) => new Date(survey.expiresAt) > new Date()
-    );
-
-    const inactivesurveys = this.dataSource.filteredData.filter(
-      (survey) => new Date(survey.expiresAt) <= new Date()
-    );
-
-
-    this.surveyCounters = [
-      { count: activesurveys.length, label: 'Aktiv' },
-      { count: inactivesurveys.length, label: 'inaktiv' },
-      { count: this.surveys.length, label: 'Insgesamt' },
-    ];
-  }
-
   showSurvey(id: string) {
     this.router.navigate(['poi-management/survey-anzeige', id]);
-  }
-
-  getActiveCount(): number {
-    return this.poiManagementService.pois.filter(item => item.active === true).length;
-  }
-
-  getInactiveCount(): number {
-    return this.poiManagementService.pois.filter(item => item.active === false).length;
   }
 
   ngOnDestroy(): void {
@@ -83,6 +58,49 @@ export class SurveyListComponent {
   }
 
   private async loadSurveys(id: string) {
-    this.surveys = await this.poiManagementService.getSurveys(id)
+    this.surveyManagementService.surveys = await this.getPoiSurveys(id)
+    this.surveyManagementService.dataSource.data = this.surveyManagementService.surveys;
+    this.surveyManagementService.updateCounters()
+  }
+
+  getAllSurveys() {
+    this.subscriptions.add(
+      this.surveyManagementService.getSurveys().subscribe({
+        next: (surveys) => {
+          this.surveyManagementService.surveys = surveys;
+          this.surveyManagementService.dataSource.data = surveys;
+          this.surveyManagementService.updateCounters();
+        },
+        error: (err) => console.error('Error loading POIs:', err),
+      })
+    );
+  }
+
+  async getPoiById(poiId: string): Promise<Poi> {
+    return new Promise((resolve, reject) => {
+      this.subscriptions.add(
+        this.surveyManagementService.getPoiByID(poiId).subscribe({
+          next: (poi) => {
+            this.currentPoiSubject.next(poi);
+            resolve(poi); // Return the poi object
+          },
+          error: (err) => {
+            console.error('Error loading POI:', err);
+            reject(err); // Reject the promise in case of an error
+          },
+        })
+      );
+    });
+  }
+
+  async getPoiSurveys(id: string) : Promise<Survey[]>{
+    try {
+      const poi = await this.getPoiById(id);
+      console.log('Loaded POI:', poi); // Move this before the return statement
+      return poi.surveys;
+    } catch (error) {
+      console.error('Failed to load POI:', error);
+      return []; // Return an empty array in case of an error
+    }
   }
 }
