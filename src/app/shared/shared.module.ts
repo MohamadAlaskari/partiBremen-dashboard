@@ -18,6 +18,8 @@ import { BottomSheetComponent } from './components/bottom-sheet/bottom-sheet.com
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 import { ReportNotificationsComponent } from './components/report-notifications/report-notifications.component';
 import { MapComponent } from './components/map/map.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { MapComponent } from './components/map/map.component';
     ConfirmModalComponent,
     ReportNotificationsComponent,
     MapComponent,
+    UserDetailsComponent,
+    UserProfileComponent,
   ],
   imports: [
     CommonModule,
@@ -53,7 +57,8 @@ import { MapComponent } from './components/map/map.component';
     TabsComponent,
     ConfirmModalComponent,
     ReportNotificationsComponent,
-    MapComponent
+    MapComponent,
+    UserProfileComponent,
   ],
   providers: [ToastService],
 })
