@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserManagementService } from '../../services/user-management-service/user-management.service';
 import { ToastService } from '../../../../shared/services/toast.service';
@@ -35,7 +35,8 @@ export class ViewUserComponent {
     private userService: UserManagementService,
     private toastService: ToastService,
     private authService: AuthService,
-    private ngZone: NgZone // Inject NgZone
+    private ngZone: NgZone, // Inject NgZone
+    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -88,7 +89,12 @@ export class ViewUserComponent {
     const sub = this.userService.getPoibyId(poiId).subscribe({
       next: (poi: Poi) => {
         this.selectedPoi = poi;
+        poi.comments.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
         console.log('selected poi:', this.selectedPoi);
+        this.cdr.detectChanges(); // Trigger change detection
       },
       error: () => {
         this.handleError('Error loading POI');
@@ -97,7 +103,11 @@ export class ViewUserComponent {
     this.subscriptions.add(sub);
   }
 
-  addComment(poiId: string, commentText: string): void {
+  addComment(
+    poiId: string,
+    commentText: string,
+    commentInput: HTMLInputElement
+  ): void {
     const currentUser = this.authService.getCurrentUser();
     if (!currentUser) {
       this.toastService.show('error', 'Error', 'User not logged in');
@@ -111,7 +121,18 @@ export class ViewUserComponent {
           const poi = this.userPois.find((p) => p.id === poiId);
           if (poi) {
             poi.comments.push(createdComment);
+            poi.comments.sort(
+              (a, b) =>
+                new Date(b.createdAt).getTime() -
+                new Date(a.createdAt).getTime()
+            );
+            console.log('comments: ', poi.comments);
+            if (this.selectedPoi?.id === poiId) {
+              this.selectedPoi = { ...poi };
+              this.cdr.detectChanges(); // Trigger change detection
+            }
           }
+          commentInput.value = ''; // Clear the input field
           this.toastService.show(
             'success',
             'Success',
