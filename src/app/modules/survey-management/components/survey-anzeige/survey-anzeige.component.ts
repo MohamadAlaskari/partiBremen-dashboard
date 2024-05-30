@@ -24,7 +24,6 @@ export class SurveyAnzeigeComponent {
     private router: Router,
     private route: ActivatedRoute
   ) {}
-/*
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
       this.id = params.get('id');
@@ -61,7 +60,7 @@ export class SurveyAnzeigeComponent {
       longitude: new FormControl(this.currentSurvey.longitude, Validators.required),
       img: new FormControl(this.currentSurvey.img),
     });
-    
+
   }
 
   updatePoi(): void {
@@ -171,6 +170,4 @@ export class SurveyAnzeigeComponent {
   navigateToPoi(id: string) {
     this.router.navigate(['anzeige', id]);
   }
-
-  */
 }
