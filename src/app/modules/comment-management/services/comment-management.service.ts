@@ -25,4 +25,8 @@ export class CommentManagementService {
     return this.apiService.put<Comment>(`${this.endpoints.edit}/${commentID}`, comment)
   }
 
+  getCommentByID(commentId: string): Observable<Comment> {
+    return this.apiService.get<Comment>(`${this.endpoints.get}/${commentId}`);
+  }
+
 }

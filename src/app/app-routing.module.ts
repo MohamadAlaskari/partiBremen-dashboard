@@ -40,7 +40,11 @@ const routes: Routes = [
   },
   {
     path: 'comment-management',
-    component: CommentManagementComponent,
+
+    loadChildren: () =>
+      import('./modules/comment-management/comment-management.module').then(
+        (m) => m.CommentManagementModule
+      )
     // canActivate: [AuthGuard],
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },

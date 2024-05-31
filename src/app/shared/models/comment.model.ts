@@ -7,4 +7,6 @@ export interface Comment {
         reports: string[],
         voting: string[],
         actualcomment: string,
+        poiID: string,
+        userID: string,
 }

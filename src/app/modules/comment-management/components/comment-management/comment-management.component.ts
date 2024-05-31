@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { Comment } from '../../../../shared/models/comment.model';
+import { MatDialog } from '@angular/material/dialog'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-comment-management',
@@ -21,7 +23,9 @@ export class CommentManagementComponent implements OnInit, OnDestroy {
 
   constructor(
     private commentManagementService: CommentManagementService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    public dialog: MatDialog,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -59,29 +63,6 @@ export class CommentManagementComponent implements OnInit, OnDestroy {
     }
   }
 
-  editComment(commentID: string, comment: Comment): void {
-    this.subscriptions.add(
-      this.commentManagementService.editComment(commentID, comment).subscribe({
-        next: (editedComment) => {
-          let index = this.comments.findIndex((comment) => comment.id === editedComment.id);
-          this.comments[index] = editedComment;
-          this.toastService.show(
-            'success',
-            'Success',
-            'Comment deleted successfully'
-          );
-        },
-        error: (error) => {
-          this.toastService.show(
-            'error',
-            'Error',
-            `Error deleting comment: ${error.message}`
-          );
-        },
-      })
-    )
-  }
-
   deleteComment(commentID: string): void {
     this.subscriptions.add(
       this.commentManagementService.deleteComment(commentID).subscribe({
@@ -102,6 +83,21 @@ export class CommentManagementComponent implements OnInit, OnDestroy {
         },
       })
     )
+  }
+ 
+  // openCommentDetailsModal(comment: any): void {
+  //   const dialogRef = this.dialog.open(CommentDetailsModalComponent, {
+  //     //width: '2000px',
+  //     data: { comment: comment }
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //   });
+  // } 
+
+  viewComment(id: string): void {
+    this.router.navigate(['/view-comment', id]);
   }
 
 }

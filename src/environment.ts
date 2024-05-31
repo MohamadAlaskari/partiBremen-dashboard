@@ -21,6 +21,7 @@ export const environment = {
       getAll: '/comment',
       delete: '/comment',
       edit: '/comment',
+      get: '/comment'
     },
     pois: {
       findAll: '/poi',

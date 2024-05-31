@@ -15,6 +15,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { PoiManagementModule } from './modules/poi-management/poi-management.module';
 import { CommentManagementModule } from './modules/comment-management/comment-management.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +31,8 @@ import { CommentManagementModule } from './modules/comment-management/comment-ma
     PoiManagementModule,
     MatIconModule,
     AppRoutingModule,
+    MatDialogModule,
+    BrowserAnimationsModule
   ],
   providers: [provideClientHydration(), provideAnimationsAsync()],
   bootstrap: [AppComponent],
