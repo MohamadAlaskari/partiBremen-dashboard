@@ -1,16 +1,19 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserManagementService } from '../../services/user-management-service/user-management.service';
 import { ToastService } from '../../../../shared/services/toast.service';
-import { User } from '../../../../shared/models/user.model';
-import * as L from 'leaflet';
 import {
+  User,
   Poi,
   Comment,
   Voting,
+  Report,
   Survey,
-} from '../../../../shared/models/partiBremen.model';
-import { loadLeaflet } from '../../../../utils/leaflet-browser';
+} from '../../../../core/models/partiBremen.model';
+
+import { CounterState } from '../../../../shared/components/state-counter/state-counter.component';
+import { AuthService } from '../../../auth/services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-view-user',
@@ -20,136 +23,168 @@ import { loadLeaflet } from '../../../../utils/leaflet-browser';
 export class ViewUserComponent {
   title: string = 'View User';
   id: string | null = null;
-  user!: User;
-  pois: Poi[] = [];
+  user?: User;
+  counters: CounterState[] = [];
+  userPois: Poi[] = [];
   selectedPoi: Poi | null = null;
-  map: L.Map | null = null;
-  markers: { [key: string]: L.Marker } = {};
+  poiClicked: boolean = false;
+  private subscriptions: Subscription = new Subscription(); // To manage subscriptions
 
   constructor(
     private route: ActivatedRoute,
     private userService: UserManagementService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private authService: AuthService,
+    private ngZone: NgZone, // Inject NgZone
+    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
   ) {}
+
   ngOnInit(): void {
-    this.extractIdFromRoute();
+    this.ngZone.run(() => {
+      this.extractIdFromRoute();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe(); // Unsubscribe from all subscriptions
   }
 
   private extractIdFromRoute(): void {
-    this.route.paramMap.subscribe((params) => {
+    const sub = this.route.paramMap.subscribe((params) => {
       this.id = params.get('id');
       if (this.id) {
         this.loadUser(this.id);
-        this.loadPois();
+        this.loadUserPois(this.id);
       }
     });
+    this.subscriptions.add(sub);
   }
 
   private loadUser(id: string): void {
-    this.userService.getUserById(id).subscribe((user: User) => {
-      this.user = user;
+    const sub = this.userService.getUserById(id).subscribe({
+      next: (user: User) => {
+        this.user = user;
+      },
+      error: () => {
+        this.handleError('Error loading user');
+      },
     });
+    this.subscriptions.add(sub);
   }
 
-  private async loadPois(): Promise<void> {
-    this.userService.getPois().subscribe(async (pois: Poi[]) => {
-      this.pois = pois.filter((poi) => poi.creator.id === this.user.id);
-      await this.initializeMap();
+  private loadUserPois(userId: string): void {
+    const sub = this.userService.getPoisByUserId(userId).subscribe({
+      next: (userPois: Poi[]) => {
+        this.userPois = userPois;
+        this.updateCounters();
+      },
+      error: () => {
+        this.handleError('Error loading user POIs');
+      },
     });
+    this.subscriptions.add(sub);
   }
 
-  private async initializeMap(): Promise<void> {
-    if (this.map) {
-      this.map.remove();
+  private loadPoiByPoiID(poiId: string): void {
+    const sub = this.userService.getPoibyId(poiId).subscribe({
+      next: (poi: Poi) => {
+        this.selectedPoi = poi;
+        poi.comments.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        console.log('selected poi:', this.selectedPoi);
+        this.cdr.detectChanges(); // Trigger change detection
+      },
+      error: () => {
+        this.handleError('Error loading POI');
+      },
+    });
+    this.subscriptions.add(sub);
+  }
+
+  addComment(
+    poiId: string,
+    commentText: string,
+    commentInput: HTMLInputElement
+  ): void {
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser) {
+      this.toastService.show('error', 'Error', 'User not logged in');
+      return;
     }
 
-    const L = await loadLeaflet();
-
-    this.map = L.map('map').setView([53.0792962, 8.8016936], 13);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-    }).addTo(this.map);
-
-    const defaultIcon = L.icon({
-      iconUrl:
-        'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-      shadowUrl:
-        'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41],
-    });
-
-    this.pois.forEach((poi) => {
-      if (this.map) {
-        const marker = L.marker([poi.latitude, poi.longitude], {
-          icon: defaultIcon,
-        })
-          .addTo(this.map)
-          .bindPopup(`<b>${poi.titel}</b><br>${poi.description}`)
-          .on('click', () => {
-            this.selectedPoi = poi;
-            this.toggleAccordion(poi.id);
-          });
-        this.markers[poi.id] = marker;
-      }
-    });
-  }
-
-  private toggleAccordion(poiId: string): void {
-    const element = document.getElementById(`heading${poiId}`);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      const button = element.querySelector('.accordion-button') as HTMLElement;
-      if (button) {
-        button.click();
-      }
-    }
-  }
-
-  addComment(poiId: string, commentText: string): void {
-    const newComment = new Comment(
-      (Math.random() * 1000).toString(),
-      new Date().toISOString(),
-      new Date().toISOString(),
-      '',
-      this.user,
-      poiId,
-      [],
-      [],
-      [],
-      commentText
-    );
-    const poi = this.pois.find((p) => p.id === poiId);
-    if (poi) {
-      poi.comments.push(newComment);
-    }
+    const sub = this.userService
+      .createComment(commentText, currentUser.id, poiId)
+      .subscribe({
+        next: (createdComment: Comment) => {
+          const poi = this.userPois.find((p) => p.id === poiId);
+          if (poi) {
+            poi.comments.push(createdComment);
+            poi.comments.sort(
+              (a, b) =>
+                new Date(b.createdAt).getTime() -
+                new Date(a.createdAt).getTime()
+            );
+            console.log('comments: ', poi.comments);
+            if (this.selectedPoi?.id === poiId) {
+              this.selectedPoi = { ...poi };
+              this.cdr.detectChanges(); // Trigger change detection
+            }
+          }
+          commentInput.value = ''; // Clear the input field
+          this.toastService.show(
+            'success',
+            'Success',
+            'Comment added successfully'
+          );
+        },
+        error: () => {
+          this.handleError('Error adding comment');
+        },
+      });
+    this.subscriptions.add(sub);
   }
 
   vote(poiId: string, voteType: string): void {
-    const newVote = new Voting(
-      (Math.random() * 1000).toString(),
-      new Date().toISOString(),
-      new Date().toISOString(),
-      voteType,
-      null, // Adjust here if necessary
-      null, // Adjust here if necessary
-      poiId,
-      this.user
-    );
-    const poi = this.pois.find((p) => p.id === poiId);
-    if (poi) {
-      poi.votings.push(newVote);
-    }
+    // Implement voting logic here
   }
 
   getVoteCount(poiId: string, voteType: string): number {
-    const poi = this.pois.find((p) => p.id === poiId);
+    const poi = this.userPois.find((p) => p.id === poiId);
     if (poi) {
       return poi.votings.filter((v) => v.voteType === voteType).length;
     }
     return 0;
+  }
+
+  updateCounters(): void {
+    this.counters = [
+      { count: this.userPois.length, label: 'POIs' },
+      { count: 20, label: 'Credit' },
+      { count: 100, label: 'Comments' },
+    ];
+  }
+
+  getInitials(name: string, surname: string): string {
+    return `${name.charAt(0).toUpperCase()}${surname.charAt(0).toUpperCase()}`;
+  }
+
+  trackById(index: number, poi: Poi): string {
+    return poi.id;
+  }
+
+  selectPoi(poiId: string): void {
+    this.loadPoiByPoiID(poiId);
+  }
+
+  onMarkerClick(poi: Poi): void {
+    this.poiClicked = true;
+    this.selectedPoi = poi;
+    console.log('selected poi: ', this.selectedPoi);
+  }
+
+  private handleError(message: string): void {
+    this.toastService.show('error', 'Error', message);
   }
 }

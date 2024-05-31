@@ -5,6 +5,7 @@ import { AddUserComponent } from './components/add-user/add-user.component';
 import { ViewUserComponent } from './components/view-user/view-user.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
 import { DeleteUserComponent } from './components/delete-user/delete-user.component';
+import { UserBlockComponent } from './components/user-block/user-block.component';
 
 const routes: Routes = [
   {
@@ -15,12 +16,18 @@ const routes: Routes = [
         path: 'add-user',
         component: AddUserComponent,
       },
+      {
+        path: 'block-user',
+        component: UserBlockComponent,
+      },
     ],
   },
+
   {
     path: 'delete-user/:id',
     component: DeleteUserComponent,
   },
+
   {
     path: 'update-user/:id',
     component: UpdateUserComponent,

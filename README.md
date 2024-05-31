@@ -6,13 +6,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 https://partibremen.student.28apps-software.de
 
-## URL Deployment für master branch
+## Deployment URL für master branch
 
 This project läuft auf folgenden URL von branch master: https://parti-bremen-dashboard.vercel.app/
 
-## Deployment für Development branch
+## Deployment URL für Development branch
 
-This project läuft auf folgenden URL von branch Development: https://parti-bremen-dashboard-dev.vercel.app/
+This project läuft auf folgenden URL von branch Development: parti-bremen-dashboard-git-development-mo-alaskaris-projects.vercel.app
 
 ## swagger URL
 

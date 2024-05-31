@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./comment-management.component.scss']
 })
 export class CommentManagementComponent implements OnInit, OnDestroy {
-
+title:string="Comment´s Management"
   comments: Comment[] = [];
   dataSource = new MatTableDataSource<Comment>();
 

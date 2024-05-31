@@ -1,8 +1,8 @@
 .app-sidebar {
-  width: 70px;
+  width: 90px;
   position: fixed;
   left: 0px;
-  background-color: var( --bg-color-primary);
+  top: 71px;
   height: 100%;
   z-index: 999;
   display: flex;
@@ -103,9 +103,9 @@
     overflow-y: visible;
   }
   .app-sidebar {
-    width: 100%;
+   // width: 100%;
     top: 61px;
-    left: -100%;
+   // left: -100%;
   }
   /*
   .sidebar-content,

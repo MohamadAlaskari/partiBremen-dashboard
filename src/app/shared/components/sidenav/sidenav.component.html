@@ -1,16 +1,27 @@
-<div class="app-sidebar">
-  <div class="icon-menu">
-    <span class="app-icon"></span>
-  </div>
-  <div class="sidebar-content">
+<div class="app-sidebar" *ngIf="!hidden">
 
-    <!-- Dashboard icon-->
-    <a routerLink="/dashboard" routerLinkActive="active" class="sidebar-content-link">
+
+  <div class="sidebar-content" [ngClass]="{'show-sidebar': showSidebar}">
+
+
+
+
+
+    <a routerLink="/home" routerLinkActive="active" class="sidebar-content-link">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
         class="feather feather-home">
         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
         <polyline points="9 22 9 12 15 12 15 22" />
+      </svg>
+    </a>
+
+    <!-- Dashboard icon-->
+    <a routerLink="/dashboard" routerLinkActive="active" class="sidebar-content-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-graph-down"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M0 0h1v15h15v1H0zm14.817 11.887a.5.5 0 0 0 .07-.704l-4.5-5.5a.5.5 0 0 0-.74-.037L7.06 8.233 3.404 3.206a.5.5 0 0 0-.808.588l4 5.5a.5.5 0 0 0 .758.06l2.609-2.61 4.15 5.073a.5.5 0 0 0 .704.07" />
       </svg>
     </a>
 
@@ -35,7 +46,7 @@
       </mat-icon>
     </a>
 
-    <a routerLink="/settings" routerLinkActive="active" class="sidebar-content-link">
+    <a routerLink="/report-management" routerLinkActive="active" class="sidebar-content-link">
       <svg class="link-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
         stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-settings"
         viewBox="0 0 24 24">

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { User } from '../../../../shared/models/user.model';
+import { User } from '../../../../core/models/partiBremen.model';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { UserManagementService } from '../../services/user-management-service/user-management.service';

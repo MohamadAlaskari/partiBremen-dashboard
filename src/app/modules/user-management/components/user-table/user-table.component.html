@@ -1,6 +1,6 @@
 <div class="table-responsive">
 
-  <table class=" table-parti table table-hover table-responsive caption-buttom align-middle">
+  <table class=" table-parti table table-hover table-responsive caption-buttom align-middle  table-fixed">
     <caption>List of users</caption>
     <thead>
       <tr>
@@ -14,28 +14,41 @@
     </thead>
     <tbody class="table-group-divider">
       @for (user of users; track $index) {
-      <tr>
+      <tr >
 
-        <th>@if (user.verified) {
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-            class="bi bi-patch-check-fill" viewBox="0 0 16 16">
+        <th>
+
+          @if (user.verified) {
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0040ff"
+            class="bi bi-check-circle-fill" viewBox="0 0 16 16">
             <path
-              d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708" />
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
           </svg>
           } @else {
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-patch-check"
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle"
             viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-              d="M10.354 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708 0" />
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
             <path
-              d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911z" />
+              d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05" />
           </svg>
           }
-          {{user.name }} {{user.surname}}
+          <span class="ps-1">
+            {{user.name }} {{user.surname}}
+          </span>
         </th>
         <td>{{user.email }}</td>
         <td>{{user.dob }}</td>
         <td>{{user.role | lowercase }}</td>
+
+          @if(user.blockStatus != "UNBLOCKED"){
+            <td> <span class="badge rounded-pill  bg-danger bg-opacity-25 text-danger-emphasis">Blocked {{user.blockUntilDatum }}</span> </td>
+            }@else{
+              <td>
+                <span class="badge rounded-pill  bg-success bg-opacity-25  text-success-emphasis">aktive</span>
+              </td>
+            }
+
+
         <td>@if(user.active){
           <span class="badge rounded-pill  bg-success bg-opacity-25  text-success-emphasis">aktive</span>
           }@else{
@@ -67,13 +80,35 @@
                 <a class="dropdown-item" [routerLink]="['/user-management/view-user',user.id]">view user</a>
               </li>
               <li>
-                <a class="dropdown-item" [routerLink]="['/user-management/update-user',user.id]" >update
+                <a class="dropdown-item" [routerLink]="['/user-management/update-user',user.id]">update
                   user</a>
               </li>
               <li>
                 <a class="dropdown-item" [routerLink]="['/user-management/delete-user',user.id]">
                   delete user</a>
               </li>
+              @if(user.blockStatus != "UNBLOCKED"){
+                <li>
+                  <a class="dropdown-item" (click)="unblockUser(user.id)">unBlock</a>
+
+                </li>
+                }@else{
+                  <li>
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#blockmodal" (click)="setSelectedUserId(user.id)">Block Until</a>
+
+
+                  </li>
+                  <li>
+                    <a class="dropdown-item" (click)="blockUser(user.id)">Permanent Block</a>
+
+                  </li>
+                }
+
+
+
+
+
+
             </ul>
           </div>
         </td>
@@ -86,4 +121,53 @@
     </tbody>
   </table>
 
+</div>
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+
+
+<div class="modal fade" id="blockmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+
+      <app-section-header [title]="title" time=""></app-section-header>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <form class="row g-3" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <!-- Block Until Date -->
+        <div class="col-8">
+          <div class="form-floating">
+            <input
+              type="date"
+              class="form-control"
+              id="blockUntilDate"
+              placeholder=""
+              formControlName="blockUntilDate"
+              [class.is-invalid]="userForm.get('blockUntilDate')?.invalid && userForm.get('blockUntilDate')?.touched"
+              [class.is-valid]="userForm.get('blockUntilDate')?.valid && userForm.get('blockUntilDate')?.touched"
+            />
+            <label for="blockUntilDate" class="form-label">Blocked until*</label>
+            <div class="invalid-feedback" *ngIf="userForm.get('blockUntilDate')?.invalid && userForm.get('blockUntilDate')?.touched">
+              Date is required.
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+
+    </div>
+    <div class="modal-footer">
+
+      <button type="reset" (click)="onCancel()" class="btn btn-outline-dark" data-bs-dismiss="modal">close</button>
+      <button type="submit" (click)="onSubmit()" class="btn btn-dark mx-md-3"
+        data-bs-dismiss="modal" >Block user</button>
+    </div>
+  </div>
+</div>
 </div>

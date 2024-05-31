@@ -16,6 +16,10 @@ import { TabsComponent } from './components/tabs/tabs.component';
 import { MatSortModule } from '@angular/material/sort';
 import { BottomSheetComponent } from './components/bottom-sheet/bottom-sheet.component';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
+import { ReportNotificationsComponent } from './components/report-notifications/report-notifications.component';
+import { MapComponent } from './components/map/map.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { PoiModalComponent } from './components/poi-modal/poi-modal.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +33,10 @@ import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.
     TabsComponent,
     BottomSheetComponent,
     ConfirmModalComponent,
+    ReportNotificationsComponent,
+    MapComponent,
+    UserProfileComponent,
+    PoiModalComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +56,9 @@ import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.
     SectionHeaderComponent,
     TabsComponent,
     ConfirmModalComponent,
+    ReportNotificationsComponent,
+    MapComponent,
+    UserProfileComponent,
   ],
   providers: [ToastService],
 })

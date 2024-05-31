@@ -17,6 +17,8 @@ import { PoiManagementModule } from './modules/poi-management/poi-management.mod
 import { CommentManagementModule } from './modules/comment-management/comment-management.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReportManagementModule } from './modules/report-management/report-management.module';
+import { HomeModule } from './modules/home/home.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +31,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     UserManagementModule,
     CommentManagementModule,
     PoiManagementModule,
+    ReportManagementModule,
+    HomeModule,
     MatIconModule,
     AppRoutingModule,
     MatDialogModule,

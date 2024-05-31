@@ -2,44 +2,61 @@
   <div class="left">
     <div class="overlay">
       <h1>Parti Bremen Dashboard</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Curabitur et est sed felis aliquet sollicitudin</p>
+      <p>Willkommen beim Parti Bremen Dashboard. Diese Verwaltungsplattform ist ausschließlich für Administratoren und
+        Moderatoren gedacht, um Projekte effizient zu verwalten und den Überblick über alle Aktivitäten zu behalten!
+
+      </p>
     </div>
   </div>
 
   <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="right">
     <h1 class="login-title-right">Login</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic, repellat!</p>
+    <p class="opacity-75">Bitte melden Sie sich an, um auf das Admin-Dashboard zuzugreifen. Nur Administratoren und
+      Moderatoren haben
+      Zugang zu diesem Bereich
 
-    <div class="inputs">
-      <input type="email" formControlName="email" placeholder="Email" autocomplete="username" required>
-      <div style="color: red;" *ngIf=" loginForm.get('email')?.errors?.['email']">
-        Please enter a valid email.
+    </p>
+    @if (loginForm.invalid && userFormSubmitted) {
+    <div class="alert alert-danger">
+      Please correct the errors in the form before submitting.
+    </div>
+    }
+    <!--Email-->
+    <div class="col-12">
+      <div class="form-floating">
+        <input type="email" class="form-control" id="email" placeholder="" formControlName="email"
+          autocomplete="current-Email" Email
+          [class.is-invalid]="loginForm.get('email')!.invalid && loginForm.get('email')!.touched  "
+          [class.is-valid]="loginForm.get('email')!.valid && loginForm.get('email')!.touched  ">
+        <label for="email" class="form-label">Email*</label>
+        @if ((loginForm.get('email')!.invalid && loginForm.get('email')!.touched) ) {
+        <div class="invalid-feedback">
+          Please provide a valid email.
+        </div>
+        }
       </div>
-      <br>
-      <input type="password" formControlName="password" placeholder="Password" autocomplete="current-password" required>
-      <div style="color: red;" *ngIf="loginForm.get('password')?.errors?.['minLength']">
-        Password must be at least 6 characters.
-      </div>
-      <div style="color: red;" *ngIf=" loginForm.get('password')?.errors?.['required']">
-        Password is required.
-      </div>
-
     </div>
 
-    <br><br>
-
-    <div class="remember-me--forget-password">
-      <label>
-        <input type="checkbox" name="item" checked />
-        <span class="text-checkbox">Remember me</span>
-      </label>
-      <p>forget password?</p>
+    <!--Password-->
+    <div class="col-12 mt-3">
+      <div class="form-floating">
+        <input type="password" class="form-control" id="password" placeholder="" formControlName="password"
+          autocomplete="current-password"
+          [class.is-invalid]="loginForm.get('password')!.invalid && loginForm.get('password')!.touched  "
+          [class.is-valid]="loginForm.get('password')!.valid && loginForm.get('password')!.touched  ">
+        <label for="password" class="form-label">Password*</label>
+        @if ((loginForm.get('password')!.invalid && loginForm.get('password')!.touched) ) {
+        <div class="invalid-feedback">
+          Please provide a valid password.
+        </div>
+        }
+      </div>
     </div>
+
 
     <br>
-    <button type="submit" class="btn btn-primary">Login</button>
 
+    <button type="submit" class="btn btn-dark btn-lg mx-auto col-12">Login</button>
   </form>
 
 </div>

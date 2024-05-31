@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { UserManagementService } from '../../services/user-management-service/user-management.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
-import { User } from '../../../../shared/models/user.model';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { Router } from '@angular/router';
 

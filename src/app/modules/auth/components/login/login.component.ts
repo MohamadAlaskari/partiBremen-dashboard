@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../../../../shared/models/user.model';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -12,6 +11,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  userFormSubmitted: boolean = false;
 
   constructor(
     private router: Router,
@@ -34,6 +34,7 @@ export class LoginComponent {
     }
   }
   onLogin(): void {
+    this.userFormSubmitted = true;
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe({

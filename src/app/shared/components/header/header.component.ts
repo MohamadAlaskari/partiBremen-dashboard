@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
+
 import { Router } from '@angular/router';
-import { User } from '../../models/user.model';
 import { AuthService } from '../../../modules/auth/services/auth.service';
 import { ToastService } from '../../services/toast.service';
+import {User} from "../../../core/models/partiBremen.model";
 
 @Component({
   selector: 'app-header',
@@ -10,6 +11,14 @@ import { ToastService } from '../../services/toast.service';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
+  @Output() toggleNotifications = new EventEmitter<void>();
+  @Output() sidebarToggled = new EventEmitter<void>();
+  onClickToggleNotifications() {
+    this.toggleNotifications.emit();
+  }
+  toggleSidebar() {
+    this.sidebarToggled.emit();
+  }
   title = 'Parti Bremen';
   currentUser: User | null = null;
   darkMode: boolean = false;

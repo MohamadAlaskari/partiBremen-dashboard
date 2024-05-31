@@ -1,27 +1,44 @@
-<div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
-  <form action="#" method="post" style="flex: 1 1 400px; min-width: 300px;" *ngIf="poiManagementService.currentPoi">
-    <p>ID:          {{poiManagementService.currentPoi.id}}</p>
+<div class="container">
+  <form action="#" method="post" class="poi-form" *ngIf="this.currentPoi">
+    <div class="info-container">
+      <p class="info-item"><span class="label">ID:</span> <span class="value">{{this.currentPoi.id}}</span></p>
+    </div>
 
-    <label for="input1">Name:  </label><br>
-    <input type="text" id="input1" name="input1" [(ngModel)]="poiManagementService.currentPoi.titel"><br><br>
+    <label for="input1">Name:</label><br>
+    <input type="text" id="input1" name="input1" [(ngModel)]="this.currentPoi.titel"><br><br>
 
-    <label for="input4">Beschreibung:  </label><br>
-    <input type="text" id="input4" name="input4" [(ngModel)]="poiManagementService.currentPoi.description"><br><br>
+    <label for="input4">Beschreibung:</label><br>
+    <textarea id="input4" name="input4" [(ngModel)]="this.currentPoi.description" class="description-box"></textarea><br><br>
 
-    <label for="input2">Aktiv?: </label>
-    <input type="checkbox" id="input2" name="input2" [(ngModel)]="poiManagementService.currentPoi.active"><br><br>
+    <div class="info-container">
+      <label for="input2" class="info-item"><span class="label">Aktiv?:</span> <span class="value"><input type="checkbox" id="input2" name="input2" [(ngModel)]="currentPoi.active"></span></label>
+    </div>
 
-    <p>Creator:     {{poiManagementService.currentPoi.creator.name + " " + poiManagementService.currentPoi.creator.surname}}</p>
+    <br>
 
-    <p>created at:  {{poiManagementService.currentPoi.createdAt | date:'short'}}</p>
+    <div class="flex-container">
+      <p class="info-item"><span class="label">Creator:</span> <span class="value">{{this.currentPoi.creator.name + " " + this.currentPoi.creator.surname}}</span></p>
+      <div><button id="view-user-button" type="submit" (click)="navigateToUser(this.currentPoi.creator.id)">View User</button></div>
+    </div>
 
-    <p>updated at:  {{poiManagementService.currentPoi.updatedAt | date:'short'}}</p>
+    <div class="info-container">
+      <p class="info-item"><span class="label">created at:</span> <span class="value">{{this.currentPoi.createdAt | date:'short'}}</span></p>
+      <p class="info-item"><span class="label">updated at:</span> <span class="value">{{this.currentPoi.updatedAt | date:'short'}}</span></p>
+      <p class="info-item"><span class="label">long/lat:</span> <span class="value">{{this.currentPoi.longitude}} / {{this.currentPoi.latitude}}</span></p>
+    </div>
 
-    <p>long/lat:    {{poiManagementService.currentPoi.longitude}} / {{poiManagementService.currentPoi.latitude}}</p>
+    <br>
+
+    <div class="flex-container">
+      <div><button type="button" (click)="navigateToComments()">View Comments</button></div>
+      <div><button type="button" (click)="navigateToSurveys()">View Surveys</button></div>
+    </div>
+
+    <br>
 
     <button type="submit" (click)="updatePoi()">Update</button>
     <button class="button alert tiny" (click)="deletePoi()">Delete</button>
   </form>
 
-  <div id="map" style="height: 400px; width: 100%; flex: 1 1 300px; min-width: 300px;"></div>
+  <div id="map"></div>
 </div>

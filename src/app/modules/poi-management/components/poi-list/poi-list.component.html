@@ -1,5 +1,7 @@
+
 <div class="project-boxes jsGridView" *ngIf="poiManagementService.pois">
 
+  <app-section-header [title]="title_poiManagment" time=""></app-section-header>
 
   <app-state-counter [states]="this.poiManagementService.counters"></app-state-counter>
 
@@ -23,17 +25,16 @@
       <th>Beschreibung</th>
       <th>Creator</th>
       <th>Aktiv?</th>
-      <th></th>
       </thead>
       <tbody>
         @for (poi of filteredItems; track poi.id) {
 
-          <tr (dblclick)="showPoi(poi)" >
+          <tr (dblclick)="showPoi(poi.id)" >
             <td>{{poi.titel}}</td>
             <td>{{poi.createdAt | date:'short'}}</td>
             <td>{{poi.updatedAt | date:'short'}}</td>
             <td>{{poi.description}}</td>
-            <td>{{poi.creator.name}} {{poi.creator.surname}}</td>
+            <td>{{poi.creator.name}} {{poi.creator.surname}} </td>
             <td>{{poi.active ? 'ja' : 'nein'}}</td>
           </tr>
         }
