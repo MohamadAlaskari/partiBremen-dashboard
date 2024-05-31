@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommentManagementService } from '../../services/comment-management.service';
-import { Comment } from '../../../../shared/models/comment.model';
+import { Comment } from '../../../../core/models/partiBremen.model';
 import { ToastService } from '../../../../shared/services/toast.service';
 
 @Component({

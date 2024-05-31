@@ -5,9 +5,9 @@ import { CommentManagementService } from '../../services/comment-management.serv
 import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastService } from '../../../../shared/services/toast.service';
-import { Comment } from '../../../../shared/models/comment.model';
 import { MatDialog } from '@angular/material/dialog'
 import { Router } from '@angular/router';
+import { Comment } from '../../../../core/models/partiBremen.model';
 
 @Component({
   selector: 'app-comment-management',
@@ -15,9 +15,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./comment-management.component.scss']
 })
 export class CommentManagementComponent implements OnInit, OnDestroy {
-title:string="Comment´s Management"
+  title: string = "Comment Management";
   comments: Comment[] = [];
   dataSource = new MatTableDataSource<Comment>();
+
 
   private subscriptions: Subscription = new Subscription();
 
@@ -84,17 +85,6 @@ title:string="Comment´s Management"
       })
     )
   }
- 
-  // openCommentDetailsModal(comment: any): void {
-  //   const dialogRef = this.dialog.open(CommentDetailsModalComponent, {
-  //     //width: '2000px',
-  //     data: { comment: comment }
-  //   });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log('The dialog was closed');
-  //   });
-  // } 
 
   viewComment(id: string): void {
     this.router.navigate(['/view-comment', id]);

@@ -31,7 +31,7 @@
               </svg>
             </button>
             <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <li><a class="dropdown-item" (click)="editComment(comment)">Edit</a></li>
+              <li><a class="dropdown-item" (click)="viewComment(comment.id)">View</a></li>
               <li><a class="dropdown-item" (click)="deleteComment(comment.id)">Delete</a></li>
             </ul>
           </div>

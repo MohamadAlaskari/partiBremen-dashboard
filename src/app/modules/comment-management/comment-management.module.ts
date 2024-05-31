@@ -5,7 +5,7 @@ import { CommentManagementComponent } from './components/comment-management/comm
 import { CommentManagementService } from './services/comment-management.service';
 import { CommentManagementRoutingModule } from './comment-management-routing.module';
 import { CommentDetailsModalComponent } from './components/comment-details-modal/comment-details-modal.component';
-
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +14,8 @@ import { CommentDetailsModalComponent } from './components/comment-details-modal
   ],
   imports: [
     CommonModule,
-    CommentManagementRoutingModule
+    CommentManagementRoutingModule,
+    SharedModule,
   ],
   providers: [CommentManagementService]
 

@@ -4,7 +4,7 @@ import { UserManagementService } from '../../../user-management/services/user-ma
 import {Poi, User} from '../../../../core/models/partiBremen.model';
 import { PoiManagementService } from '../../../poi-management/services/poi-management.service';
 import { CommentManagementService } from '../../../comment-management/services/comment-management.service';
-import { Comment } from '../../../../shared/models/comment.model';
+import { Comment } from '../../../../core/models/partiBremen.model';
 import Chart from 'chart.js/auto';
 import { ReportNotificationsService } from '../../../../shared/services/report-notifications.service';
 import { Subscription } from 'rxjs';

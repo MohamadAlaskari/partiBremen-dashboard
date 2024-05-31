@@ -80,14 +80,14 @@ export class Voting {
 export class Comment {
   constructor(
     public id: string,
-    public createdAt: string,
-    public updatedAt: string,
+    public createdAt: Date,
+    public updatedAt: Date,
     public commentComment: string,
     public commenter: User,
     public poi: Poi,
-    public votings: string[],
-    public comments: string[],
-    public reports: string[],
+    public votings: Voting[],
+    public comments: Comment[],
+    public reports: Report[],
     public actualcomment: string
   ) {}
 }

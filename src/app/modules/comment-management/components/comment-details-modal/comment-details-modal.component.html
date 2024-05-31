@@ -2,7 +2,7 @@
 <div class="comment-detail" *ngIf="comment">
     <h2>Comment Detail</h2>
     <p><strong>Text:</strong> {{ comment.actualcomment }}</p>
-    <p><strong>Author:</strong> {{ comment.userID }}</p>
-    <button (click)="goToUser(comment.userID)">View Author</button>
-    <button (click)="goToPOI(comment.poiID)">View POI</button>
+    <p><strong>Author:</strong> {{ comment.commenter.id }}</p>
+    <button (click)="goToUser(comment.commenter.id)">View Author</button>
+    <button (click)="goToPOI(comment.poi.id)">View POI</button>
   </div>

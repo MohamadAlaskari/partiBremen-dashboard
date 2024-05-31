@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../../core/Services/api.service';
 import { Observable } from 'rxjs';
-import { Comment } from '../../../shared/models/comment.model';
+import { Comment } from '../../../core/models/partiBremen.model';
 import { environment } from '../../../../environment';
 
 @Injectable({
