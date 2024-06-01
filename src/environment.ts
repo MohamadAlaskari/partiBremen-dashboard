@@ -47,6 +47,10 @@ export const environment = {
       update: '/poi',
       delete: '/poi',
     },
+    voting:{
+      vote:'/voting',
+      getVotes:'/voting'
+    },
     surveys: {
       findAll: '/survey',
       findById: '/survey',
