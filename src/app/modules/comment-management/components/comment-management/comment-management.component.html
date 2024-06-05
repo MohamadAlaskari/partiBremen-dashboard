@@ -6,7 +6,7 @@
   <table>
     <thead>
       <tr>
-        <th>ID</th>
+        <th>Author</th>
         <th>Comment</th>
         <th>Created At</th>
         <th>Updated At</th>
@@ -16,18 +16,17 @@
     <tbody>
       @for (comment of comments; track comment.id) {
       <tr>
-        <td>{{ comment.id }}</td>
-        <td>{{ comment.actualcomment }}</td>
-        <td>{{ comment.createdAt }}</td>
-        <td>{{ comment.updatedAt }}</td>
+        <td>{{ comment.commenter.name + " " + comment.commenter.surname }}</td>
+        <td class="actualcomment">{{ comment.actualcomment }}</td>
+        <td>{{ comment.createdAt | date: 'short' }}</td>
+        <td>{{ comment.updatedAt | date: 'short'  }}</td>
         <td>
           <div class="dropdown">
-            <button type="button" class="button" data-bs-toggle="dropdown" aria-expanded="false"
-              (click)="toggleDropdown(comment.id)">
+            <button type="button" class="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="toggleDropdown(comment.id)">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                <path
-                  d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+              class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+              <path
+                d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
               </svg>
             </button>
             <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -35,9 +34,21 @@
               <li><a class="dropdown-item" (click)="deleteComment(comment.id)">Delete</a></li>
             </ul>
           </div>
+          <!-- <div class="dropdown">
+            <button class="button" type="button" id="dropdownMenuButton" aria-expanded="false" mdbDropdownToggle>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+              </svg>              
+            </button>
+            <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li><a class="dropdown-item" (click)="viewComment(comment.id)">View</a></li>
+              <li><a class="dropdown-item" (click)="deleteComment(comment.id)">Delete</a></li>
+            </ul>
+          </div> -->
         </td>
       </tr>
       }
     </tbody>
   </table>
 </div>
+

@@ -17,7 +17,7 @@
   color: rgba(0, 0, 0, 0.85);
   cursor: pointer;
   display: inline-flex;
-  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: system-ui,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 16px;
   font-weight: 600;
   justify-content: center;
@@ -67,7 +67,7 @@ th, td {
   border: 1px solid rgb(231, 231, 231);
   border-radius: .5rem;
   color: #111827;
-  font-family: ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-family: ui-sans-serif,system-ui,system-ui,"Segoe UI","Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
   font-size: .875rem;
   font-weight: 600;
   line-height: 1.25rem;
@@ -96,4 +96,8 @@ th, td {
 .button:focus-visible {
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+
+.actualcomment {
+  width: 20%;
 }

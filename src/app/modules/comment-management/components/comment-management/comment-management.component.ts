@@ -15,10 +15,10 @@ import { Comment } from '../../../../core/models/partiBremen.model';
   styleUrls: ['./comment-management.component.scss']
 })
 export class CommentManagementComponent implements OnInit, OnDestroy {
+  
   title: string = "Comment Management";
   comments: Comment[] = [];
   dataSource = new MatTableDataSource<Comment>();
-
 
   private subscriptions: Subscription = new Subscription();
 
@@ -53,17 +53,6 @@ export class CommentManagementComponent implements OnInit, OnDestroy {
     );
   }
 
-  selectedCommentId: string | null = null;
-
-  toggleDropdown(commentId: string): void {
-    if(this.selectedCommentId === commentId) {
-      this.selectedCommentId = null;
-    }
-    else {
-      this.selectedCommentId = commentId;
-    }
-  }
-
   deleteComment(commentID: string): void {
     this.subscriptions.add(
       this.commentManagementService.deleteComment(commentID).subscribe({
@@ -88,6 +77,17 @@ export class CommentManagementComponent implements OnInit, OnDestroy {
 
   viewComment(id: string): void {
     this.router.navigate(['/view-comment', id]);
+  }
+
+  selectedCommentId: string | null = null;
+
+  toggleDropdown(commentId: string): void {
+    if(this.selectedCommentId === commentId) {
+      this.selectedCommentId = null;
+    }
+    else {
+      this.selectedCommentId = commentId;
+    }
   }
 
 }
