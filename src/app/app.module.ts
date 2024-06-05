@@ -16,6 +16,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReportManagementModule } from './modules/report-management/report-management.module';
 import { HomeModule } from './modules/home/home.module';
+import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,7 +35,8 @@ import { HomeModule } from './modules/home/home.module';
     MatIconModule,
     AppRoutingModule,
     MatDialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MdbDropdownModule,
   ],
   providers: [provideClientHydration(), provideAnimationsAsync()],
   bootstrap: [AppComponent],

@@ -53,6 +53,10 @@ export class CommentManagementComponent implements OnInit, OnDestroy {
     );
   }
 
+  viewComment(id: string): void {
+    this.router.navigate(['/view-comment', id]);
+  }
+
   deleteComment(commentID: string): void {
     this.subscriptions.add(
       this.commentManagementService.deleteComment(commentID).subscribe({
@@ -73,21 +77,6 @@ export class CommentManagementComponent implements OnInit, OnDestroy {
         },
       })
     )
-  }
-
-  viewComment(id: string): void {
-    this.router.navigate(['/view-comment', id]);
-  }
-
-  selectedCommentId: string | null = null;
-
-  toggleDropdown(commentId: string): void {
-    if(this.selectedCommentId === commentId) {
-      this.selectedCommentId = null;
-    }
-    else {
-      this.selectedCommentId = commentId;
-    }
   }
 
 }

@@ -36,7 +36,7 @@ import { PoiModalComponent } from './components/poi-modal/poi-modal.component';
     ReportNotificationsComponent,
     MapComponent,
     UserProfileComponent,
-    PoiModalComponent,
+    PoiModalComponent
   ],
   imports: [
     CommonModule,
