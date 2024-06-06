@@ -65,3 +65,7 @@ export class PoiManagementService {
   }
 
 
+  getComments(id: string) {
+
+  }
+}
