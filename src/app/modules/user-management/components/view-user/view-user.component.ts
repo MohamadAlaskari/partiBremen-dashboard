@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserManagementService } from '../../services/user-management-service/user-management.service';
 import { ToastService } from '../../../../shared/services/toast.service';
@@ -11,7 +11,6 @@ import {
   Survey,
 } from '../../../../core/models/partiBremen.model';
 
-import { MapboxService } from '../../../../shared/services/mapbox-service/mapbox.service';
 import { CounterState } from '../../../../shared/components/state-counter/state-counter.component';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Subscription } from 'rxjs';
@@ -35,9 +34,9 @@ export class ViewUserComponent {
     private route: ActivatedRoute,
     private userService: UserManagementService,
     private toastService: ToastService,
-    private mapboxService: MapboxService,
     private authService: AuthService,
-    private ngZone: NgZone // Inject NgZone
+    private ngZone: NgZone, // Inject NgZone
+    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -47,7 +46,6 @@ export class ViewUserComponent {
   }
 
   ngOnDestroy(): void {
-    this.mapboxService.map?.remove();
     this.subscriptions.unsubscribe(); // Unsubscribe from all subscriptions
   }
 
@@ -58,9 +56,6 @@ export class ViewUserComponent {
         this.loadUser(this.id);
         this.loadUserPois(this.id);
       }
-      this.mapboxService.setOnMarkerClickCallback(
-        this.onMarkerClick.bind(this)
-      );
     });
     this.subscriptions.add(sub);
   }
@@ -82,7 +77,6 @@ export class ViewUserComponent {
       next: (userPois: Poi[]) => {
         this.userPois = userPois;
         this.updateCounters();
-        this.initializeMap();
       },
       error: () => {
         this.handleError('Error loading user POIs');
@@ -95,7 +89,12 @@ export class ViewUserComponent {
     const sub = this.userService.getPoibyId(poiId).subscribe({
       next: (poi: Poi) => {
         this.selectedPoi = poi;
+        poi.comments.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
         console.log('selected poi:', this.selectedPoi);
+        this.cdr.detectChanges(); // Trigger change detection
       },
       error: () => {
         this.handleError('Error loading POI');
@@ -104,14 +103,11 @@ export class ViewUserComponent {
     this.subscriptions.add(sub);
   }
 
-  private initializeMap(): void {
-    this.mapboxService.initializeMap('map', [8.8016936, 53.0792962], 9);
-    this.mapboxService.map.on('load', () => {
-      this.mapboxService.addMarkers(this.userPois);
-    });
-  }
-
-  addComment(poiId: string, commentText: string): void {
+  addComment(
+    poiId: string,
+    commentText: string,
+    commentInput: HTMLInputElement
+  ): void {
     const currentUser = this.authService.getCurrentUser();
     if (!currentUser) {
       this.toastService.show('error', 'Error', 'User not logged in');
@@ -125,7 +121,18 @@ export class ViewUserComponent {
           const poi = this.userPois.find((p) => p.id === poiId);
           if (poi) {
             poi.comments.push(createdComment);
+            poi.comments.sort(
+              (a, b) =>
+                new Date(b.createdAt).getTime() -
+                new Date(a.createdAt).getTime()
+            );
+            console.log('comments: ', poi.comments);
+            if (this.selectedPoi?.id === poiId) {
+              this.selectedPoi = { ...poi };
+              this.cdr.detectChanges(); // Trigger change detection
+            }
           }
+          commentInput.value = ''; // Clear the input field
           this.toastService.show(
             'success',
             'Success',
@@ -171,7 +178,7 @@ export class ViewUserComponent {
     this.loadPoiByPoiID(poiId);
   }
 
-  private onMarkerClick(poi: Poi): void {
+  onMarkerClick(poi: Poi): void {
     this.poiClicked = true;
     this.selectedPoi = poi;
     console.log('selected poi: ', this.selectedPoi);

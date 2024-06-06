@@ -31,7 +31,8 @@ export class Poi {
     public surveys: Survey[],
     public votings: Voting[],
     public comments: Comment[],
-    public titel: string
+    public titel: string,
+    public img: string,
   ) {}
 }
 

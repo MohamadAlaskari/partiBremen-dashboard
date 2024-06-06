@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { PoiManagementService } from '../../services/poi-management.service';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { Router } from '@angular/router';
-import { Poi } from '../../../../shared/models/poi.model';
+import {Poi} from "../../../../core/models/partiBremen.model";
 
 @Component({
   selector: 'app-poi-list',
@@ -14,9 +14,7 @@ import { Poi } from '../../../../shared/models/poi.model';
 })
 export class PoiListComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
-
-  // Datenquelle für Material Table.
-  dataSource = new MatTableDataSource<Poi>();
+  protected title_poiManagment: string = 'POI Management';
 
   constructor(
     protected poiManagementService: PoiManagementService,
@@ -25,7 +23,20 @@ export class PoiListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.poiManagementService.loadPois();
+    this.getPois();
+  }
+
+  getPois(): void {
+    this.subscriptions.add(
+      this.poiManagementService.getPois().subscribe({
+        next: (pois) => {
+          this.poiManagementService.pois = pois;
+          this.poiManagementService.dataSource.data = pois;
+          this.poiManagementService.updateCounters();
+        },
+        error: (err) => console.error('Error loading POIs:', err),
+      })
+    );
   }
 
   searchTerm: string = '';
@@ -39,30 +50,8 @@ export class PoiListComponent implements OnInit, OnDestroy {
     );
   }
 
-  showPoi(poi: any) {
-    this.poiManagementService.currentPoi = this.poiManagementService.loadPoiById(poi.id)
-    this.waitForCurrentPoi()
-    this.router.navigate(['poi-management/anzeige']);
-  }
-
-  private waitForCurrentPoi(): Promise<any> {
-    return new Promise(resolve => {
-      const intervalId = setInterval(() => {
-        const currentPoi = this.poiManagementService.currentPoi;
-        if (currentPoi) {
-          clearInterval(intervalId);
-          resolve(currentPoi);
-        }
-      }, 500); // Prüfen Sie jede Sekunde
-    });
-  }
-
-  getActiveCount(): number {
-    return this.poiManagementService.pois.filter(item => item.active === true).length;
-  }
-
-  getInactiveCount(): number {
-    return this.poiManagementService.pois.filter(item => item.active === false).length;
+  showPoi(id: string) {
+    this.router.navigate(['poi-management/anzeige', id]);
   }
 
   ngOnDestroy(): void {

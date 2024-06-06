@@ -144,6 +144,11 @@ $alert-border-radius: 5px;
 .mapboxgl-popup {
   z-index: 999;
 }
+//search panel container
+.mapboxgl-ctrl-top-left {
+width: 30%;
+}
+
 //search icon
 svg.mapboxgl-ctrl-geocoder--icon.mapboxgl-ctrl-geocoder--icon-search {
   position: absolute;
@@ -184,7 +189,6 @@ ul.suggestions {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
   background: white;
   padding: 0px;
   border-radius: 3px;
