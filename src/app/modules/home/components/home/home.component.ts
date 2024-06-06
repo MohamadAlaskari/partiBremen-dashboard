@@ -35,6 +35,11 @@ export class HomeComponent {
       longitude: ['', Validators.required]
     });
   }
+  mapCursorEnabled: boolean = false;
+
+toggleMapCursor(): void {
+  this.mapCursorEnabled = !this.mapCursorEnabled;
+}
   submitForm(): void {
     this.currentUser = this.authService.getCurrentUser();
 
@@ -54,6 +59,7 @@ export class HomeComponent {
         next: (response) => {
             // Handle the response if needed
             console.log("POI created:", response);
+            window.location.reload();
         },
         error: (error) => {
             // Handle any errors
@@ -69,18 +75,12 @@ export class HomeComponent {
   ngAfterViewInit(): void {
     if (this.mapButton) {
       this.mapButton.nativeElement.addEventListener('click', () => {
-        this.changeCursorToPenIcon();
       });
     }
 
     this.setupMapClickHandler();
   }
 
-  private changeCursorToPenIcon(): void {
-    if (this.mapButton) {
-      this.mapButton.nativeElement.style.cursor = 'url("https://png.pngtree.com/png-vector/20220622/ourmid/pngtree-red-location-map-icon-png-image_5237524.png"), auto';
-    }
-  }
 
   private setupMapClickHandler(): void {
     this.mapboxService.setOnMapClickCallback((coordinates) => {
