@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MapboxService } from '../../../../shared/services/mapbox-service/mapbox.service';
 import { Poi } from '../../../../core/models/partiBremen.model';
 import { HomeService } from '../../services/home.service';
-
+declare var bootstrap: any;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -12,6 +12,8 @@ export class HomeComponent {
   pois: Poi[] = [];
   poiClicked: boolean = false;
   selectedPoi: Poi | null = null; // Initialize as null
+  @ViewChild('poiModal') poiModal!: ElementRef;
+
 
   constructor(
     private mapboxService: MapboxService,
@@ -43,9 +45,15 @@ export class HomeComponent {
 
   private onMarkerClick(poi: Poi): void {
     this.poiClicked = true;
+    console.log(this.poiClicked);
     this.selectedPoi = poi;
+    this.openModal();
   }
-
+  openModal(): void {
+    const modalElement = this.poiModal.nativeElement;
+    const bootstrapModal = new bootstrap.Modal(modalElement);
+    bootstrapModal.show();
+  }
   addComment(poiId: string, commentText: string): void {}
 
   vote(poiId: string, voteType: string): void {}
