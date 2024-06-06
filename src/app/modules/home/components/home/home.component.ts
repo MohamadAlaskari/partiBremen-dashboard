@@ -1,9 +1,10 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MapboxService } from '../../../../shared/services/mapbox-service/mapbox.service';
-import { Poi,User } from '../../../../core/models/partiBremen.model';
+import { Poi, User } from '../../../../core/models/partiBremen.model';
 import { HomeService } from '../../services/home.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../auth/services/auth.service';
+
 declare var bootstrap: any;
 @Component({
   selector: 'app-home',
@@ -14,17 +15,20 @@ export class HomeComponent {
   pois: Poi[] = [];
   poiClicked: boolean = false;
   formData!: FormGroup;
+  reportForm!: FormGroup;
   currentUser: User | null = null;
-
+  selectedReportType: string = '';
+  selectedReportItemId: any;
+  title: string = '';
   selectedPoi: Poi | null = null; // Initialize as null
   @ViewChild('poiModal') poiModal!: ElementRef;
-    @ViewChild('mapButton', { static: true }) mapButton?: ElementRef<HTMLButtonElement>;
-    constructor(
+  @ViewChild('mapButton', { static: true }) mapButton?: ElementRef<HTMLButtonElement>;
+  constructor(
     private mapboxService: MapboxService,
     private homeService: HomeService,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-  ) {}
+  ) { }
   ngOnInit() {
     this.loadPOIs();
     this.mapboxService.setOnMarkerClickCallback(this.onMarkerClick.bind(this));
@@ -34,12 +38,81 @@ export class HomeComponent {
       latitude: ['', Validators.required],
       longitude: ['', Validators.required]
     });
+    this.reportForm = this.formBuilder.group({
+      title: ['', Validators.required],
+      kommentar: ['', Validators.required],
+    });
+  }
+  selectReport(type: string, id: any, title: string) {
+    this.selectedReportType = type;
+    this.selectedReportItemId = id;
+    this.title = title;
+
+  }
+  Submitreport() {
+    this.currentUser = this.authService.getCurrentUser();
+    const creatorId = this.currentUser?.id || '';
+    if (this.reportForm.valid) {
+      const reportData = {
+        title: this.reportForm.get('title')?.value,
+        kommentar: this.reportForm.get('kommentar')?.value,
+        creatorId: creatorId,
+        itemId: this.selectedReportItemId
+      };
+
+      let reportObservable;
+
+      switch (this.selectedReportType) {
+        case 'poi':
+          reportObservable = this.homeService.createpoireport(
+            reportData.title,
+            reportData.kommentar,
+            reportData.creatorId,
+            reportData.itemId
+          );
+          break;
+        case 'user':
+          reportObservable = this.homeService.createuserreport(
+            reportData.title,
+            reportData.kommentar,
+            reportData.creatorId,
+            reportData.itemId
+          );
+          break;
+        case 'comment':
+        default:
+          reportObservable = this.homeService.createcommentreport(
+            reportData.title,
+            reportData.kommentar,
+            reportData.creatorId,
+            reportData.itemId
+          );
+          break;
+      }
+
+      reportObservable.subscribe({
+        next: (response) => {
+          // Handle the response if needed
+          console.log(`${this.selectedReportType} report created:`, response);
+          window.location.reload();
+        },
+        error: (error) => {
+          // Handle any errors
+          console.error(`Error creating ${this.selectedReportType} report:`, error);
+        }
+      });
+    }
+  }
+  closeForm() {
+    this.selectedReportType = '';
+    this.selectedReportItemId = null;
+    // You can also reset other necessary variables here
   }
   mapCursorEnabled: boolean = false;
 
-toggleMapCursor(): void {
-  this.mapCursorEnabled = !this.mapCursorEnabled;
-}
+  toggleMapCursor(): void {
+    this.mapCursorEnabled = !this.mapCursorEnabled;
+  }
   submitForm(): void {
     this.currentUser = this.authService.getCurrentUser();
 
@@ -57,17 +130,17 @@ toggleMapCursor(): void {
         this.formData.get('longitude')?.value,
       ).subscribe({
         next: (response) => {
-            // Handle the response if needed
-            console.log("POI created:", response);
-            window.location.reload();
+          // Handle the response if needed
+          console.log("POI created:", response);
+          window.location.reload();
         },
         error: (error) => {
-            // Handle any errors
-            console.error("Error creating POI:", error);
+          // Handle any errors
+          console.error("Error creating POI:", error);
         }
       });
     }
-}
+  }
 
 
 
@@ -107,7 +180,7 @@ toggleMapCursor(): void {
         this.pois = response;
         this.initializeMap();
       },
-      error: (error) => {},
+      error: (error) => { },
     });
   }
 
@@ -129,9 +202,9 @@ toggleMapCursor(): void {
     const bootstrapModal = new bootstrap.Modal(modalElement);
     bootstrapModal.show();
   }
-  addComment(poiId: string, commentText: string): void {}
+  addComment(poiId: string, commentText: string): void { }
 
-  vote(poiId: string, voteType: string): void {}
+  vote(poiId: string, voteType: string): void { }
 
   getVoteCount(poiId: string, voteType: string): number {
     const poi = this.pois.find((p) => p.id === poiId);

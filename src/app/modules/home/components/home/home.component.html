@@ -63,7 +63,7 @@
       <div class="modal-header">
         <div class="comment-box d-flex align-items-start p-2 w-100">
 
-          <h5 class="modal-title" id="poiModalLabel">{{ selectedPoi.creator.name }} {{ selectedPoi.creator.surname }}
+          <h5 class="modal-title" id="poiModalLabel">{{ selectedPoi.creator.name }} {{ selectedPoi.creator.surname }}  <a  class="replink" (click)="selectReport('user', selectedPoi.creator.id,selectedPoi.creator.name)" [class.selected]="selectedReportType === 'user'">report user</a>
           </h5>
 
 
@@ -83,6 +83,7 @@
             <h5 class="modal-title" id="poiModalLabel">{{ selectedPoi.titel }}</h5>
             <p>{{ selectedPoi.description }}</p>
             <p class="text-secondary small">{{ selectedPoi.createdAt | date:'dd MMM yyyy, HH:mm' }}</p>
+            <small class="text-secondary"><a  class="replink" (click)="selectReport('poi', selectedPoi.id,selectedPoi.titel)" [class.selected]="selectedReportType === 'poi'">report poi</a></small>
             <div class="d-flex justify-content-between">
               <div class="d-flex align-items-center svg-bold">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -109,23 +110,23 @@
             <h5>Comments</h5>
             <div class="comment-list overflow-auto" style="max-height: 400px;">
               @for (comment of selectedPoi.comments; track comment.id) {
-              <!--comments-->
-              <div class="comment-box d-flex align-items-start p-2 w-100">
-                <div class="bg-dark p-1 fw-bold small d-flex align-items-center justify-content-center rounded-circle">
-                  <div class="initials text-white">
-                    {{ getInitials(comment.commenter.name, comment.commenter.surname) }}
-                  </div>
+                <!--comments-->
+                <div class="comment-box d-flex align-items-start p-2 w-100">
+                    <div class="bg-dark p-1 fw-bold small d-flex align-items-center justify-content-center rounded-circle">
+                        <div class="initials text-white">
+                            {{ getInitials(comment.commenter.name, comment.commenter.surname) }}
+                        </div>
+                    </div>
+                    <div class="comment-content ps-2">
+                        <h6 class="text-dark mb-0">{{comment.commenter.name}} {{comment.commenter.surname}}</h6>
+                        <p class="small">{{ comment.actualcomment }}</p>
+                        <small class="text-secondary">{{ comment.createdAt | date:'dd MMM yyyy, HH:mm' }}</small>
+                        <small class="text-secondary">
+                            <a class="replink" (click)="selectReport('comment', comment.id,comment.commenter.name)" [class.selected]="selectedReportItemId === comment.id">report comment</a>
+                        </small>
+                    </div>
                 </div>
-                <div class="comment-content ps-2">
-                  <h6 class="text-dark mb-0">{{comment.commenter.name}} {{comment.commenter.surname}}</h6>
-                  <p class="small">{{ comment.actualcomment }}</p>
-                  <small class="text-secondary">{{ comment.createdAt | date:'dd MMM yyyy, HH:mm' }}</small>
-                </div>
-              </div>
-
-              <!--add comment-->
-
-              }@empty {
+            }@empty {
               <p class="opacity-50">no comments vorhanden yet!</p>
               }
 
@@ -144,6 +145,27 @@
                 </svg>
               </button>
             </div>
+            <div class="reportform" *ngIf="selectedReportType">
+              <form [formGroup]="reportForm" (ngSubmit)="Submitreport()">
+                <div class="inline-container">
+                  <p>You are reporting on: </p>
+                  <p *ngIf="selectedReportType === 'comment'">{{title}} comment</p>
+                  <p *ngIf="selectedReportType === 'poi'">this poi "{{title}}"</p>
+                  <p *ngIf="selectedReportType === 'user'">{{title}}</p>
+                </div>
+
+                <input formControlName="title" type="text" placeholder="Report title..." class="report-title">
+                <textarea formControlName="kommentar" placeholder="Report details..." class="report-details"></textarea>
+
+                <button type="button" class="close-btn" (click)="closeForm()">
+                  <span>&times;</span> <!-- Close icon -->
+                </button>
+
+                <button class="submit-btn" type="submit">Submit</button>
+              </form>
+            </div>
+
+
 
           </div>
         </div>
