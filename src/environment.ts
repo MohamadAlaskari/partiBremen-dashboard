@@ -29,7 +29,7 @@ export const environment = {
     report: {
       findAll: '/report',
       findById: '/report',
-      create: 'report',
+      create: '/report',
       findRebortsByRebortedUserId: '/reports/user',
       findRebortsByRebortedCommentId: '/reports/comment',
       findRebortsByRebortedPoiId: '/reports/poi',
