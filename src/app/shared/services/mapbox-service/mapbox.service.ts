@@ -13,6 +13,7 @@ export class MapboxService {
   is3DMode: boolean = false; // Hinzugefügte Eigenschaft, um den 3D-Modus zu verfolgen
 
   onMarkerClickCallback: ((poi: Poi) => void) | null = null;
+  onMapClickCallback: ((coordinates: { latitude: number; longitude: number }) => void) | null = null;
 
   initializeMap(
     container: string,
@@ -25,6 +26,12 @@ export class MapboxService {
       style: 'mapbox://styles/mapbox/streets-v12',
       center: center,
       zoom: zoom,
+    });
+    this.map.on('click', (event) => {
+      const { lng, lat } = event.lngLat;
+      if (this.onMapClickCallback) {
+        this.onMapClickCallback({ latitude: lat, longitude: lng }); // Call the callback with the coordinates
+      }
     });
     // Geocoder hinzufügen
     const geocoder = new MapboxGeocoder({
@@ -242,5 +249,8 @@ export class MapboxService {
 
   setOnMarkerClickCallback(callback: (poi: Poi) => void): void {
     this.onMarkerClickCallback = callback;
+  }
+  setOnMapClickCallback(callback: (coordinates: { latitude: number; longitude: number }) => void): void {
+    this.onMapClickCallback = callback; // Set the callback function
   }
 }

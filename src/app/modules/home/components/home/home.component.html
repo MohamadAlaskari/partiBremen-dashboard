@@ -1,20 +1,42 @@
 <div>
   <div class="row">
     <div class="col-md-4">
-
+      <form [formGroup]="formData" (ngSubmit)="submitForm()">
+        <div class="mb-3">
+          <label for="titel" class="form-label">Title</label>
+          <input type="text" class="form-control" id="titel" formControlName="titel">
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" id="description" formControlName="description"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">latitude</label>
+          <input type="text" class="form-control" id="latitude" formControlName="latitude">
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">longitude</label>
+          <input type="text" class="form-control" id="longitude" formControlName="longitude">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-8">
       <div class="mb-3 d-flex gap-2">
         <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search...">
-        <button class="btn btn-dark mx-auto" type="button">
+        <button  id="mapButton" class="btn btn-dark mx-auto" type="button" data-toggle="tooltip" title="Click to indicate location on map">
           <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
             fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
             class="feather feather-plus">
             <line x1="12" y1="5" x2="12" y2="19" />
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
-
         </button>
+        <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+
 
       </div>
       <div id="map" style="height: 450px;"></div>
@@ -23,6 +45,8 @@
   </div>
 </div>
 
+
+<!-- Modal -->
 
 
 
