@@ -35,7 +35,7 @@
       </button>
       <div class="dropdown-menu" [class.show]="isDropdownOpen">
         <a class="dropdown-item"[routerLink]="['/meinepoi']">Meine POI</a>
-
+        <a class="dropdown-item" [routerLink]="['/user-management/update-user',currentUser?.id]">Profile update</a>
         <button (click)="logout()" class="logout-btn" title="Logout">
 
           <mat-icon class="manage_accounts_icon" fontSet="material-icons-outlined">
