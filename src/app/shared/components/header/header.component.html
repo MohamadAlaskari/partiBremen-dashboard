@@ -25,16 +25,27 @@
       </svg>
     </button>
 
-    <button (click)="logout()" class="logout-btn" title="Logout">
-      <mat-icon class="manage_accounts_icon" fontSet="material-icons-outlined">
-        logout
-      </mat-icon>
-    </button>
 
-    <button class="profile-btn">
 
-      <span class="profile-name">{{ currentUser?.name }} {{ currentUser?.surname }} </span>
-    </button>
+
+    <div class="profile-dropdown">
+      <button class="profile-btn" (click)="toggleDropdown()">
+        <span class="profile-name">{{ currentUser?.name }} {{ currentUser?.surname }}</span>
+        <mat-icon style="color: black;">expand_more</mat-icon>
+      </button>
+      <div class="dropdown-menu" [class.show]="isDropdownOpen">
+        <a class="dropdown-item"[routerLink]="['/meinepoi']">Meine POI</a>
+
+        <button (click)="logout()" class="logout-btn" title="Logout">
+
+          <mat-icon class="manage_accounts_icon" fontSet="material-icons-outlined">
+            logout
+          </mat-icon>
+        </button>
+      </div>
+    </div>
+
+
   </div>
 
 </div>

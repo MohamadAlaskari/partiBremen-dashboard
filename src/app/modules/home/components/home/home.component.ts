@@ -1,9 +1,12 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { MapboxService } from '../../../../shared/services/mapbox-service/mapbox.service';
-import { Poi, User } from '../../../../core/models/partiBremen.model';
+import { Poi, User,Comment } from '../../../../core/models/partiBremen.model';
 import { HomeService } from '../../services/home.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../auth/services/auth.service';
+import { UserManagementService } from '../../../user-management/services/user-management-service/user-management.service';
+import { Subscription } from 'rxjs';
+import { ToastService } from '../../../../shared/services/toast.service';
 
 declare var bootstrap: any;
 @Component({
@@ -15,6 +18,7 @@ export class HomeComponent {
   pois: Poi[] = [];
   poiClicked: boolean = false;
   formData!: FormGroup;
+  private subscriptions: Subscription = new Subscription();
   reportForm!: FormGroup;
   currentUser: User | null = null;
   selectedReportType: string = '';
@@ -27,7 +31,10 @@ export class HomeComponent {
     private mapboxService: MapboxService,
     private homeService: HomeService,
     private formBuilder: FormBuilder,
+    private toastService: ToastService,
+    private cdr: ChangeDetectorRef,
     private authService: AuthService,
+    private userService: UserManagementService
   ) { }
   ngOnInit() {
     this.loadPOIs();
@@ -48,6 +55,26 @@ export class HomeComponent {
     this.selectedReportItemId = id;
     this.title = title;
 
+  }
+  selectPoi(poiId: string): void {
+    this.loadPoiByPoiID(poiId);
+  }
+  private loadPoiByPoiID(poiId: string): void {
+    const sub = this.userService.getPoibyId(poiId).subscribe({
+      next: (poi: Poi) => {
+        this.selectedPoi = poi;
+        poi.comments.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        console.log('selected poi:', this.selectedPoi);
+        this.cdr.detectChanges(); // Trigger change detection
+      },
+      error: () => {
+
+      },
+    });
+    this.subscriptions.add(sub);
   }
   Submitreport() {
     this.currentUser = this.authService.getCurrentUser();
@@ -202,7 +229,6 @@ export class HomeComponent {
     const bootstrapModal = new bootstrap.Modal(modalElement);
     bootstrapModal.show();
   }
-  addComment(poiId: string, commentText: string): void { }
 
   vote(poiId: string, voteType: string): void { }
 
@@ -222,5 +248,49 @@ export class HomeComponent {
 
   trackById(index: number, poi: Poi): string {
     return poi.id;
+  }
+  addComment(
+    poiId: string,
+    commentText: string,
+    commentInput: HTMLInputElement
+  ): void {
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser) {
+      this.toastService.show('error', 'Error', 'User not logged in');
+      return;
+    }
+
+    const sub = this.userService
+      .createComment(commentText, currentUser.id, poiId)
+      .subscribe({
+        next: (createdComment: Comment) => {
+          const poi = this.pois.find((p) => p.id === poiId);
+          if (poi) {
+            poi.comments.push(createdComment);
+            poi.comments.sort(
+              (a, b) =>
+                new Date(b.createdAt).getTime() -
+                new Date(a.createdAt).getTime()
+            );
+            console.log('comments: ', poi.comments);
+            if (this.selectedPoi?.id === poiId) {
+              this.selectedPoi = { ...poi };
+              this.cdr.detectChanges(); // Trigger change detection
+            }
+          }
+          commentInput.value = ''; // Clear the input field
+          this.toastService.show(
+            'success',
+            'Success',
+            'Comment added successfully'
+          );
+        },
+        error: () => {
+        },
+      });
+    this.subscriptions.add(sub);
+  }
+  trackByCommentId(index: number, comment: any): number {
+    return comment.id;
   }
 }
