@@ -5,6 +5,8 @@
  */
 // environments/environment.prod.ts (für Produktion)
 
+import { create } from "domain";
+
 export const environment = {
   production: true,
   mapbox: {
@@ -46,6 +48,7 @@ export const environment = {
       findByUserId: '/poi/user',
       update: '/poi',
       delete: '/poi',
+      create: '/poi',
     },
   },
 };

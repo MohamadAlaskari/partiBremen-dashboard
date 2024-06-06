@@ -93,4 +93,7 @@ export class PoiManagementService {
       `${this.poiEndpoints.delete}/${poiId}`
     );
   }
+
+
+
 }
