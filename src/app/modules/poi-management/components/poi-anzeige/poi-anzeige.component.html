@@ -18,7 +18,7 @@
 
     <div class="flex-container">
       <p class="info-item"><span class="label">Creator:</span> <span class="value">{{this.currentPoi.creator.name + " " + this.currentPoi.creator.surname}}</span></p>
-      <div><button id="view-user-button" type="submit" (click)="navigateToUser(this.currentPoi.creator.id)">View User</button></div>
+      <div class="button-right"><button id="view-user-button" type="submit" (click)="navigateToUser(this.currentPoi.creator.id)">View User</button></div>
     </div>
 
     <div class="info-container">
@@ -32,6 +32,7 @@
     <div class="flex-container">
       <div><button type="button" (click)="navigateToComments()">View Comments</button></div>
       <div><button type="button" (click)="navigateToSurveys()">View Surveys</button></div>
+      <div><button type="button" (click)="navigateToReports()">View Reports</button></div>
     </div>
 
     <br>

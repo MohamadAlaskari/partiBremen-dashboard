@@ -17,7 +17,7 @@
 .info-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  margin-bottom: -20px;
 }
 
 .info-item {
@@ -69,6 +69,11 @@ input[type="checkbox"] {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  align-items: center;
+}
+
+.button-right {
+  margin-left: 10px;
 }
 
 button {
@@ -79,18 +84,18 @@ button {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
 
-  &:hover {
-    background-color: #005f7a;
-  }
+button:hover {
+  background-color: #005f7a;
 }
 
 .button.alert {
   background-color: #e74c3c;
+}
 
-  &:hover {
-    background-color: #c0392b;
-  }
+.button.alert:hover {
+  background-color: #c0392b;
 }
 
 @media (max-width: 600px) {

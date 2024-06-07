@@ -59,6 +59,11 @@ input[type="checkbox"] {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  align-items: center;
+}
+
+.button-right {
+  margin-left: 10px;
 }
 
 button {

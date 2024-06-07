@@ -58,11 +58,4 @@ export class SurveyManagementService {
   getPoiByID(poiId: string) {
     return this.poiManagementservice.getPoiByID(poiId)
   }
-
-  updateSurvey(surveyId: string, survey: Survey): Observable<Survey> {
-    return this.apiService.put<Survey>(
-      `${this.surveyEndpoints.update}/${surveyId}`,
-      survey
-    );
-  }
 }
