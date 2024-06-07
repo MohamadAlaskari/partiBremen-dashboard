@@ -19,6 +19,7 @@ export class CommentManagementComponent implements OnInit, OnDestroy {
   title: string = "Comment Management";
   comments: Comment[] = [];
   dataSource = new MatTableDataSource<Comment>();
+  dropdownStates: boolean[] = [];
 
   private subscriptions: Subscription = new Subscription();
 
@@ -77,6 +78,20 @@ export class CommentManagementComponent implements OnInit, OnDestroy {
         },
       })
     )
+  }
+
+  trackById(index: number, comment: any): number {
+    return comment.id;
+  }
+
+  toggleDropdown(index: number): void {
+    // Toggle only the dropdown of the specified index
+    this.dropdownStates[index] = !this.dropdownStates[index];
+
+    // Optional: Close all other dropdowns
+    this.dropdownStates = this.dropdownStates.map((state, i) =>
+      i === index ? state : false
+    );
   }
 
 }

@@ -9,6 +9,7 @@ import { CommentManagementRoutingModule } from './comment-management-routing.mod
 import { CommentDetailsModalComponent } from './components/comment-details-modal/comment-details-modal.component';
 import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
 import { SharedModule } from '../../shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SharedModule } from '../../shared/shared.module';
     CommentManagementRoutingModule,
     SharedModule,
     MdbDropdownModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [CommentManagementService]
 

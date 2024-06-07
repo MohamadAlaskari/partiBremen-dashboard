@@ -1,12 +1,5 @@
 // comment-management.component.scss
 
-.button-container {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .edit-comment-table {
   align-items: center;
   background-color: #FFFFFF;
@@ -89,8 +82,7 @@ th, td {
 }
 
 .button:focus {
-  outline: 2px solid rgba(0,0,0,0.1);
-  outline-offset: 2px;
+  background-color: #f9fafb;
 }
 
 .button:focus-visible {

@@ -1,14 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  HttpClientModule,
-  provideHttpClient,
-  withFetch,
-} from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 
-@NgModule({
-  declarations: [],
-  imports: [CommonModule, HttpClientModule],
-  providers: [provideHttpClient(withFetch())],
-})
+@NgModule({ declarations: [], imports: [CommonModule], providers: [provideHttpClient(withFetch()), provideHttpClient(withInterceptorsFromDi())] })
 export class CoreModule {}
