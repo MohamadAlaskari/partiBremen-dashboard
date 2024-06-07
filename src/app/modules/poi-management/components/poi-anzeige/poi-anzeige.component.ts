@@ -181,4 +181,12 @@ export class PoiAnzeigeComponent implements OnInit, OnDestroy {
       );
     });
   }
+
+  getUpvotes() {
+    return this.currentPoi.votings.filter((v: { voteType: string; }) => v.voteType === 'UP').length;
+  }
+
+  getDownvotes() {
+    return this.currentPoi.votings.filter((v: { voteType: string; }) => v.voteType === 'DOWN').length;
+  }
 }

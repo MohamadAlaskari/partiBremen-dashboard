@@ -85,9 +85,9 @@ export class Comment {
     public commentComment: string,
     public commenter: User,
     public poi: Poi,
-    public votings: string[],
-    public comments: string[],
-    public reports: string[],
+    public votings: Voting[],
+    public comments: Comment[],
+    public reports: Report[],
     public actualcomment: string
   ) {}
 }

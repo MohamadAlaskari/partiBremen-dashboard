@@ -2,7 +2,7 @@
   <form action="#" method="post" class="poi-form" *ngIf="this.currentPoi">
     <div class="info-container">
       <p class="info-item"><span class="label">ID:</span> <span class="value">{{this.currentPoi.id}}</span></p>
-    </div>
+    </div><br>
 
     <label for="input1">Name:</label><br>
     <input type="text" id="input1" name="input1" [(ngModel)]="this.currentPoi.titel"><br><br>
@@ -10,11 +10,26 @@
     <label for="input4">Beschreibung:</label><br>
     <textarea id="input4" name="input4" [(ngModel)]="this.currentPoi.description" class="description-box"></textarea><br><br>
 
-    <div class="info-container">
+    <div class="info-item">
+      <span class="value">
+        <svg class="icon upvote-icon" viewBox="0 0 24 24">
+            <path d="M12 2L5 14h14L12 2z"/>
+        </svg>
+        {{this.getUpvotes()}}
+    </span>
+    </div>
+    <div class="info-item">
+      <span class="value">
+        <svg class="icon downvote-icon" viewBox="0 0 24 24">
+            <path d="M12 22l7-12H5l7 12z"/>
+        </svg>
+        {{this.getDownvotes()}}
+    </span>
+    </div>
+    <br>
+    <div>
       <label for="input2" class="info-item"><span class="label">Aktiv?:</span> <span class="value"><input type="checkbox" id="input2" name="input2" [(ngModel)]="currentPoi.active"></span></label>
     </div>
-
-    <br>
 
     <div class="flex-container">
       <p class="info-item"><span class="label">Creator:</span> <span class="value">{{this.currentPoi.creator.name + " " + this.currentPoi.creator.surname}}</span></p>
