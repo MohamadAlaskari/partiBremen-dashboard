@@ -11,8 +11,9 @@ export class MapboxService {
   map!: mapboxgl.Map;
   markers: { [key: string]: mapboxgl.Marker } = {};
   is3DMode: boolean = false; // Hinzugefügte Eigenschaft, um den 3D-Modus zu verfolgen
-
+  marker: mapboxgl.Marker | null = null;
   onMarkerClickCallback: ((poi: Poi) => void) | null = null;
+  onMapClickCallback: ((coordinates: { latitude: number; longitude: number }) => void) | null = null;
 
   initializeMap(
     container: string,
@@ -25,6 +26,18 @@ export class MapboxService {
       style: 'mapbox://styles/mapbox/streets-v12',
       center: center,
       zoom: zoom,
+    });
+    this.map.on('click', (event) => {
+      const { lng, lat } = event.lngLat;
+      if (this.onMapClickCallback) {
+        this.onMapClickCallback({ latitude: lat, longitude: lng }); // Call the callback with the coordinates
+      }
+      // Add or move marker to the clicked location
+      if (!this.marker) {
+        this.marker = new mapboxgl.Marker().setLngLat([lng, lat]).addTo(this.map);
+      } else {
+        this.marker.setLngLat([lng, lat]);
+      }
     });
     // Geocoder hinzufügen
     const geocoder = new MapboxGeocoder({
@@ -98,7 +111,9 @@ export class MapboxService {
       this.markers[poi.id] = marker;
     });
   }
-
+  setOnMapClickCallback(callback: (coordinates: { latitude: number; longitude: number }) => void): void {
+    this.onMapClickCallback = callback; // Set the callback function
+  }
   toggle3DMode(): void {
     const layerId = '3d-buildings';
 
@@ -243,4 +258,5 @@ export class MapboxService {
   setOnMarkerClickCallback(callback: (poi: Poi) => void): void {
     this.onMarkerClickCallback = callback;
   }
+
 }

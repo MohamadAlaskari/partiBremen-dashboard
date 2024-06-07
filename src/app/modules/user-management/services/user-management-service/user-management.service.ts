@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../../../../core/Services/api.service';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../environment';
-import { User, Poi, Comment } from '../../../../core/models/partiBremen.model';
+import {
+  User,
+  Poi,
+  Comment,
+  Voting,
+} from '../../../../core/models/partiBremen.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +16,7 @@ export class UserManagementService {
   private userEndpoints = environment.endpoints.users;
   private poiEndpoints = environment.endpoints.pois;
   private commentEndepoints = environment.endpoints.comments;
+  private votingEndepoints = environment.endpoints.voting;
 
   constructor(private apiService: ApiService) {}
 
@@ -66,5 +72,8 @@ export class UserManagementService {
       poiId: poiId,
     };
     return this.apiService.post<Comment>(this.commentEndepoints.create, body);
+  }
+  vote(vote: Voting): Observable<Voting> {
+    return this.apiService.post<Voting>(`${this.votingEndepoints.vote}`, vote);
   }
 }

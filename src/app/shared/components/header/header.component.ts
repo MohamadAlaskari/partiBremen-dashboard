@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, HostListener, ElementRef, Renderer2 } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { AuthService } from '../../../modules/auth/services/auth.service';
@@ -25,10 +25,25 @@ export class HeaderComponent {
   constructor(
     private authService: AuthService,
     private toastService: ToastService,
-    private _router: Router
+    private _router: Router,
+    private renderer: Renderer2, private el: ElementRef
   ) {}
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
+
+  }
+  isDropdownOpen = false;
+
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent) {
+    if (!this.el.nativeElement.contains(event.target)) {
+      this.isDropdownOpen = false;
+    }
   }
   logout(): void {
     if (this.currentUser) {

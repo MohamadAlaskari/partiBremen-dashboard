@@ -1,8 +1,14 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { MapboxService } from '../../../../shared/services/mapbox-service/mapbox.service';
-import { Poi } from '../../../../core/models/partiBremen.model';
+import { Poi, User,Comment } from '../../../../core/models/partiBremen.model';
 import { HomeService } from '../../services/home.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../../auth/services/auth.service';
+import { UserManagementService } from '../../../user-management/services/user-management-service/user-management.service';
+import { Subscription } from 'rxjs';
+import { ToastService } from '../../../../shared/services/toast.service';
 
+declare var bootstrap: any;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -11,26 +17,197 @@ import { HomeService } from '../../services/home.service';
 export class HomeComponent {
   pois: Poi[] = [];
   poiClicked: boolean = false;
+  formData!: FormGroup;
+  private subscriptions: Subscription = new Subscription();
+  reportForm!: FormGroup;
+  currentUser: User | null = null;
+  selectedReportType: string = '';
+  selectedReportItemId: any;
+  title: string = '';
   selectedPoi: Poi | null = null; // Initialize as null
-
+  @ViewChild('poiModal') poiModal!: ElementRef;
+  @ViewChild('mapButton', { static: true }) mapButton?: ElementRef<HTMLButtonElement>;
   constructor(
     private mapboxService: MapboxService,
-    private homeService: HomeService
-  ) {}
+    private homeService: HomeService,
+    private formBuilder: FormBuilder,
+    private toastService: ToastService,
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService,
+    private userService: UserManagementService
+  ) { }
   ngOnInit() {
     this.loadPOIs();
     this.mapboxService.setOnMarkerClickCallback(this.onMarkerClick.bind(this));
+    this.formData = this.formBuilder.group({
+      titel: ['', Validators.required],
+      description: ['', Validators.required],
+      latitude: ['', Validators.required],
+      longitude: ['', Validators.required]
+    });
+    this.reportForm = this.formBuilder.group({
+      title: ['', Validators.required],
+      kommentar: ['', Validators.required],
+    });
+  }
+  selectReport(type: string, id: any, title: string) {
+    this.selectedReportType = type;
+    this.selectedReportItemId = id;
+    this.title = title;
+
+  }
+  selectPoi(poiId: string): void {
+    this.loadPoiByPoiID(poiId);
+  }
+  private loadPoiByPoiID(poiId: string): void {
+    const sub = this.userService.getPoibyId(poiId).subscribe({
+      next: (poi: Poi) => {
+        this.selectedPoi = poi;
+        poi.comments.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        console.log('selected poi:', this.selectedPoi);
+        this.cdr.detectChanges(); // Trigger change detection
+      },
+      error: () => {
+
+      },
+    });
+    this.subscriptions.add(sub);
+  }
+  Submitreport() {
+    this.currentUser = this.authService.getCurrentUser();
+    const creatorId = this.currentUser?.id || '';
+    if (this.reportForm.valid) {
+      const reportData = {
+        title: this.reportForm.get('title')?.value,
+        kommentar: this.reportForm.get('kommentar')?.value,
+        creatorId: creatorId,
+        itemId: this.selectedReportItemId
+      };
+
+      let reportObservable;
+
+      switch (this.selectedReportType) {
+        case 'poi':
+          reportObservable = this.homeService.createpoireport(
+            reportData.title,
+            reportData.kommentar,
+            reportData.creatorId,
+            reportData.itemId
+          );
+          break;
+        case 'user':
+          reportObservable = this.homeService.createuserreport(
+            reportData.title,
+            reportData.kommentar,
+            reportData.creatorId,
+            reportData.itemId
+          );
+          break;
+        case 'comment':
+        default:
+          reportObservable = this.homeService.createcommentreport(
+            reportData.title,
+            reportData.kommentar,
+            reportData.creatorId,
+            reportData.itemId
+          );
+          break;
+      }
+
+      reportObservable.subscribe({
+        next: (response) => {
+          // Handle the response if needed
+          console.log(`${this.selectedReportType} report created:`, response);
+          window.location.reload();
+        },
+        error: (error) => {
+          // Handle any errors
+          console.error(`Error creating ${this.selectedReportType} report:`, error);
+        }
+      });
+    }
+  }
+  closeForm() {
+    this.selectedReportType = '';
+    this.selectedReportItemId = null;
+    // You can also reset other necessary variables here
+  }
+  mapCursorEnabled: boolean = false;
+
+  toggleMapCursor(): void {
+    this.mapCursorEnabled = !this.mapCursorEnabled;
+  }
+  submitForm(): void {
+    this.currentUser = this.authService.getCurrentUser();
+
+    if (this.formData && this.formData.valid) {
+      console.log('Form data:', this.formData.value);
+
+      // Ensure this.currentUser?.id is defined before using it
+      const creatorId = this.currentUser?.id || '';
+
+      this.homeService.createPoi(
+        this.formData.get('titel')?.value,
+        this.formData.get('description')?.value,
+        creatorId,
+        this.formData.get('latitude')?.value,
+        this.formData.get('longitude')?.value,
+      ).subscribe({
+        next: (response) => {
+          // Handle the response if needed
+          console.log("POI created:", response);
+          window.location.reload();
+        },
+        error: (error) => {
+          // Handle any errors
+          console.error("Error creating POI:", error);
+        }
+      });
+    }
+  }
+
+
+
+
+  ngAfterViewInit(): void {
+    if (this.mapButton) {
+      this.mapButton.nativeElement.addEventListener('click', () => {
+      });
+    }
+
+    this.setupMapClickHandler();
+  }
+
+
+  private setupMapClickHandler(): void {
+    this.mapboxService.setOnMapClickCallback((coordinates) => {
+      console.log('Clicked coordinates:', coordinates); //
+      this.formData.patchValue({ latitude: coordinates.latitude });
+      this.formData.patchValue({ longitude: coordinates.longitude });
+
+      this.resetCursorToDefault();
+    });
+  }
+
+  private resetCursorToDefault(): void {
+    if (this.mapButton) {
+      this.mapButton.nativeElement.style.cursor = 'auto';
+    }
   }
   ngOnDestroy(): void {
     this.mapboxService.map?.remove();
   }
+
   private loadPOIs() {
     this.homeService.getPOIs().subscribe({
       next: (response) => {
         this.pois = response;
         this.initializeMap();
       },
-      error: (error) => {},
+      error: (error) => { },
     });
   }
 
@@ -43,12 +220,17 @@ export class HomeComponent {
 
   private onMarkerClick(poi: Poi): void {
     this.poiClicked = true;
+    console.log(this.poiClicked);
     this.selectedPoi = poi;
+    this.openModal();
+  }
+  openModal(): void {
+    const modalElement = this.poiModal.nativeElement;
+    const bootstrapModal = new bootstrap.Modal(modalElement);
+    bootstrapModal.show();
   }
 
-  addComment(poiId: string, commentText: string): void {}
-
-  vote(poiId: string, voteType: string): void {}
+  vote(poiId: string, voteType: string): void { }
 
   getVoteCount(poiId: string, voteType: string): number {
     const poi = this.pois.find((p) => p.id === poiId);
@@ -66,5 +248,49 @@ export class HomeComponent {
 
   trackById(index: number, poi: Poi): string {
     return poi.id;
+  }
+  addComment(
+    poiId: string,
+    commentText: string,
+    commentInput: HTMLInputElement
+  ): void {
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser) {
+      this.toastService.show('error', 'Error', 'User not logged in');
+      return;
+    }
+
+    const sub = this.userService
+      .createComment(commentText, currentUser.id, poiId)
+      .subscribe({
+        next: (createdComment: Comment) => {
+          const poi = this.pois.find((p) => p.id === poiId);
+          if (poi) {
+            poi.comments.push(createdComment);
+            poi.comments.sort(
+              (a, b) =>
+                new Date(b.createdAt).getTime() -
+                new Date(a.createdAt).getTime()
+            );
+            console.log('comments: ', poi.comments);
+            if (this.selectedPoi?.id === poiId) {
+              this.selectedPoi = { ...poi };
+              this.cdr.detectChanges(); // Trigger change detection
+            }
+          }
+          commentInput.value = ''; // Clear the input field
+          this.toastService.show(
+            'success',
+            'Success',
+            'Comment added successfully'
+          );
+        },
+        error: () => {
+        },
+      });
+    this.subscriptions.add(sub);
+  }
+  trackByCommentId(index: number, comment: any): number {
+    return comment.id;
   }
 }

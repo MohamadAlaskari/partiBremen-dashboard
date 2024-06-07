@@ -1,15 +1,15 @@
-import {Component, Inject, PLATFORM_ID} from '@angular/core';
-import {BehaviorSubject, Subscription} from "rxjs";
-import {ToastService} from "../../../../shared/services/toast.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Survey} from "../../../../core/models/partiBremen.model";
-import {SurveyManagementService} from "../../services/survey-management.service";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { ToastService } from '../../../../shared/services/toast.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Survey } from '../../../../core/models/partiBremen.model';
+import { SurveyManagementService } from '../../services/survey-management.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-survey-anzeige',
   templateUrl: './survey-anzeige.component.html',
-  styleUrl: './survey-anzeige.component.scss'
+  styleUrl: './survey-anzeige.component.scss',
 })
 export class SurveyAnzeigeComponent {
   private subscriptions: Subscription = new Subscription();
