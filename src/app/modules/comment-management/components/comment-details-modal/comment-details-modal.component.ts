@@ -38,6 +38,6 @@ export class CommentDetailsModalComponent implements OnInit {
   }
 
   goToPOI(poiId: string): void {
-    this.router.navigate(['/poi-management/anzeige', poiId]);
+    this.router.navigate(['poi-management/anzeige', poiId]);
   }
 }

@@ -1,8 +1,21 @@
 <!-- comment-detail.component.html -->
 <div class="comment-detail" *ngIf="comment">
-    <h2>Comment Detail</h2>
-    <p><strong>Text:</strong> {{ comment.actualcomment }}</p>
-    <p><strong>Author:</strong> {{ comment.commenter.id }}</p>
-    <button (click)="goToUser(comment.commenter.id)">View Author</button>
-    <button (click)="goToPOI(comment.poi.id)">View POI</button>
+    <h2><strong>Comment Detail</strong></h2>
+    <br>
+    <h3>User Details</h3>
+    <p><strong>ID:</strong> {{ comment.commenter.id }}</p>
+    <p><strong>Name:</strong> {{ comment.commenter.name + " " +  comment.commenter.surname }}</p>
+    <br>
+    <h3>Comment Details</h3>
+    <p><strong>Comment ID:</strong> {{ comment.id }}</p>
+    <p><strong>Comment:</strong> {{ comment.actualcomment }}</p>
+    <p><strong>CreatedAt:</strong> {{ comment.createdAt | date: "short" }}</p>
+    <p><strong>UpdatedAt</strong> {{ comment.updatedAt | date: "short" }}</p>
+    <br>
+    <h3>POI Details</h3>
+    <p><strong>ID:</strong> {{ comment.poi.titel }}</p>
+    <p><strong>Name:</strong> {{ comment.poi.titel }}</p>
+
+    <button class="button" (click)="goToUser(comment.commenter.id)">View Author</button>
+    <button class="button" (click)="goToPOI(comment.poi.id)">View POI</button>
   </div>
