@@ -157,7 +157,7 @@ export class PoiAnzeigeComponent implements OnInit, OnDestroy {
     if (this.currentPoi.reports.length != 0) {
       this.router.navigate(['report-management', this.currentPoi.reports[0].id]);
     } else {
-      this.toastService.show("error", "Info", "Dieser POI hat keine Reports.");
+      this.toastService.show("info", "Info", "Dieser POI hat keine Reports.");
     }
   }
 
