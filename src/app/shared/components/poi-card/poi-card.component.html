@@ -1,0 +1,30 @@
+<div class="poi-card card h-100" (click)="selectPoi()">
+  <img [src]="poi.img" class="card-img-top" alt="POI image">
+  <div class="card-body d-flex flex-column">
+    <div class="d-flex flex-column justify-content-between ">
+      <!--
+      <div (click)="vote(poi.id, 'UP')" class="d-flex align-items-center svg-bold">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up"
+          viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5" />
+        </svg>
+        <span class="small-caps-bold">{{ getVoteCount('UP') }} up</span>
+      </div>
+      <div (click)="vote(poi.id, 'DOWN')" class="d-flex align-items-center svg-bold ">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down"
+          viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1" />
+        </svg>
+        <span class="small-caps-bold">{{ getVoteCount('DOWN') }} down</span>
+      </div>
+    </div>-->
+    <div class="d-flex justify-content-between py-2">
+      <h6 class="my-0 text-secondary">{{ poi.creator.name }} {{ poi.creator.surname }}</h6>
+    </div>
+      <h5 class="card-title">{{ poi.titel }}</h5>
+      <p class="card-text text-truncate">{{ poi.description }}</p>
+      <p class="card-text text-secondary small">{{ poi.createdAt | date:'dd MMM yyyy' }}</p>
+  </div>
+</div>

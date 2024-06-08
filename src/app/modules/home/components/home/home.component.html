@@ -1,31 +1,45 @@
 <div>
   <div class="row">
+    <!--create new poi-->
     <div class="col-md-4">
+      <h4 class="mb-4">Create new POI</h4>
       <form [formGroup]="formData" (ngSubmit)="submitForm()">
-        <div class="mb-3">
-          <label for="titel" class="form-label">Title</label>
-          <input type="text" class="form-control" id="titel" formControlName="titel">
-        </div>
-        <div class="mb-3">
-          <label for="description" class="form-label">Description</label>
-          <textarea class="form-control" id="description" formControlName="description"></textarea>
+        <div class="col-12">
+          <div class="form-floating">
+            <input type="text" class="form-control" id="titel" placeholder="" formControlName="titel"
+              autocomplete="current-titel"
+              [class.is-invalid]="formData.get('titel')!.invalid && formData.get('titel')!.touched"
+              [class.is-valid]="formData.get('titel')!.valid && formData.get('titel')!.touched">
+            <label for="titel" class="form-label">Titel*</label>
+            <div *ngIf="formData.get('titel')!.invalid && formData.get('titel')!.touched" class="invalid-feedback">
+              Please provide a valid titel.
+            </div>
+          </div>
         </div>
 
-        <div class="mb-3">
-          <label for="description" class="form-label">latitude</label>
-          <input type="text" class="form-control" id="latitude" formControlName="latitude">
+        <div class="col-12 mt-3">
+          <div class="form-floating">
+            <textarea class="form-control" rows="20" cols="50" placeholder="Leave a comment here" id="floatingTextarea"
+              formControlName="description" style="height: 280px;"
+              [class.is-invalid]="formData.get('description')!.invalid && formData.get('description')!.touched"
+              [class.is-valid]="formData.get('description')!.valid && formData.get('description')!.touched"></textarea>
+            <label for="floatingTextarea">Description</label>
+            <div *ngIf="formData.get('description')!.invalid && formData.get('description')!.touched"
+              class="invalid-feedback">
+              Please provide a valid description.
+            </div>
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="description" class="form-label">longitude</label>
-          <input type="text" class="form-control" id="longitude" formControlName="longitude">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+
+        <button type="submit" class="btn btn-dark btn-lg mx-auto col-12 mt-3">Add new POI</button>
       </form>
+
     </div>
     <div class="col-md-8">
       <div class="mb-3 d-flex gap-2">
         <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search...">
-        <button  id="mapButton" class="btn btn-dark mx-auto" type="button" data-toggle="tooltip" title="Click to indicate location on map">
+        <button id="mapButton" class="btn btn-dark mx-auto" type="button" data-toggle="tooltip"
+          title="Click to indicate location on map">
           <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
             fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
             class="feather feather-plus">
@@ -36,15 +50,16 @@
         <!-- Button trigger modal -->
 
 
-<!-- Modal -->
-
 
       </div>
-      <div id="map" style="height: 450px;"></div>
+      <div id="map" style="height: 454px;"></div>
 
     </div>
   </div>
 </div>
+
+
+<!--all pois cards-->
 <div class="row mt-3 border-top-3">
   <div class="col-12">
     <div class="row">
@@ -53,9 +68,7 @@
         <div class="col-md-3 mb-3" *ngFor="let poi of pois; track $index">
           <div class="poi-card card h-100" data-bs-toggle="modal" data-bs-target="#poiModal"
             (click)="selectPoi(poi.id)">
-            <img
-              src="https://images.unsplash.com/photo-1562797807-aa9baed9a414?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8c3RyZWV0fGVufDB8fDB8fHww"
-              class="card-img-top" alt="POI image">
+            <img [src]="poi.img" class="card-img-top" alt="POI image">
             <div class="card-body d-flex flex-column">
               <!-- Voting system -->
               <div class="d-flex justify-content-between">
@@ -81,7 +94,7 @@
                 <h6 class="my-0 text-secondary">{{ poi.creator.name }} {{ poi.creator.surname }}</h6>
               </div>
               <h5 class="card-title">{{ poi.titel }}</h5>
-              <p class="card-text text-truncate" >{{ poi.description }}</p>
+              <p class="card-text text-truncate">{{ poi.description }}</p>
               <p class="card-text text-secondary small">{{ poi.createdAt | date:'dd MMM yyyy' }}</p>
             </div>
           </div>
@@ -94,13 +107,9 @@
   </div>
 </div>
 
-<!-- Modal -->
 
 
-
-
-
-<!-- Modal -->
+<!--map poi Modal -->
 <div #poiModal class="modal fade" tabindex="-1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -110,7 +119,9 @@
       <div class="modal-header">
         <div class="comment-box d-flex align-items-start p-2 w-100">
 
-          <h5 class="modal-title" id="poiModalLabel">{{ selectedPoi.creator.name }} {{ selectedPoi.creator.surname }}  <a  class="replink" (click)="selectReport('user', selectedPoi.creator.id,selectedPoi.creator.name)" [class.selected]="selectedReportType === 'user'">report user</a>
+          <h5 class="modal-title" id="poiModalLabel">{{ selectedPoi.creator.name }} {{ selectedPoi.creator.surname }} <a
+              class="replink" (click)="selectReport('user', selectedPoi.creator.id,selectedPoi.creator.name)"
+              [class.selected]="selectedReportType === 'user'">report user</a>
           </h5>
 
 
@@ -130,7 +141,9 @@
             <h5 class="modal-title" id="poiModalLabel">{{ selectedPoi.titel }}</h5>
             <p>{{ selectedPoi.description }}</p>
             <p class="text-secondary small">{{ selectedPoi.createdAt | date:'dd MMM yyyy, HH:mm' }}</p>
-            <small class="text-secondary"><a  class="replink" (click)="selectReport('poi', selectedPoi.id,selectedPoi.titel)" [class.selected]="selectedReportType === 'poi'">report poi</a></small>
+            <small class="text-secondary"><a class="replink"
+                (click)="selectReport('poi', selectedPoi.id,selectedPoi.titel)"
+                [class.selected]="selectedReportType === 'poi'">report poi</a></small>
             <div class="d-flex justify-content-between">
               <div class="d-flex align-items-center svg-bold">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -157,23 +170,24 @@
             <h5>Comments</h5>
             <div class="comment-list overflow-auto" style="max-height: 400px;">
               @for (comment of selectedPoi.comments; track comment.id) {
-                <!--comments-->
-                <div class="comment-box d-flex align-items-start p-2 w-100">
-                    <div class="bg-dark p-1 fw-bold small d-flex align-items-center justify-content-center rounded-circle">
-                        <div class="initials text-white">
-                            {{ getInitials(comment.commenter.name, comment.commenter.surname) }}
-                        </div>
-                    </div>
-                    <div class="comment-content ps-2">
-                        <h6 class="text-dark mb-0">{{comment.commenter.name}} {{comment.commenter.surname}}</h6>
-                        <p class="small">{{ comment.actualcomment }}</p>
-                        <small class="text-secondary">{{ comment.createdAt | date:'dd MMM yyyy, HH:mm' }}</small>
-                        <small class="text-secondary">
-                            <a class="replink" (click)="selectReport('comment', comment.id,comment.commenter.name)" [class.selected]="selectedReportItemId === comment.id">report comment</a>
-                        </small>
-                    </div>
+              <!--comments-->
+              <div class="comment-box d-flex align-items-start p-2 w-100">
+                <div class="bg-dark p-1 fw-bold small d-flex align-items-center justify-content-center rounded-circle">
+                  <div class="initials text-white">
+                    {{ getInitials(comment.commenter.name, comment.commenter.surname) }}
+                  </div>
                 </div>
-            }@empty {
+                <div class="comment-content ps-2">
+                  <h6 class="text-dark mb-0">{{comment.commenter.name}} {{comment.commenter.surname}}</h6>
+                  <p class="small">{{ comment.actualcomment }}</p>
+                  <small class="text-secondary">{{ comment.createdAt | date:'dd MMM yyyy, HH:mm' }}</small>
+                  <small class="text-secondary">
+                    <a class="replink" (click)="selectReport('comment', comment.id,comment.commenter.name)"
+                      [class.selected]="selectedReportItemId === comment.id">report comment</a>
+                  </small>
+                </div>
+              </div>
+              }@empty {
               <p class="opacity-50">no comments vorhanden yet!</p>
               }
 
@@ -229,6 +243,9 @@
     </div>
   </div>
 </div>
+
+<!-- poi Modal -->
+
 <div class="modal fade" id="poiModal" tabindex="-1" aria-labelledby="poiModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -287,7 +304,8 @@
                 <div *ngFor="let comment of selectedPoi.comments; trackBy: trackByCommentId">
                   <!--comments-->
                   <div class="comment-box d-flex align-items-start p-2 w-100">
-                    <div class="bg-dark p-1 fw-bold small d-flex align-items-center justify-content-center rounded-circle">
+                    <div
+                      class="bg-dark p-1 fw-bold small d-flex align-items-center justify-content-center rounded-circle">
                       <div class="initials text-white">
                         {{ getInitials(comment.commenter.name, comment.commenter.surname) }}
                       </div>

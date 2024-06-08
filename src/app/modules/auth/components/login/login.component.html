@@ -8,55 +8,61 @@
       </p>
     </div>
   </div>
+  <div class="right">
 
-  <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="right">
-    <h1 class="login-title-right">Login</h1>
+    <h1 class="login-title-right mt-5">Login</h1>
     <p class="opacity-75">Bitte melden Sie sich an, um auf das Admin-Dashboard zuzugreifen. Nur Administratoren und
       Moderatoren haben
       Zugang zu diesem Bereich
 
     </p>
-    @if (loginForm.invalid && userFormSubmitted) {
-    <div class="alert alert-danger">
-      Please correct the errors in the form before submitting.
-    </div>
-    }
-    <!--Email-->
-    <div class="col-12">
-      <div class="form-floating">
-        <input type="email" class="form-control" id="email" placeholder="" formControlName="email"
-          autocomplete="current-Email" Email
-          [class.is-invalid]="loginForm.get('email')!.invalid && loginForm.get('email')!.touched  "
-          [class.is-valid]="loginForm.get('email')!.valid && loginForm.get('email')!.touched  ">
-        <label for="email" class="form-label">Email*</label>
-        @if ((loginForm.get('email')!.invalid && loginForm.get('email')!.touched) ) {
-        <div class="invalid-feedback">
-          Please provide a valid email.
-        </div>
-        }
+
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      @if (loginForm.invalid && userFormSubmitted) {
+      <div class="alert alert-danger">
+        Please correct the errors in the form before submitting.
       </div>
-    </div>
-
-    <!--Password-->
-    <div class="col-12 mt-3">
-      <div class="form-floating">
-        <input type="password" class="form-control" id="password" placeholder="" formControlName="password"
-          autocomplete="current-password"
-          [class.is-invalid]="loginForm.get('password')!.invalid && loginForm.get('password')!.touched  "
-          [class.is-valid]="loginForm.get('password')!.valid && loginForm.get('password')!.touched  ">
-        <label for="password" class="form-label">Password*</label>
-        @if ((loginForm.get('password')!.invalid && loginForm.get('password')!.touched) ) {
-        <div class="invalid-feedback">
-          Please provide a valid password.
+      }
+      <!--Email-->
+      <div class="col-12">
+        <div class="form-floating">
+          <input type="email" class="form-control" id="email" placeholder="" formControlName="email"
+            autocomplete="current-Email" Email
+            [class.is-invalid]="loginForm.get('email')!.invalid && loginForm.get('email')!.touched  "
+            [class.is-valid]="loginForm.get('email')!.valid && loginForm.get('email')!.touched  ">
+          <label for="email" class="form-label">Email*</label>
+          @if ((loginForm.get('email')!.invalid && loginForm.get('email')!.touched) ) {
+          <div class="invalid-feedback">
+            Please provide a valid email.
+          </div>
+          }
         </div>
-        }
       </div>
-    </div>
+
+      <!--Password-->
+      <div class="col-12 mt-3">
+        <div class="form-floating">
+          <input type="password" class="form-control" id="password" placeholder="" formControlName="password"
+            autocomplete="current-password"
+            [class.is-invalid]="loginForm.get('password')!.invalid && loginForm.get('password')!.touched  "
+            [class.is-valid]="loginForm.get('password')!.valid && loginForm.get('password')!.touched  ">
+          <label for="password" class="form-label">Password*</label>
+          @if ((loginForm.get('password')!.invalid && loginForm.get('password')!.touched) ) {
+          <div class="invalid-feedback">
+            Please provide a valid password.
+          </div>
+          }
+        </div>
+      </div>
 
 
-    <br>
+      <br>
 
-    <button type="submit" class="btn btn-dark btn-lg mx-auto col-12">Login</button>
-  </form>
+      <button type="submit" class="btn btn-dark btn-lg mx-auto col-12">Login</button>
+    </form>
+
+
+  </div>
 
 </div>

@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  NgZone,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserManagementService } from '../../services/user-management-service/user-management.service';
 import { ToastService } from '../../../../shared/services/toast.service';
@@ -14,6 +20,7 @@ import {
 import { CounterState } from '../../../../shared/components/state-counter/state-counter.component';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Subscription } from 'rxjs';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-view-user',
@@ -21,6 +28,9 @@ import { Subscription } from 'rxjs';
   styleUrl: './view-user.component.scss',
 })
 export class ViewUserComponent {
+  @ViewChild('poiModal') poiModal!: ElementRef;
+  @ViewChild('mapButton', { static: true })
+  mapButton?: ElementRef<HTMLButtonElement>;
   title: string = 'View User';
   id: string | null = null;
   user?: User;
@@ -170,21 +180,25 @@ export class ViewUserComponent {
     return `${name.charAt(0).toUpperCase()}${surname.charAt(0).toUpperCase()}`;
   }
 
-  trackById(index: number, poi: Poi): string {
-    return poi.id;
-  }
-
   selectPoi(poiId: string): void {
     this.loadPoiByPoiID(poiId);
+    this.openModal();
   }
 
   onMarkerClick(poi: Poi): void {
     this.poiClicked = true;
     this.selectedPoi = poi;
     console.log('selected poi: ', this.selectedPoi);
+    this.openModal();
   }
 
   private handleError(message: string): void {
     this.toastService.show('error', 'Error', message);
+  }
+
+  openModal(): void {
+    const modalElement = this.poiModal.nativeElement;
+    const bootstrapModal = new bootstrap.Modal(modalElement);
+    bootstrapModal.show();
   }
 }
