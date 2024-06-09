@@ -1,7 +1,7 @@
 <div class="app-header bg-light">
 
   <div class="app-header-left">
-    <div class="icon-menu" (click)="toggleSidebar()" >
+    <div class="icon-menu" (click)="toggleSidebar()">
       <span class="app-icon"></span>
     </div>
     <p class="app-name">{{title}}</p>
@@ -15,6 +15,7 @@
         <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
       </svg>
     </button>
+    @if (currentUser?.role =='ADMIN' ||currentUser?.role =='MODERATOR' ) {
 
     <button class="notification-btn" (click)="onClickToggleNotifications()">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -24,6 +25,7 @@
         <path d="M13.73 21a2 2 0 0 1-3.46 0" />
       </svg>
     </button>
+    }
 
 
 
@@ -34,8 +36,10 @@
         <mat-icon style="color: black;">expand_more</mat-icon>
       </button>
       <div class="dropdown-menu" [class.show]="isDropdownOpen">
-        <a class="dropdown-item"[routerLink]="['/meinepoi']">Meine POI</a>
-        <a class="dropdown-item" [routerLink]="['/user-management/update-user',currentUser?.id]">Profile update</a>
+        <a class="dropdown-item" [routerLink]="['/user-management/view-user',currentUser?.id]">My Profile</a>
+        <a class="dropdown-item" [routerLink]="['/user-management/update-user',currentUser?.id]">Edit Profile</a>
+        <a class="dropdown-item" [routerLink]="['/user-management/delete-user',currentUser?.id]">Delete Account</a>
+
         <button (click)="logout()" class="logout-btn" title="Logout">
 
           <mat-icon class="manage_accounts_icon" fontSet="material-icons-outlined">

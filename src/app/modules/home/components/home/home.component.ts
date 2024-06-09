@@ -1,6 +1,11 @@
-import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { MapboxService } from '../../../../shared/services/mapbox-service/mapbox.service';
-import { Poi, User,Comment } from '../../../../core/models/partiBremen.model';
+import { Poi, User, Comment } from '../../../../core/models/partiBremen.model';
 import { HomeService } from '../../services/home.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../auth/services/auth.service';
@@ -23,10 +28,13 @@ export class HomeComponent {
   currentUser: User | null = null;
   selectedReportType: string = '';
   selectedReportItemId: any;
+  pageTitle: string = 'Home';
   title: string = '';
   selectedPoi: Poi | null = null; // Initialize as null
   @ViewChild('poiModal') poiModal!: ElementRef;
-  @ViewChild('mapButton', { static: true }) mapButton?: ElementRef<HTMLButtonElement>;
+  @ViewChild('mapButton', { static: true })
+  mapButton?: ElementRef<HTMLButtonElement>;
+  currentStep: number = 1;
   constructor(
     private mapboxService: MapboxService,
     private homeService: HomeService,
@@ -35,7 +43,7 @@ export class HomeComponent {
     private cdr: ChangeDetectorRef,
     private authService: AuthService,
     private userService: UserManagementService
-  ) { }
+  ) {}
   ngOnInit() {
     this.loadPOIs();
     this.mapboxService.setOnMarkerClickCallback(this.onMarkerClick.bind(this));
@@ -43,21 +51,32 @@ export class HomeComponent {
       titel: ['', Validators.required],
       description: ['', Validators.required],
       latitude: ['', Validators.required],
-      longitude: ['', Validators.required]
+      longitude: ['', Validators.required],
     });
+
     this.reportForm = this.formBuilder.group({
       title: ['', Validators.required],
       kommentar: ['', Validators.required],
     });
   }
+
+  goToNextStep(): void {
+    this.currentStep++;
+  }
+
+  goToPreviousStep(): void {
+    this.currentStep--;
+  }
+
   selectReport(type: string, id: any, title: string) {
     this.selectedReportType = type;
     this.selectedReportItemId = id;
     this.title = title;
-
   }
+
   selectPoi(poiId: string): void {
     this.loadPoiByPoiID(poiId);
+    this.openModal();
   }
   private loadPoiByPoiID(poiId: string): void {
     const sub = this.userService.getPoibyId(poiId).subscribe({
@@ -70,9 +89,7 @@ export class HomeComponent {
         console.log('selected poi:', this.selectedPoi);
         this.cdr.detectChanges(); // Trigger change detection
       },
-      error: () => {
-
-      },
+      error: () => {},
     });
     this.subscriptions.add(sub);
   }
@@ -84,7 +101,7 @@ export class HomeComponent {
         title: this.reportForm.get('title')?.value,
         kommentar: this.reportForm.get('kommentar')?.value,
         creatorId: creatorId,
-        itemId: this.selectedReportItemId
+        itemId: this.selectedReportItemId,
       };
 
       let reportObservable;
@@ -125,8 +142,11 @@ export class HomeComponent {
         },
         error: (error) => {
           // Handle any errors
-          console.error(`Error creating ${this.selectedReportType} report:`, error);
-        }
+          console.error(
+            `Error creating ${this.selectedReportType} report:`,
+            error
+          );
+        },
       });
     }
   }
@@ -149,38 +169,35 @@ export class HomeComponent {
       // Ensure this.currentUser?.id is defined before using it
       const creatorId = this.currentUser?.id || '';
 
-      this.homeService.createPoi(
-        this.formData.get('titel')?.value,
-        this.formData.get('description')?.value,
-        creatorId,
-        this.formData.get('latitude')?.value,
-        this.formData.get('longitude')?.value,
-      ).subscribe({
-        next: (response) => {
-          // Handle the response if needed
-          console.log("POI created:", response);
-          window.location.reload();
-        },
-        error: (error) => {
-          // Handle any errors
-          console.error("Error creating POI:", error);
-        }
-      });
+      this.homeService
+        .createPoi(
+          this.formData.get('titel')?.value,
+          this.formData.get('description')?.value,
+          creatorId,
+          this.formData.get('latitude')?.value,
+          this.formData.get('longitude')?.value
+        )
+        .subscribe({
+          next: (response) => {
+            // Handle the response if needed
+            console.log('POI created:', response);
+            window.location.reload();
+          },
+          error: (error) => {
+            // Handle any errors
+            console.error('Error creating POI:', error);
+          },
+        });
     }
   }
 
-
-
-
   ngAfterViewInit(): void {
     if (this.mapButton) {
-      this.mapButton.nativeElement.addEventListener('click', () => {
-      });
+      this.mapButton.nativeElement.addEventListener('click', () => {});
     }
 
     this.setupMapClickHandler();
   }
-
 
   private setupMapClickHandler(): void {
     this.mapboxService.setOnMapClickCallback((coordinates) => {
@@ -205,22 +222,13 @@ export class HomeComponent {
     this.homeService.getPOIs().subscribe({
       next: (response) => {
         this.pois = response;
-        this.initializeMap();
       },
-      error: (error) => { },
+      error: (error) => {},
     });
   }
 
-  private initializeMap(): void {
-    this.mapboxService.initializeMap('map', [8.8016936, 53.0792962], 9);
-    this.mapboxService.map.on('load', () => {
-      this.mapboxService.addMarkers(this.pois);
-    });
-  }
-
-  private onMarkerClick(poi: Poi): void {
+  onMarkerClick(poi: Poi): void {
     this.poiClicked = true;
-    console.log(this.poiClicked);
     this.selectedPoi = poi;
     this.openModal();
   }
@@ -230,7 +238,7 @@ export class HomeComponent {
     bootstrapModal.show();
   }
 
-  vote(poiId: string, voteType: string): void { }
+  vote(poiId: string, voteType: string): void {}
 
   getVoteCount(poiId: string, voteType: string): number {
     const poi = this.pois.find((p) => p.id === poiId);
@@ -285,8 +293,7 @@ export class HomeComponent {
             'Comment added successfully'
           );
         },
-        error: () => {
-        },
+        error: () => {},
       });
     this.subscriptions.add(sub);
   }

@@ -62,6 +62,7 @@ import { PoiCardComponent } from './components/poi-card/poi-card.component';
     MapComponent,
     UserProfileComponent,
     PoiCardComponent,
+    PoiModalComponent,
   ],
   providers: [ToastService],
 })

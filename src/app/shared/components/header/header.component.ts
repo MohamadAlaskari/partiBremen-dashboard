@@ -1,9 +1,16 @@
-import { Component, Output, EventEmitter, HostListener, ElementRef, Renderer2 } from '@angular/core';
+import {
+  Component,
+  Output,
+  EventEmitter,
+  HostListener,
+  ElementRef,
+  Renderer2,
+} from '@angular/core';
 
 import { Router } from '@angular/router';
 import { AuthService } from '../../../modules/auth/services/auth.service';
 import { ToastService } from '../../services/toast.service';
-import {User} from "../../../core/models/partiBremen.model";
+import { User } from '../../../core/models/partiBremen.model';
 
 @Component({
   selector: 'app-header',
@@ -26,14 +33,14 @@ export class HeaderComponent {
     private authService: AuthService,
     private toastService: ToastService,
     private _router: Router,
-    private renderer: Renderer2, private el: ElementRef
+    private renderer: Renderer2,
+    private el: ElementRef
   ) {}
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
-
+    console.log(this.currentUser?.role);
   }
   isDropdownOpen = false;
-
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;

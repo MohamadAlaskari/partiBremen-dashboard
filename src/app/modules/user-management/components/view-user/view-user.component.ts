@@ -31,7 +31,7 @@ export class ViewUserComponent {
   @ViewChild('poiModal') poiModal!: ElementRef;
   @ViewChild('mapButton', { static: true })
   mapButton?: ElementRef<HTMLButtonElement>;
-  title: string = 'View User';
+  title: string = 'Profile Details';
   id: string | null = null;
   user?: User;
   counters: CounterState[] = [];
@@ -157,7 +157,30 @@ export class ViewUserComponent {
   }
 
   vote(poiId: string, voteType: string): void {
-    // Implement voting logic here
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser) {
+      this.toastService.show('error', 'Error', 'User not logged in');
+      return;
+    }
+
+    const voting: Voting = {
+      votedPoiId: poiId,
+      voterId: currentUser.id,
+      voteType: voteType,
+    };
+
+    const sub = this.userService.vote(voting).subscribe({
+      next: () => {
+        this.toastService.show('success', 'Success', 'Vote added successfully');
+        this.loadUserPois(this.id!); // Reload POIs to update vote counts
+        console.log('Vote added successfully');
+      },
+      error: (error) => {
+        this.handleError('Error adding vote');
+        console.log(error);
+      },
+    });
+    this.subscriptions.add(sub);
   }
 
   getVoteCount(poiId: string, voteType: string): number {

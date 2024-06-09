@@ -14,13 +14,13 @@
     </thead>
     <tbody class="table-group-divider">
       @for (user of users; track $index) {
-      <tr >
+      <tr class="bg-danger" [ngClass]="{'bg-danger': user.isDeleted}">
 
         <th>
 
           @if (user.verified) {
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0040ff"
-            class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0040ff" class="bi bi-check-circle-fill"
+            viewBox="0 0 16 16">
             <path
               d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
           </svg>
@@ -40,13 +40,14 @@
         <td>{{user.dob }}</td>
         <td>{{user.role | lowercase }}</td>
 
-          @if(user.blockStatus != "UNBLOCKED"){
-            <td> <span class="badge rounded-pill  bg-danger bg-opacity-25 text-danger-emphasis">Blocked {{user.blockUntilDatum }}</span> </td>
-            }@else{
-              <td>
-                <span class="badge rounded-pill  bg-success bg-opacity-25  text-success-emphasis">aktive</span>
-              </td>
-            }
+        @if(user.blockStatus != "UNBLOCKED"){
+        <td> <span class="badge rounded-pill  bg-danger bg-opacity-25 text-danger-emphasis">Blocked
+            {{user.blockUntilDatum }}</span> </td>
+        }@else{
+        <td>
+          <span class="badge rounded-pill  bg-success bg-opacity-25  text-success-emphasis">aktive</span>
+        </td>
+        }
 
 
         <td>@if(user.active){
@@ -88,21 +89,22 @@
                   delete user</a>
               </li>
               @if(user.blockStatus != "UNBLOCKED"){
-                <li>
-                  <a class="dropdown-item" (click)="unblockUser(user.id)">unBlock</a>
+              <li>
+                <a class="dropdown-item" (click)="unblockUser(user.id)">unBlock</a>
 
-                </li>
-                }@else{
-                  <li>
-                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#blockmodal" (click)="setSelectedUserId(user.id)">Block Until</a>
+              </li>
+              }@else{
+              <li>
+                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#blockmodal"
+                  (click)="setSelectedUserId(user.id)">Block Until</a>
 
 
-                  </li>
-                  <li>
-                    <a class="dropdown-item" (click)="blockUser(user.id)">Permanent Block</a>
+              </li>
+              <li>
+                <a class="dropdown-item" (click)="blockUser(user.id)">Permanent Block</a>
 
-                  </li>
-                }
+              </li>
+              }
 
 
 
@@ -129,45 +131,41 @@
 
 
 <div class="modal fade" id="blockmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-aria-labelledby="staticBackdropLabel" aria-hidden="true">
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
 
-      <app-section-header [title]="title" time=""></app-section-header>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <div class="modal-body">
-      <form class="row g-3" [formGroup]="userForm" (ngSubmit)="onSubmit()">
-        <!-- Block Until Date -->
-        <div class="col-8">
-          <div class="form-floating">
-            <input
-              type="date"
-              class="form-control"
-              id="blockUntilDate"
-              placeholder=""
-              formControlName="blockUntilDate"
-              [class.is-invalid]="userForm.get('blockUntilDate')?.invalid && userForm.get('blockUntilDate')?.touched"
-              [class.is-valid]="userForm.get('blockUntilDate')?.valid && userForm.get('blockUntilDate')?.touched"
-            />
-            <label for="blockUntilDate" class="form-label">Blocked until*</label>
-            <div class="invalid-feedback" *ngIf="userForm.get('blockUntilDate')?.invalid && userForm.get('blockUntilDate')?.touched">
-              Date is required.
+        <app-section-header [title]="title" time=""></app-section-header>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+          <!-- Block Until Date -->
+          <div class="col-8">
+            <div class="form-floating">
+              <input type="date" class="form-control" id="blockUntilDate" placeholder=""
+                formControlName="blockUntilDate"
+                [class.is-invalid]="userForm.get('blockUntilDate')?.invalid && userForm.get('blockUntilDate')?.touched"
+                [class.is-valid]="userForm.get('blockUntilDate')?.valid && userForm.get('blockUntilDate')?.touched" />
+              <label for="blockUntilDate" class="form-label">Blocked until*</label>
+              <div class="invalid-feedback"
+                *ngIf="userForm.get('blockUntilDate')?.invalid && userForm.get('blockUntilDate')?.touched">
+                Date is required.
+              </div>
             </div>
           </div>
-        </div>
 
-      </form>
+        </form>
 
 
-    </div>
-    <div class="modal-footer">
+      </div>
+      <div class="modal-footer">
 
-      <button type="reset" (click)="onCancel()" class="btn btn-outline-dark" data-bs-dismiss="modal">close</button>
-      <button type="submit" (click)="onSubmit()" class="btn btn-dark mx-md-3"
-        data-bs-dismiss="modal" >Block user</button>
+        <button type="reset" (click)="onCancel()" class="btn btn-outline-dark" data-bs-dismiss="modal">close</button>
+        <button type="submit" (click)="onSubmit()" class="btn btn-dark mx-md-3" data-bs-dismiss="modal">Block
+          user</button>
+      </div>
     </div>
   </div>
-</div>
 </div>

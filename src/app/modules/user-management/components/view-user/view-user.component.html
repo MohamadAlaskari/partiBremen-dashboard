@@ -1,11 +1,3 @@
-<a routerLink="/user-management">
-
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
-    viewBox="0 0 16 16">
-    <path fill-rule="evenodd"
-      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8" />
-  </svg>
-</a>
 <app-section-header [title]="title" time=""></app-section-header>
 <!-- User Details and Map -->
 <div class="row">
@@ -78,24 +70,38 @@
             <h5 class="modal-title" id="poiModalLabel">{{ selectedPoi.titel }}</h5>
             <p>{{ selectedPoi.description }}</p>
             <p class="text-secondary small">{{ selectedPoi.createdAt | date:'dd MMM yyyy, HH:mm' }}</p>
-            <div class="d-flex justify-content-between">
-              <div class="d-flex align-items-center svg-bold">
+
+
+
+
+            <!--Voting section-->
+            <div class="d-flex justify-content-between border border-2 rounded-3">
+
+              <!--Voting up-->
+              <div (click)="vote(selectedPoi.id, 'UP')"
+                class="d-flex justify-content-center align-items-center svg-bold w-50 vote-container-box rounded-2 p-1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                  class="bi bi-arrow-up vote-svg" viewBox="0 0 16 16">
+                  class="bi bi-arrow-up vote-svg  " viewBox="0 0 16 16">
                   <path fill-rule="evenodd"
                     d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5" />
                 </svg>
                 <span class="small-caps-bold">{{ getVoteCount(selectedPoi.id || '', 'UP') }} up</span>
               </div>
-              <div class="d-flex align-items-center svg-bold">
+
+              <span class="opacity-50 px-1">|</span>
+
+              <!--Voting Down-->
+              <div (click)="vote(selectedPoi.id, 'DOWN')"
+                class="d-flex justify-content-center align-items-center svg-bold w-50  vote-container-box rounded-2 p-1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                  class="bi bi-arrow-down vote-svg" viewBox="0 0 16 16">
+                  class="bi bi-arrow-down vote-svg  " viewBox="0 0 16 16">
                   <path fill-rule="evenodd"
                     d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1" />
                 </svg>
                 <span class="small-caps-bold">{{ getVoteCount(selectedPoi.id || '', 'DOWN') }} down</span>
               </div>
             </div>
+
           </div>
 
           <!-- Comments Section -->
