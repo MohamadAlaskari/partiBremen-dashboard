@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { MapboxService } from '../../services/mapbox-service/mapbox.service';
 import { Poi } from '../../../core/models/partiBremen.model';
 
@@ -19,10 +25,10 @@ export class MapComponent {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['height']) {
+    if (changes['height'] && !changes['height'].firstChange) {
       this.adjustMapHeight();
     }
-    if (changes['pois']) {
+    if (changes['pois'] && !changes['pois'].firstChange) {
       this.addMarkersToMap();
     }
   }
@@ -35,12 +41,19 @@ export class MapComponent {
     this.mapboxService.initializeMap('map', [8.8016936, 53.0792962], 9);
     this.mapboxService.map.on('load', () => {
       this.addMarkersToMap();
+      this.adjustMapHeight(); // Ensure height is adjusted when the map is fully loaded
     });
     this.mapboxService.setOnMarkerClickCallback(this.onMarkerClick.bind(this));
   }
 
   private addMarkersToMap(): void {
-    this.mapboxService.addMarkers(this.pois);
+    if (this.mapboxService.map && this.mapboxService.map.loaded()) {
+      this.mapboxService.addMarkers(this.pois);
+    } else {
+      this.mapboxService.map?.on('load', () => {
+        this.mapboxService.addMarkers(this.pois);
+      });
+    }
   }
 
   private onMarkerClick(poi: Poi): void {
@@ -51,8 +64,12 @@ export class MapComponent {
     const mapElement = document.getElementById('map');
     if (mapElement) {
       mapElement.style.height = `${this.height}px`;
-      if (this.mapboxService.map) {
+      if (this.mapboxService.map && this.mapboxService.map.loaded()) {
         this.mapboxService.map.resize();
+      } else {
+        this.mapboxService.map?.on('load', () => {
+          this.mapboxService.map.resize();
+        });
       }
     }
   }
