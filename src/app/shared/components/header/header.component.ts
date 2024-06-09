@@ -20,27 +20,31 @@ import { User } from '../../../core/models/partiBremen.model';
 export class HeaderComponent {
   @Output() toggleNotifications = new EventEmitter<void>();
   @Output() sidebarToggled = new EventEmitter<void>();
-  onClickToggleNotifications() {
-    this.toggleNotifications.emit();
-  }
-  toggleSidebar() {
-    this.sidebarToggled.emit();
-  }
+
   title = 'Parti Bremen';
   currentUser: User | null = null;
   darkMode: boolean = false;
+  isDropdownOpen = false;
+
   constructor(
     private authService: AuthService,
     private toastService: ToastService,
     private _router: Router,
-    private renderer: Renderer2,
     private el: ElementRef
   ) {}
+
+  onClickToggleNotifications() {
+    this.toggleNotifications.emit();
+  }
+
+  toggleSidebar() {
+      this.sidebarToggled.emit();
+    
+  }
+
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
-    console.log(this.currentUser?.role);
   }
-  isDropdownOpen = false;
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
