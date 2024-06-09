@@ -215,7 +215,7 @@ export class HomeComponent {
     }
   }
   ngOnDestroy(): void {
-    this.mapboxService.map?.remove();
+    //this.mapboxService.map?.remove();
   }
 
   private loadPOIs() {

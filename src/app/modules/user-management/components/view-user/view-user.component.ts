@@ -97,21 +97,21 @@ export class ViewUserComponent {
 
   private loadPoiByPoiID(poiId: string): void {
     const sub = this.userService.getPoibyId(poiId).subscribe({
-      next: (poi: Poi) => {
-        this.selectedPoi = poi;
-        poi.comments.sort(
-          (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        );
-        console.log('selected poi:', this.selectedPoi);
-        this.cdr.detectChanges(); // Trigger change detection
-      },
-      error: () => {
-        this.handleError('Error loading POI');
-      },
+        next: (poi: Poi) => {
+            this.ngZone.run(() => {
+                this.selectedPoi = poi;
+                poi.comments.sort(
+                    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                );
+                console.log('selected poi:', this.selectedPoi);
+                this.cdr.detectChanges(); // Trigger change detection
+            });
+        },
+        error: () => {},
     });
     this.subscriptions.add(sub);
-  }
+}
+
 
   addComment(
     poiId: string,
