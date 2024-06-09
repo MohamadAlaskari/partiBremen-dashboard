@@ -7,13 +7,14 @@
       <span class="app-icon"></span>
     </div>
     }@else {
-   <img src="../../../../assets/roadmap.png" alt="logo.png" class="icon-logo" >
+    <img src="../../../../assets/roadmap.png" alt="logo.png" class="icon-logo">
 
     }
     <p class="app-name">{{title}}</p>
   </div>
 
   <div class="app-header-right">
+
     @if (currentUser?.role !='ADMIN' ||currentUser?.role !='MODERATOR' ) {
 
     <button class="home-btn" [routerLink]="[ '/home' ]" routerLinkActive="active">
@@ -25,7 +26,6 @@
       </svg>
     </button>
     }
-
     <button (click)="toggleTheme()" class="mode-switch" title="Switch Theme">
       <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
         stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
@@ -54,6 +54,7 @@
       </svg>
     </button>
     }
+
 
 
 

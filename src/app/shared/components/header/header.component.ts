@@ -38,14 +38,16 @@ export class HeaderComponent {
   }
 
   toggleSidebar() {
-      this.sidebarToggled.emit();
-    
+    this.sidebarToggled.emit();
   }
 
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
   }
 
+  ngAfterContentInit(): void {
+    this.currentUser = this.authService.getCurrentUser();
+  }
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
