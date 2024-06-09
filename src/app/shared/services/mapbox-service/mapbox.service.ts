@@ -13,7 +13,9 @@ export class MapboxService {
   is3DMode: boolean = false; // Hinzugefügte Eigenschaft, um den 3D-Modus zu verfolgen
   marker: mapboxgl.Marker | null = null;
   onMarkerClickCallback: ((poi: Poi) => void) | null = null;
-  onMapClickCallback: ((coordinates: { latitude: number; longitude: number }) => void) | null = null;
+  onMapClickCallback:
+    | ((coordinates: { latitude: number; longitude: number }) => void)
+    | null = null;
 
   initializeMap(
     container: string,
@@ -34,7 +36,9 @@ export class MapboxService {
       }
       // Add or move marker to the clicked location
       if (!this.marker) {
-        this.marker = new mapboxgl.Marker().setLngLat([lng, lat]).addTo(this.map);
+        this.marker = new mapboxgl.Marker()
+          .setLngLat([lng, lat])
+          .addTo(this.map);
       } else {
         this.marker.setLngLat([lng, lat]);
       }
@@ -88,8 +92,9 @@ export class MapboxService {
       el.style.borderRadius = '50%';
 
       if (
-        poi.votings.filter((vote) => vote.voteType === 'UP').length > 3 &&
-        poi.active
+        (poi.votings.filter((vote) => vote.voteType === 'UP').length > 3 &&
+          poi.active) ||
+        (poi.comments.length > 5 && poi.active)
       ) {
         el.classList.add('pulsate');
       }
@@ -111,7 +116,9 @@ export class MapboxService {
       this.markers[poi.id] = marker;
     });
   }
-  setOnMapClickCallback(callback: (coordinates: { latitude: number; longitude: number }) => void): void {
+  setOnMapClickCallback(
+    callback: (coordinates: { latitude: number; longitude: number }) => void
+  ): void {
     this.onMapClickCallback = callback; // Set the callback function
   }
   toggle3DMode(): void {
@@ -258,5 +265,4 @@ export class MapboxService {
   setOnMarkerClickCallback(callback: (poi: Poi) => void): void {
     this.onMarkerClickCallback = callback;
   }
-
 }

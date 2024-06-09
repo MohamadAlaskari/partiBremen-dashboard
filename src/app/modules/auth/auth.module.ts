@@ -7,9 +7,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastService } from '../../shared/services/toast.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
+import { SignupComponent } from './components/signup/signup.component';
+import { AuthComponent } from './components/auth/auth.component';
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, SignupComponent, AuthComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
