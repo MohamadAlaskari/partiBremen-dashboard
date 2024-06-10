@@ -19,7 +19,7 @@ import { AuthComponent } from './components/auth/auth.component';
     HttpClientModule,
     ReactiveFormsModule,
   ],
-  exports: [LoginComponent],
+  exports: [AuthComponent],
   providers: [AuthService, ToastService],
 })
 export class AuthModule {}

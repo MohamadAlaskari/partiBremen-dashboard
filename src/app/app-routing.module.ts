@@ -11,7 +11,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'login',
+    path: 'auth',
     loadChildren: () =>
       import('./modules/auth/auth.module').then((m) => m.AuthModule),
     // canActivate: [AuthGuard],
@@ -54,8 +54,8 @@ const routes: Routes = [
       ),
     // canActivate: [AuthGuard],
   },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: '**', redirectTo: 'login' }, // Fallback-Route
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '**', redirectTo: 'auth' }, // Fallback-Route
 ];
 
 @NgModule({

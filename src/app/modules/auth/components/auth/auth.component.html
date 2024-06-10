@@ -1,1 +1,26 @@
-<p>auth works!</p>
+<div class="auth-section">
+  <div class="left">
+    <div class="overlay">
+      <h1>Parti Bremen Dashboard</h1>
+      <p>Willkommen beim Parti Bremen Dashboard. Diese Verwaltungsplattform ist ausschließlich für Administratoren und
+        Moderatoren gedacht, um Projekte effizient zu verwalten und den Überblick über alle Aktivitäten zu behalten!
+      </p>
+    </div>
+  </div>
+
+  <div class="right">
+    <h1 class="login-title-right mt-5" *ngIf="isLoginMode">Login</h1>
+    <h1 class="login-title-right mt-5" *ngIf="!isLoginMode">Sign Up</h1>
+    <p class="opacity-75">Bitte melden Sie sich an, um auf das Admin-Dashboard zuzugreifen. Nur Administratoren und
+      Moderatoren haben
+      Zugang zu diesem Bereich
+    </p>
+
+    <app-login *ngIf="isLoginMode"></app-login>
+    <app-signup *ngIf="!isLoginMode"></app-signup>
+
+    <button class="btn btn-link" (click)="toggleMode()">
+      {{ isLoginMode ? 'No account? Sign Up' : 'Already have an account? Login' }}
+    </button>
+  </div>
+</div>
