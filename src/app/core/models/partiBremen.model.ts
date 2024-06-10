@@ -10,6 +10,7 @@ export class User {
     public email: string,
     public password: string,
     public verified: boolean,
+    public isDeleted: boolean,
     public role: string | null,
     public active: boolean,
     public blockStatus: string | null,
@@ -32,7 +33,7 @@ export class Poi {
     public votings: Voting[],
     public comments: Comment[],
     public titel: string,
-    public img: string,
+    public img: string
   ) {}
 }
 
@@ -66,14 +67,15 @@ export class Survey {
 
 export class Voting {
   constructor(
-    public id: string,
-    public createdAt: string,
-    public updatedAt: string,
     public voteType: string,
-    public votedSurvey: Survey | null,
-    public votedComment: Comment | null,
-    public votedPoi: string,
-    public voter: User
+    public votedPoiId?: string,
+    public voterId?: string,
+    public voter?: User,
+    public id?: string,
+    public createdAt?: string,
+    public updatedAt?: string,
+    public votedCommentID?: string,
+    public votedComment?: Comment
   ) {}
 }
 

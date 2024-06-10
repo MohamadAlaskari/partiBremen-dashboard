@@ -1,23 +1,22 @@
-.user-list-section {
+.poi-list-section {
   display: flex;
   flex-direction: column;
   color: var(--font-color-primary);
-
-  .steurung-line {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 32px;
-  }
+  position: relative;
 }
 
-.search-add-container {
+.steurung-line {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
+  padding-bottom: 32px;
 }
 
 .search-wrapper {
+  position: absolute;
+  top: 0px;
+  right: 0;
   border-radius: 4px;
   background-color: var(--search-area-bg);
   border: 1px solid var(--link-color-active-bg);
@@ -26,14 +25,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  max-width: 430px;
+  max-width: 500px;
   color: var(--light-font);
   overflow: hidden;
-
-  .dark & {
-    box-shadow: none;
-  }
 }
 
 .search-input {
@@ -45,17 +39,17 @@
   font-size: 16px;
   background-color: var(--search-area-bg);
   color: var(--font-color-primary);
+}
 
-  &::placeholder {
-    color: var(--font-color-primary);
-    opacity: 0.6;
-  }
+.search-input::placeholder {
+  color: var(--font-color-primary);
+  opacity: 0.6;
 }
 
 .btn-add-user {
   background-color: var(--link-color-active-bg);
   color: var(--link-color-active);
-  width: 200px;
+  min-width: 160px;
   height: 36px;
   display: flex;
   justify-content: center;
@@ -65,18 +59,16 @@
   border: none;
   margin-left: 8px;
   transition: 0.2s;
-  span {
-    padding-inline: 10px;
-  }
 }
 
-// table
+.btn-add-user span {
+  padding-inline: 10px;
+}
 
 .scroll-window table {
   margin-bottom: 0;
 }
 
-/* fixed header background */
 .scroll-window:before {
   content: "";
   position: absolute;
@@ -87,7 +79,6 @@
   background: rgba(170, 170, 170, 0.8);
 }
 
-/* the actual fixed header */
 table.fixed-header th div {
   position: absolute;
   margin-top: -0.5rem;
@@ -105,58 +96,25 @@ table.fixed-header thead tr {
 
 .user-list {
   width: 100%;
-
-  &.table-fixed {
-    thead {
-      display: table;
-      width: 100%;
-      table-layout: fixed;
-    }
-
-    tbody {
-      display: block;
-      max-height: 430px;
-      overflow-y: auto;
-      width: 100%;
-    }
-
-    tbody tr {
-      display: table;
-      width: 100%;
-      table-layout: fixed;
-    }
-
-    thead, tbody tr {
-      th, td {
-        width: 16.66%; // Assuming 6 columns. Adjust as needed.
-      }
-    }
-  }
 }
 
 .user-list td.text-right {
   width: 16rem;
 }
 
-/*-----experimental scrollbar styles-----*/
-/* line 199, ../scss/main.scss */
 #bodywrap ::-webkit-scrollbar {
   width: 1rem;
 }
-/* line 202, ../scss/main.scss */
-#bodywrap ::-webkit-scrollbar-button {
-  /* width:1rem;*/
-}
-/* line 205, ../scss/main.scss */
+
 #bodywrap ::-webkit-scrollbar-track {
   background-color: #eaeaea;
   border-left: 1px solid #ccc;
 }
-/* line 212, ../scss/main.scss */
+
 #bodywrap ::-webkit-scrollbar-thumb {
   background-color: #ccc;
 }
-/* line 215, ../scss/main.scss */
+
 #bodywrap ::-webkit-scrollbar-thumb:hover {
   background-color: #aaa;
 }
@@ -169,14 +127,15 @@ table.fixed-header thead tr {
   width: 30px;
   height: 100%;
   cursor: pointer;
-  .punkt {
-    width: 3px;
-    height: 3px;
-    border-radius: 100%;
-    margin-bottom: 2px;
-    background-color: var(--link-color);
-    opacity: 0.9;
-  }
+}
+
+.user-settings .punkt {
+  width: 3px;
+  height: 3px;
+  border-radius: 100%;
+  margin-bottom: 2px;
+  background-color: var(--link-color);
+  opacity: 0.9;
 }
 
 .uname-verified {
@@ -185,21 +144,17 @@ table.fixed-header thead tr {
   cursor: default;
 }
 
-/// sort
 .sort-menu-container {
   position: relative;
 }
 
-/* sort btn */
 .sort-btn {
   padding: 0 40px 0 20px;
-  // font-size: 16px;
   text-align: left;
   cursor: pointer;
   outline: none;
   transition: all 0.2s ease;
   border: 1px solid var(--link-color-active-bg);
-
   width: 150px;
   height: 36px;
   display: flex;
@@ -209,12 +164,14 @@ table.fixed-header thead tr {
   color: var(--font-color-primary);
   margin-left: 8px;
   transition: 0.2s;
-  svg {
-    fill: var(--link-color);
-  }
-  span {
-    padding-left: 4px;
-  }
+}
+
+.sort-btn svg {
+  fill: var(--link-color);
+}
+
+.sort-btn span {
+  padding-left: 4px;
 }
 
 .sort-btn__arrow {
@@ -232,11 +189,8 @@ table.fixed-header thead tr {
   transform: rotate(180deg);
 }
 
-/* sort Dropdown */
-
 .sortDropdown {
   margin-left: 8px;
-
   position: absolute;
   z-index: 700;
   box-sizing: border-box;
@@ -253,12 +207,6 @@ table.fixed-header thead tr {
 }
 
 .sort-menu-container.open .sortDropdown {
-  opacity: 1;
-  transform: translatey(0);
-  pointer-events: all;
-}
-
-.open {
   opacity: 1;
   transform: translatey(0);
   pointer-events: all;
@@ -294,4 +242,17 @@ table.fixed-header thead tr {
   opacity: 0.8;
   color: var(--link-color-active) !important;
 }
-/// ende sort
+
+.table {
+  --bs-table-bg: var(--bg-color-secondary);
+}
+
+thead {
+  --bs-table-color: var(--font-color-primary);
+}
+
+.dropdown-active {
+  display: block;
+  transform: translateX(-60px);
+  color:#0040ff;
+}

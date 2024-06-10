@@ -1,0 +1,27 @@
+<div class="auth-section">
+  <div class="left">
+    <div class="overlay">
+      <h1>Parti Bremen</h1>
+      <p>Welcome to the Parti Bremen Dashboard. This platform lets citizens improve their city by reporting issues,
+        sharing photos, and suggesting new projects.</p>
+
+
+    </div>
+  </div>
+
+  <div class="right">
+    <h1 class="login-title-right mt-5" *ngIf="isLoginMode">Login</h1>
+    <h1 class="login-title-right mt-5" *ngIf="!isLoginMode">Sign Up</h1>
+    <p class="opacity-75">Please log in to join the city participation program. Share your observations, support others'
+      ideas, and help make the city better.</p>
+    <button class="btn btn-link" (click)="toggleMode()">
+      {{ isLoginMode ? 'No account? Sign Up' : 'Already have an account? Login' }}
+    </button>
+
+
+    <app-login *ngIf="isLoginMode"></app-login>
+    <app-signup *ngIf="!isLoginMode"></app-signup>
+
+
+  </div>
+</div>

@@ -1,0 +1,82 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+  <div *ngIf="step === 1">
+    <!-- Name -->
+    <div class="col-12">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="name" placeholder="" formControlName="name" required
+          [class.is-invalid]="userForm.get('name')!.invalid && userForm.get('name')!.touched"
+          [class.is-valid]="userForm.get('name')!.valid && userForm.get('name')!.touched">
+        <label for="name" class="form-label">Name*</label>
+        <div *ngIf="userForm.get('name')!.invalid && userForm.get('name')!.touched" class="invalid-feedback">
+          Please provide a valid name.
+        </div>
+      </div>
+    </div>
+
+    <!-- Surname -->
+    <div class="col-12 mt-3">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="surname" placeholder="" formControlName="surname" required
+          [class.is-invalid]="userForm.get('surname')!.invalid && userForm.get('surname')!.touched"
+          [class.is-valid]="userForm.get('surname')!.valid && userForm.get('surname')!.touched">
+        <label for="surname" class="form-label">Surname*</label>
+        <div *ngIf="userForm.get('surname')!.invalid && userForm.get('surname')!.touched" class="invalid-feedback">
+          Please provide a valid surname.
+        </div>
+      </div>
+    </div>
+
+    <!-- Date of Birth -->
+    <div class="col-12 mt-3">
+      <div class="form-floating">
+        <input type="date" class="form-control" id="dob" placeholder="" formControlName="dob" required
+          [class.is-invalid]="userForm.get('dob')!.invalid && userForm.get('dob')!.touched"
+          [class.is-valid]="userForm.get('dob')!.valid && userForm.get('dob')!.touched">
+        <label for="dob" class="form-label">Date of Birth*</label>
+        <div *ngIf="userForm.get('dob')!.invalid && userForm.get('dob')!.touched" class="invalid-feedback">
+          Please provide a valid date of birth.
+        </div>
+      </div>
+    </div>
+
+    <!-- Next Button -->
+    <div class="d-grid gap-2 d-md-block mt-4">
+      <button type="button" class="btn btn-dark" (click)="onNextStep()"
+        [disabled]="!userForm.get('name')!.valid || !userForm.get('surname')!.valid || !userForm.get('dob')!.valid">Next</button>
+    </div>
+  </div>
+
+  <div *ngIf="step === 2">
+    <!-- Email -->
+    <div class="col-12 mt-3">
+      <div class="form-floating">
+        <input type="email" class="form-control" id="email" placeholder="" formControlName="email" required
+          [class.is-invalid]="userForm.get('email')!.invalid && userForm.get('email')!.touched"
+          [class.is-valid]="userForm.get('email')!.valid && userForm.get('email')!.touched">
+        <label for="email" class="form-label">Email*</label>
+        <div *ngIf="userForm.get('email')!.invalid && userForm.get('email')!.touched" class="invalid-feedback">
+          Please provide a valid email.
+        </div>
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div class="col-12 mt-3">
+      <div class="form-floating">
+        <input type="password" class="form-control" id="password" placeholder="" formControlName="password" required
+          [class.is-invalid]="userForm.get('password')!.invalid && userForm.get('password')!.touched"
+          [class.is-valid]="userForm.get('password')!.valid && userForm.get('password')!.touched">
+        <label for="password" class="form-label">Password*</label>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="d-grid gap-2  mt-4">
+      <button type="submit" class="btn btn-dark btn-lg mx-auto col-12 "
+        [disabled]="!userForm.get('email')!.valid || !userForm.get('password')!.valid">Sign Up</button>
+      <button type="button" class="btn btn-outline-dark btn-lg col-12" (click)="onPreviousStep()">Back</button>
+    </div>
+  </div>
+
+</form>

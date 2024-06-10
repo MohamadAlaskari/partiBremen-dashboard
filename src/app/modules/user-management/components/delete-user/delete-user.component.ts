@@ -11,7 +11,7 @@ import { UserManagementService } from '../../services/user-management-service/us
   styleUrl: './delete-user.component.scss',
 })
 export class DeleteUserComponent {
-  title: string = 'Delete User';
+  title: string = 'Delete Profile';
   user!: User;
   id: string | null = null;
   userFormSubmitted: boolean = false;

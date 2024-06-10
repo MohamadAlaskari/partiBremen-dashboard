@@ -12,7 +12,7 @@
     object-fit: cover;
     width: 40px;
     height: 40px;
-     font-variant: small-caps;
+    font-variant: small-caps;
   }
 }
 
@@ -22,14 +22,13 @@
   aspect-ratio: 16 / 9;
   object-fit: cover;
 }
-.poi-card{
+.poi-card {
   opacity: 0.9;
   transition: all 0.3s ease;
-  &:hover{
+  &:hover {
     cursor: pointer;
     opacity: 1;
     scale: 1.01;
-
   }
 }
 
@@ -39,12 +38,21 @@
   align-items: center;
   text-align: center;
 }
-
+.vote-container-box {
+  transition: all 0.4s ease-in;
+  &:hover {
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+  }
+}
 .vote-svg {
   font-weight: bold;
 }
+
 
 .vote-text {
   font-variant: small-caps;
   font-weight: bold;
 }
+

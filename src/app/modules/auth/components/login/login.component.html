@@ -1,62 +1,34 @@
-<div class="login-section">
-  <div class="left">
-    <div class="overlay">
-      <h1>Parti Bremen Dashboard</h1>
-      <p>Willkommen beim Parti Bremen Dashboard. Diese Verwaltungsplattform ist ausschließlich für Administratoren und
-        Moderatoren gedacht, um Projekte effizient zu verwalten und den Überblick über alle Aktivitäten zu behalten!
-
-      </p>
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+  <div *ngIf="loginForm.invalid && userFormSubmitted" class="alert alert-danger">
+    Please correct the errors in the form before submitting.
+  </div>
+  <!-- Email -->
+  <div class="col-12">
+    <div class="form-floating">
+      <input type="email" class="form-control" id="email" placeholder="" formControlName="email"
+        autocomplete="current-Email"
+        [class.is-invalid]="loginForm.get('email')!.invalid && loginForm.get('email')!.touched"
+        [class.is-valid]="loginForm.get('email')!.valid && loginForm.get('email')!.touched">
+      <label for="email" class="form-label">Email*</label>
+      <div *ngIf="loginForm.get('email')!.invalid && loginForm.get('email')!.touched" class="invalid-feedback">
+        Please provide a valid email.
+      </div>
     </div>
   </div>
 
-  <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="right">
-    <h1 class="login-title-right">Login</h1>
-    <p class="opacity-75">Bitte melden Sie sich an, um auf das Admin-Dashboard zuzugreifen. Nur Administratoren und
-      Moderatoren haben
-      Zugang zu diesem Bereich
-
-    </p>
-    @if (loginForm.invalid && userFormSubmitted) {
-    <div class="alert alert-danger">
-      Please correct the errors in the form before submitting.
-    </div>
-    }
-    <!--Email-->
-    <div class="col-12">
-      <div class="form-floating">
-        <input type="email" class="form-control" id="email" placeholder="" formControlName="email"
-          autocomplete="current-Email" Email
-          [class.is-invalid]="loginForm.get('email')!.invalid && loginForm.get('email')!.touched  "
-          [class.is-valid]="loginForm.get('email')!.valid && loginForm.get('email')!.touched  ">
-        <label for="email" class="form-label">Email*</label>
-        @if ((loginForm.get('email')!.invalid && loginForm.get('email')!.touched) ) {
-        <div class="invalid-feedback">
-          Please provide a valid email.
-        </div>
-        }
+  <!-- Password -->
+  <div class="col-12 mt-3">
+    <div class="form-floating">
+      <input type="password" class="form-control" id="password" placeholder="" formControlName="password"
+        autocomplete="current-password"
+        [class.is-invalid]="loginForm.get('password')!.invalid && loginForm.get('password')!.touched"
+        [class.is-valid]="loginForm.get('password')!.valid && loginForm.get('password')!.touched">
+      <label for="password" class="form-label">Password*</label>
+      <div *ngIf="loginForm.get('password')!.invalid && loginForm.get('password')!.touched" class="invalid-feedback">
+        Please provide a valid password.
       </div>
     </div>
+  </div>
 
-    <!--Password-->
-    <div class="col-12 mt-3">
-      <div class="form-floating">
-        <input type="password" class="form-control" id="password" placeholder="" formControlName="password"
-          autocomplete="current-password"
-          [class.is-invalid]="loginForm.get('password')!.invalid && loginForm.get('password')!.touched  "
-          [class.is-valid]="loginForm.get('password')!.valid && loginForm.get('password')!.touched  ">
-        <label for="password" class="form-label">Password*</label>
-        @if ((loginForm.get('password')!.invalid && loginForm.get('password')!.touched) ) {
-        <div class="invalid-feedback">
-          Please provide a valid password.
-        </div>
-        }
-      </div>
-    </div>
-
-
-    <br>
-
-    <button type="submit" class="btn btn-dark btn-lg mx-auto col-12">Login</button>
-  </form>
-
-</div>
+  <button type="submit" class="btn btn-dark btn-lg mx-auto col-12 mt-3">Login</button>
+</form>

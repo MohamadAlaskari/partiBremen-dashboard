@@ -1,0 +1,113 @@
+.card-img-top {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.map-cursor {
+  cursor: url("https://cdn-icons-png.flaticon.com/512/3082/3082383.png"), auto;
+}
+.replink {
+  text-decoration: none;
+  font-size: 13px;
+  color: red;
+}
+.selected {
+  /* Define your styles for the selected link */
+  color: #5c9bdf;
+  /* Add any other styles you want to apply */
+}
+.reportform {
+  position: relative; /* Ensure relative positioning for absolute positioning of close button */
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  z-index: 1; /* Ensure close button is on top of form */
+}
+
+.close-btn span {
+  font-size: 20px;
+  color: #aaa;
+}
+
+.close-btn:hover span {
+  color: #555;
+}
+
+.reportform form {
+  padding-top: 30px; /* Add some space for the close button */
+}
+
+.report-title,
+.report-details {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  resize: none;
+  width: 100%; /* Make input fields take up full width */
+  box-sizing: border-box; /* Include padding and border in width calculation */
+}
+
+.submit-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 14px;
+  background-color: #007bff;
+  color: #fff;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+.inline-container {
+  white-space: nowrap;
+  font-size: 15px;
+  margin-bottom: 15px;
+  color: red;
+}
+
+.inline-container p {
+  display: inline;
+  margin-right: 5px;
+}
+
+// voting
+.vote-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.vote-container-box {
+  transition: all 0.4s ease-in;
+  &:hover {
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+  }
+}
+.vote-svg {
+  font-weight: bold;
+}
+
+.vote-text {
+  font-variant: small-caps;
+  font-weight: bold;
+}

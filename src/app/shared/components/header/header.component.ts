@@ -1,9 +1,16 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Output,
+  EventEmitter,
+  HostListener,
+  ElementRef,
+  Renderer2,
+} from '@angular/core';
 
 import { Router } from '@angular/router';
 import { AuthService } from '../../../modules/auth/services/auth.service';
 import { ToastService } from '../../services/toast.service';
-import {User} from "../../../core/models/partiBremen.model";
+import { User } from '../../../core/models/partiBremen.model';
 
 @Component({
   selector: 'app-header',
@@ -13,22 +20,43 @@ import {User} from "../../../core/models/partiBremen.model";
 export class HeaderComponent {
   @Output() toggleNotifications = new EventEmitter<void>();
   @Output() sidebarToggled = new EventEmitter<void>();
-  onClickToggleNotifications() {
-    this.toggleNotifications.emit();
-  }
-  toggleSidebar() {
-    this.sidebarToggled.emit();
-  }
+
   title = 'Parti Bremen';
   currentUser: User | null = null;
   darkMode: boolean = false;
+  isDropdownOpen = false;
+
   constructor(
     private authService: AuthService,
     private toastService: ToastService,
-    private _router: Router
+    private _router: Router,
+    private el: ElementRef
   ) {}
+
+  onClickToggleNotifications() {
+    this.toggleNotifications.emit();
+  }
+
+  toggleSidebar() {
+    this.sidebarToggled.emit();
+  }
+
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
+  }
+
+  ngAfterContentInit(): void {
+    this.currentUser = this.authService.getCurrentUser();
+  }
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent) {
+    if (!this.el.nativeElement.contains(event.target)) {
+      this.isDropdownOpen = false;
+    }
   }
   logout(): void {
     if (this.currentUser) {

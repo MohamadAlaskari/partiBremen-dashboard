@@ -48,15 +48,17 @@
       </span>
       {{ user.dob | date:'dd MMM yyyy' }}
     </p>
+    @if (user.role =='ADMIN' || user.role =='MODERATOR') {
+
     <p class="card-text text-secondary small mb-1">Created at: {{ user.createdAt | date:'dd MMM yyyy, HH:mm' }}</p>
     <p class="card-text text-secondary small mb-1">User ID: {{ user.id }}</p>
     <span class="badge mb-3" [ngClass]="user.active ? 'bg-success' : 'bg-danger'">
       {{ user.active ? 'Active' : 'Inactive' }}
     </span>
     <span class="badge mb-3 ms-2" [ngClass]="{
-      'bg-success': user.blockStatus === '' || user.blockStatus === 'UNBLOCKED',
-      'bg-danger': user.blockStatus === 'BLOCKED' || user.blockStatus === 'PERMANENTLY_BLOCKED'
-    }">
+       'bg-success': user.blockStatus === '' || user.blockStatus === 'UNBLOCKED',
+       'bg-danger': user.blockStatus === 'BLOCKED' || user.blockStatus === 'PERMANENTLY_BLOCKED'
+     }">
       {{ user.blockStatus === '' || user.blockStatus === 'UNBLOCKED' ? 'unblocked' : 'Blocked' }}
     </span>
     <p class="card-text text-secondary small mb-1" *ngIf="user.blockStatus === 'BLOCKED' && user.blockUntilDatum">
@@ -65,6 +67,13 @@
     <p class="card-text text-secondary small mb-1" *ngIf="user.blockStatus === 'PERMANENTLY_BLOCKED'">
       Blocked Permanently
     </p>
-    <app-state-counter *ngIf="counters" [states]="counters"></app-state-counter>
+    }
+
+
+    <div class="mt-4">
+
+      <app-state-counter *ngIf="counters" [states]="counters"></app-state-counter>
+    </div>
+
   </div>
 </div>

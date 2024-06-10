@@ -1,0 +1,50 @@
+.avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #eea8a8;
+  color: #333;
+  font-size: 1em;
+  font-weight: bold;
+  // margin-right: 16px;
+  img {
+    border-radius: 50%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    width: 40px;
+    height: 40px;
+    font-variant: small-caps;
+  }
+}
+
+.card-img-top {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.poi-card {
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  &:hover {
+    cursor: pointer;
+    opacity: 1;
+    scale: 1.01;
+    border:1px solid #333
+  }
+}
+
+.vote-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.vote-svg {
+  font-weight: bold;
+}
+
+.vote-text {
+  font-variant: small-caps;
+  font-weight: bold;
+}

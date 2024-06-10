@@ -12,7 +12,7 @@ This project läuft auf folgenden URL von branch master: https://parti-bremen-da
 
 ## Deployment URL für Development branch
 
-This project läuft auf folgenden URL von branch Development: parti-bremen-dashboard-git-development-mo-alaskaris-projects.vercel.app
+This project läuft auf folgenden URL von branch Development: https://parti-bremen-dashboard-git-development-mo-alaskaris-projects.vercel.app
 
 ## swagger URL
 

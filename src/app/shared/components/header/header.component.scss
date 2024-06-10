@@ -1,3 +1,16 @@
+.profile-btn {
+  background-color: #ececec;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.icon-logo {
+  width: 28px;
+  height: 28px;
+}
+
 .app {
   &-header {
     display: flex;
@@ -40,6 +53,7 @@
 .add-btn,
 .notification-btn,
 .logout-btn,
+.home-btn,
 .messages-btn {
   color: var(--font-color-primary);
   background-color: transparent;
@@ -65,7 +79,10 @@
   background-color: var(--button-bg);
   color: #fff;
 }
-
+.active {
+  background-color: var(--button-bg);
+  color: #fff;
+}
 .profile-btn {
   padding: 0;
   border: 0;

@@ -4,7 +4,7 @@ import { ApiService } from '../../../core/Services/api.service';
 import { environment } from '../../../../environment';
 import { MatTableDataSource } from "@angular/material/table";
 import { CounterState } from "../../../shared/components/state-counter/state-counter.component";
-import {Poi, User} from "../../../core/models/partiBremen.model";
+import {Poi, Report} from "../../../core/models/partiBremen.model";
 
 @Injectable({
   providedIn: 'root',
@@ -59,10 +59,12 @@ export class PoiManagementService {
   }
 
   deletePoi(poiId: string): Observable<Poi> {
+    console.log(poiId)
     return this.apiService.delete<any>(
       `${this.poiEndpoints.delete}/${poiId}`
     );
   }
+
 
   getComments(id: string) {
 

@@ -1,23 +1,27 @@
+<app-section-header [title]="pageTitle" time=""></app-section-header>
+
+
+
 <div>
   <div class="row">
-    <div class="col-md-6">
-
-    </div>
-    <div class="col-md-6">
+    <div class="col-md-12">
       <div class="mb-3 d-flex gap-2">
         <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search...">
-        <button class="btn btn-dark mx-auto" type="button">
+        <button data-bs-toggle="modal" data-bs-target="#addPoiModal" id="mapButton" class="btn btn-dark mx-auto"
+          type="button" data-toggle="tooltip" title="Click to indicate location on map">
           <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
             fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
             class="feather feather-plus">
             <line x1="12" y1="5" x2="12" y2="19" />
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
-
         </button>
+        <!-- Button trigger modal -->
+
+
 
       </div>
-      <div id="map" style="height: 450px;"></div>
+      <app-map [pois]="pois" [height]="400" (selectedPoi)="onMarkerClick($event)"></app-map>
 
     </div>
   </div>
@@ -26,10 +30,37 @@
 
 
 
+<!-- POis cards-->
+<div class="row mt-3 border-top-3">
+  <div class="col-12">
+    <div class="row">
+      <app-section-header title="User POIs" time=""></app-section-header>
+      @if (pois ) {
 
 
-<!-- Modal -->
-<div class="modal fade" tabindex="-1">
+      @for (poi of pois; track poi.id) {
+      <div class="col-md-3 mb-3">
+        <app-poi-card [poi]="poi" (poiSelected)="selectPoi($event)"></app-poi-card>
+
+      </div>
+      }@empty {
+      <p>This user doesn't have any POIs yet!</p>
+      }
+
+      }@else {
+      <p>This user doesn't have any POIs yet!</p>
+
+      }
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!--map poi Modal -->
+<div #poiModal class="modal fade" tabindex="-1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       @if (selectedPoi ) {
@@ -38,7 +69,9 @@
       <div class="modal-header">
         <div class="comment-box d-flex align-items-start p-2 w-100">
 
-          <h5 class="modal-title" id="poiModalLabel">{{ selectedPoi.creator.name }} {{ selectedPoi.creator.surname }}
+          <h5 class="modal-title" id="poiModalLabel">{{ selectedPoi.creator.name }} {{ selectedPoi.creator.surname }} <a
+              class="replink" (click)="selectReport('user', selectedPoi.creator.id,selectedPoi.creator.name)"
+              [class.selected]="selectedReportType === 'user'">report user</a>
           </h5>
 
 
@@ -52,34 +85,51 @@
 
           <!-- POI Details Section -->
           <div class="col-md-6">
-            <img
-              [src]="'https://images.unsplash.com/photo-1542386649-58d7ed0249bf?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YnJlbWVufGVufDB8fDB8fHww'"
-              class="img-fluid mb-3 card-img-top" alt="POI image">
+            <img [src]="selectedPoi.img" class="img-fluid mb-3 card-img-top" alt="POI image">
+
             <h5 class="modal-title" id="poiModalLabel">{{ selectedPoi.titel }}</h5>
             <p>{{ selectedPoi.description }}</p>
             <p class="text-secondary small">{{ selectedPoi.createdAt | date:'dd MMM yyyy, HH:mm' }}</p>
-            <div class="d-flex justify-content-between">
-              <div class="d-flex align-items-center svg-bold">
+            <small class="text-secondary">
+              <a class="replink" (click)="selectReport('poi', selectedPoi.id,selectedPoi.titel)"
+                [class.selected]="selectedReportType === 'poi'">report poi</a>
+            </small>
+
+            <!--Voting section-->
+            <div class="d-flex justify-content-between border border-2 rounded-3">
+
+              <!--Voting up-->
+              <div (click)="vote(selectedPoi.id, 'UP')"
+                class="d-flex justify-content-center align-items-center svg-bold w-50 vote-container-box rounded-2 p-1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                  class="bi bi-arrow-up vote-svg" viewBox="0 0 16 16">
+                  class="bi bi-arrow-up vote-svg  " viewBox="0 0 16 16">
                   <path fill-rule="evenodd"
                     d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5" />
                 </svg>
                 <span class="small-caps-bold">{{ getVoteCount(selectedPoi.id || '', 'UP') }} up</span>
               </div>
-              <div class="d-flex align-items-center svg-bold">
+
+              <span class="opacity-50 px-1">|</span>
+
+              <!--Voting Down-->
+              <div (click)="vote(selectedPoi.id, 'DOWN')"
+                class="d-flex justify-content-center align-items-center svg-bold w-50  vote-container-box rounded-2 p-1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                  class="bi bi-arrow-down vote-svg" viewBox="0 0 16 16">
+                  class="bi bi-arrow-down vote-svg  " viewBox="0 0 16 16">
                   <path fill-rule="evenodd"
                     d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1" />
                 </svg>
                 <span class="small-caps-bold">{{ getVoteCount(selectedPoi.id || '', 'DOWN') }} down</span>
               </div>
             </div>
+
+
+
+            <!--voting-->
+
           </div>
 
           <!-- Comments Section -->
-
           <div class="col-md-6">
             <h5>Comments</h5>
             <div class="comment-list overflow-auto" style="max-height: 400px;">
@@ -95,11 +145,12 @@
                   <h6 class="text-dark mb-0">{{comment.commenter.name}} {{comment.commenter.surname}}</h6>
                   <p class="small">{{ comment.actualcomment }}</p>
                   <small class="text-secondary">{{ comment.createdAt | date:'dd MMM yyyy, HH:mm' }}</small>
+                  <small class="text-secondary">
+                    <a class="replink" (click)="selectReport('comment', comment.id,comment.commenter.name)"
+                      [class.selected]="selectedReportItemId === comment.id">report comment</a>
+                  </small>
                 </div>
               </div>
-
-              <!--add comment-->
-
               }@empty {
               <p class="opacity-50">no comments vorhanden yet!</p>
               }
@@ -108,10 +159,10 @@
 
             <!--add comment-->
             <div class="input-group mb-3">
-              <input type="text" #commentText placeholder="Add a comment" class="form-control"
+              <input #commentInput type="text" #commentText placeholder="Add a comment" class="form-control"
                 aria-label="Recipient's username" aria-describedby="button-addon2">
-              <button (click)="addComment(selectedPoi.id || '', commentText.value || '')"
-                class="btn btn-outline-secondary" type="button" id="button-addon2">
+              <button (click)="addComment(selectedPoi.id || '', commentInput.value || '', commentInput)"
+                class=" btn btn-outline-secondary" type="button" id="button-addon2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                   class="bi bi-play-fill" viewBox="0 0 16 16">
                   <path
@@ -119,6 +170,27 @@
                 </svg>
               </button>
             </div>
+            <div class="reportform" *ngIf="selectedReportType">
+              <form [formGroup]="reportForm" (ngSubmit)="Submitreport()">
+                <div class="inline-container">
+                  <p>You are reporting on: </p>
+                  <p *ngIf="selectedReportType === 'comment'">{{title}} comment</p>
+                  <p *ngIf="selectedReportType === 'poi'">this poi "{{title}}"</p>
+                  <p *ngIf="selectedReportType === 'user'">{{title}}</p>
+                </div>
+
+                <input formControlName="title" type="text" placeholder="Report title..." class="report-title">
+                <textarea formControlName="kommentar" placeholder="Report details..." class="report-details"></textarea>
+
+                <button type="button" class="close-btn" (click)="closeForm()">
+                  <span>&times;</span> <!-- Close icon -->
+                </button>
+
+                <button class="submit-btn" type="submit">Submit</button>
+              </form>
+            </div>
+
+
 
           </div>
         </div>
@@ -132,6 +204,66 @@
       </div>
       }
 
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Add New POI Modal -->
+<div class="modal fade" id="addPoiModal" tabindex="-1" aria-labelledby="addPoiModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addPoiModalLabel">Create new POI</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Step 1: Select Place -->
+        <div *ngIf="currentStep === 1">
+          <div class="map-container" id="map" style="height: 400px;"></div>
+          <button type="button" class="btn btn-primary mt-3" (click)="goToNextStep()">Next</button>
+        </div>
+        <!-- Step 2: Enter Details -->
+        <div *ngIf="currentStep === 2">
+          <form [formGroup]="formData" (ngSubmit)="submitForm()">
+            <div class="col-12">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="titel" placeholder="" formControlName="titel"
+                  autocomplete="current-titel"
+                  [class.is-invalid]="formData.get('titel')!.invalid && formData.get('titel')!.touched"
+                  [class.is-valid]="formData.get('titel')!.valid && formData.get('titel')!.touched">
+                <label for="titel" class="form-label">Titel*</label>
+                <div *ngIf="formData.get('titel')!.invalid && formData.get('titel')!.touched" class="invalid-feedback">
+                  Please provide a valid titel.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 mt-3">
+              <div class="form-floating">
+                <textarea class="form-control" rows="20" cols="50" placeholder="Leave a comment here"
+                  id="floatingTextarea" formControlName="description" style="height: 280px;"
+                  [class.is-invalid]="formData.get('description')!.invalid && formData.get('description')!.touched"
+                  [class.is-valid]="formData.get('description')!.valid && formData.get('description')!.touched"></textarea>
+                <label for="floatingTextarea">Description</label>
+                <div *ngIf="formData.get('description')!.invalid && formData.get('description')!.touched"
+                  class="invalid-feedback">
+                  Please provide a valid description.
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-dark btn-lg mx-auto col-12 mt-3">Add new POI</button>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="goToPreviousStep()"
+          *ngIf="currentStep > 1">Back</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
 </div>

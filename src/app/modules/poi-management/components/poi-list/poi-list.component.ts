@@ -1,11 +1,9 @@
 // poi-list.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { PoiManagementService } from '../../services/poi-management.service';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { Router } from '@angular/router';
-import {Poi} from "../../../../core/models/partiBremen.model";
 
 @Component({
   selector: 'app-poi-list',
@@ -15,6 +13,7 @@ import {Poi} from "../../../../core/models/partiBremen.model";
 export class PoiListComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   protected title_poiManagment: string = 'POI Management';
+  dropdownStates: boolean[] = [];
 
   constructor(
     protected poiManagementService: PoiManagementService,
@@ -33,9 +32,20 @@ export class PoiListComponent implements OnInit, OnDestroy {
           this.poiManagementService.pois = pois;
           this.poiManagementService.dataSource.data = pois;
           this.poiManagementService.updateCounters();
+          pois.forEach(() => this.dropdownStates.push(false));
         },
         error: (err) => console.error('Error loading POIs:', err),
       })
+    );
+  }
+
+  toggleDropdown(index: number): void {
+    // Toggle only the dropdown of the specified index
+    this.dropdownStates[index] = !this.dropdownStates[index];
+
+    // Optional: Close all other dropdowns
+    this.dropdownStates = this.dropdownStates.map((state, i) =>
+      i === index ? state : false
     );
   }
 
@@ -56,5 +66,35 @@ export class PoiListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+
+  deletePoi(poiId : string): void {
+    if (!poiId) {
+      console.error('POI ID is missing, cannot delete');
+      return;
+    }
+    this.subscriptions.add(
+      this.poiManagementService.deletePoi(poiId).subscribe({
+        next: () => {
+          this.getPois();
+          this.toastService.show(
+            'success',
+            'Success',
+            'POI deleted successfully'
+          );
+        },
+        error: (error) => {
+          this.toastService.show(
+            'error',
+            'Error',
+            `Error deleting POI: ${error.message}`
+          );
+        },
+      })
+    );
+  }
+
+  closeDropdown() {
+    this.poiManagementService.pois.forEach(() => this.dropdownStates.push(false));
   }
 }

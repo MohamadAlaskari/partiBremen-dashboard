@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './update-user.component.scss',
 })
 export class UpdateUserComponent {
-  title: string = 'Update User';
+  title: string = 'Edit Profile';
   user!: User;
   id: string | null = null;
   userForm!: FormGroup;

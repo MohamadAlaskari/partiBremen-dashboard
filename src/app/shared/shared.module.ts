@@ -20,6 +20,7 @@ import { ReportNotificationsComponent } from './components/report-notifications/
 import { MapComponent } from './components/map/map.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { PoiModalComponent } from './components/poi-modal/poi-modal.component';
+import { PoiCardComponent } from './components/poi-card/poi-card.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { PoiModalComponent } from './components/poi-modal/poi-modal.component';
     ReportNotificationsComponent,
     MapComponent,
     UserProfileComponent,
-    PoiModalComponent
+    PoiModalComponent,
+    PoiCardComponent,
   ],
   imports: [
     CommonModule,
@@ -59,6 +61,8 @@ import { PoiModalComponent } from './components/poi-modal/poi-modal.component';
     ReportNotificationsComponent,
     MapComponent,
     UserProfileComponent,
+    PoiCardComponent,
+    PoiModalComponent,
   ],
   providers: [ToastService],
 })

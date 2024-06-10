@@ -7,6 +7,7 @@ import {CounterState} from "../../../../shared/components/state-counter/state-co
 import {SurveyManagementService} from "../../services/survey-management.service";
 import {ApiService} from "../../../../core/Services/api.service";
 import {environment} from "../../../../../environment";
+import {ToastService} from "../../../../shared/services/toast.service";
 
 @Component({
   selector: 'app-poi-surveys',
@@ -15,28 +16,33 @@ import {environment} from "../../../../../environment";
 })
 export class SurveyListComponent {
   private subscriptions: Subscription = new Subscription();
-  private id: string | null = ''
+  private id: string | null = null
   private currentPoiSubject = new BehaviorSubject<any>(null);
   protected title_surveyManagment: string = "Survey Management";
+  dropdownStates: boolean[] = [];
 
   constructor(
     protected surveyManagementService: SurveyManagementService,
     private router: Router,
     private route: ActivatedRoute,
-    private apiService: ApiService,
+    private toastService: ToastService,
   ) {}
 
-    ngOnInit() {
-        this.route.paramMap.subscribe((params) => {
-            this.id = params.get('id');
-            if (this.id) {
-                this.loadSurveys(this.id);
-            } else {
-                this.getAllSurveys();
-                this.surveyManagementService.updateCounters();
-            }
-        });
+  ngOnInit() {
+    this.route.paramMap.subscribe((params) => {
+       this.id = params.get('id');
+       this.setTabelle()
+    });
+  }
+
+  private setTabelle() {
+    if (this.id) {
+      this.loadSurveys(this.id);
+    } else {
+      this.getAllSurveys();
+      this.surveyManagementService.updateCounters();
     }
+  }
 
   searchTerm: string = '';
 
@@ -53,6 +59,27 @@ export class SurveyListComponent {
     this.router.navigate(['poi-management/survey-anzeige', id]);
   }
 
+  deleteSurvey(surveyId : string): void {
+    if (!surveyId) {
+      console.error('POI ID is missing, cannot delete');
+      return;
+    }
+    this.subscriptions.add(
+      this.surveyManagementService.deleteSurvey(surveyId).subscribe({
+        next: () => {
+          this.setTabelle();
+        },
+        error: (error) => {
+          this.toastService.show(
+            'error',
+            'Error',
+            `Error deleting POI: ${error.message}`
+          );
+        },
+      })
+    );
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
@@ -61,6 +88,7 @@ export class SurveyListComponent {
     this.surveyManagementService.surveys = await this.getPoiSurveys(id)
     this.surveyManagementService.dataSource.data = this.surveyManagementService.surveys;
     this.surveyManagementService.updateCounters()
+    this.surveyManagementService.surveys.forEach(() => this.dropdownStates.push(false));
   }
 
   getAllSurveys() {
@@ -102,5 +130,19 @@ export class SurveyListComponent {
       console.error('Failed to load POI:', error);
       return []; // Return an empty array in case of an error
     }
+  }
+
+  expired(expiresAt: string): boolean {
+    return new Date(expiresAt) > new Date();
+  }
+
+  toggleDropdown(index: number): void {
+    // Toggle only the dropdown of the specified index
+    this.dropdownStates[index] = !this.dropdownStates[index];
+
+    // Optional: Close all other dropdowns
+    this.dropdownStates = this.dropdownStates.map((state, i) =>
+      i === index ? state : false
+    );
   }
 }

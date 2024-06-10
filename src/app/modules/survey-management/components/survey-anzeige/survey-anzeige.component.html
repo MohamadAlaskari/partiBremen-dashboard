@@ -2,15 +2,9 @@
   <form action="#" method="post" class="poi-form" *ngIf="this.currentSurvey">
     <div class="info-container">
       <p class="info-item"><span class="label">ID:</span> <span class="value">{{this.currentSurvey.id}}</span></p>
+      <p class="info-item"><span class="label">Titel:</span> <span class="value">{{this.currentSurvey.titel}}</span></p>
+      <p class="info-item"><span class="label">Description:</span> <span class="value">{{this.currentSurvey.beschreibung}}</span></p>
     </div>
-
-    <label for="input1">Name:</label><br>
-    <input type="text" id="input1" name="input1" [(ngModel)]="this.currentSurvey.titel"><br><br>
-
-    <label for="input4">Beschreibung:</label><br>
-    <textarea id="input4" name="input4" [(ngModel)]="this.currentSurvey.beschreibung" class="description-box"></textarea><br><br>
-
-    <br>
 
     <div class="flex-container" *ngIf="this.currentSurvey.creator">
       <p class="info-item"><span class="label">Creator:</span> <span class="value">{{this.currentSurvey.creator?.name + " " + this.currentSurvey.creator?.surname}}</span></p>
@@ -29,10 +23,6 @@
     </div>
 
     <br>
-
-    <br>
-
-    <button type="submit" (click)="updateSurvey()">Update</button>
     <button class="button alert tiny" (click)="deleteSurvey()">Delete</button>
   </form>
 </div>

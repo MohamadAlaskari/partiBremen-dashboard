@@ -7,10 +7,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastService } from '../../shared/services/toast.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
+import { SignupComponent } from './components/signup/signup.component';
+import { AuthComponent } from './components/auth/auth.component';
 
-@NgModule({ declarations: [LoginComponent],
-    exports: [LoginComponent], imports: [CommonModule,
-        AuthRoutingModule,
-        FormsModule,
-        ReactiveFormsModule], providers: [AuthService, ToastService, provideHttpClient(withInterceptorsFromDi())] })
+@NgModule({
+  declarations: [LoginComponent, SignupComponent, AuthComponent],
+  imports: [
+    CommonModule,
+    AuthRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+  ],
+  exports: [AuthComponent],
+  providers: [AuthService, ToastService],
+})
 export class AuthModule {}
