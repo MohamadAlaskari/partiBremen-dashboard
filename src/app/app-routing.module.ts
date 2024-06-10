@@ -54,8 +54,8 @@ const routes: Routes = [
       ),
     // canActivate: [AuthGuard],
   },
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
-  { path: '**', redirectTo: 'auth' }, // Fallback-Route
+  // { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  //  { path: '**', redirectTo: 'auth' }, // Fallback-Route
 ];
 
 @NgModule({

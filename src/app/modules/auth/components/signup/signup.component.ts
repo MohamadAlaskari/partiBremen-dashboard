@@ -26,7 +26,7 @@ export class SignupComponent {
       dob: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
-      role: new FormControl('User', Validators.required), // Set default value to "User"
+      role: new FormControl('USER', Validators.required), // Set default value to "User"
     });
   }
 

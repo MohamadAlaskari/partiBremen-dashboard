@@ -72,10 +72,10 @@
     </div>
 
     <!-- Buttons -->
-    <div class="d-grid gap-2 d-md-block mt-4">
-      <button type="button" class="btn btn-outline-dark me-2" (click)="onPreviousStep()">Back</button>
-      <button type="submit" class="btn btn-dark"
+    <div class="d-grid gap-2  mt-4">
+      <button type="submit" class="btn btn-dark btn-lg mx-auto col-12 "
         [disabled]="!userForm.get('email')!.valid || !userForm.get('password')!.valid">Sign Up</button>
+      <button type="button" class="btn btn-outline-dark btn-lg col-12" (click)="onPreviousStep()">Back</button>
     </div>
   </div>
 
