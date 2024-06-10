@@ -1,11 +1,13 @@
 <div class="profile-box d-flex align-items-start p-2 w-100">
   <div class="avatar d-flex align-items-center justify-content-center rounded-circle">
-    <ng-container *ngIf="false; else initials">
-      <img [src]="" alt="profile image">
-    </ng-container>
-    <ng-template #initials>
-      <div class="initials">{{ getInitials(user.name, user.surname) }}</div>
-    </ng-template>
+    @if (user.img ) {
+
+    <img [src]="user.img" alt="profile image">
+    } @else {
+
+    <div class="initials">{{ getInitials(user.name, user.surname) }}</div>
+    }
+
   </div>
   <!-- Profile Details -->
   <div class="profile-content ps-2">
