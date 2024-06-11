@@ -1,3 +1,23 @@
+.avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #00000024;
+  color: #333;
+  font-size: 1em;
+  font-weight: bold;
+  // margin-right: 16px;
+  img {
+    border-radius: 50%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    width: 40px;
+    height: 40px;
+    font-variant: small-caps;
+  }
+}
+
+
+
 .card-img-top {
   width: 100%;
   height: auto;
