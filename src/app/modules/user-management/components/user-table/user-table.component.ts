@@ -3,6 +3,7 @@ import { UserBlockService } from '../../services/user-block/user-block.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastService } from '../../../../shared/services/toast.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-table',
@@ -50,36 +51,65 @@ export class UserTableComponent {
   }
 
   blockUser(userId: string) {
-    this.userBlockService.blockUser(userId).subscribe(
-      (response) => {
-        console.log('User blocked successfully', response);
-        this.toastService.show('success', 'Success', 'User blocked successfully');
-        this.router.navigate(['/user-management']);
-        window.location.reload();
-      },
-      (error) => {
-        console.error('Error unblocking user:', error);
-        this.toastService.show('error', 'Error', 'Failed to block user. Please try again later');
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to block this user !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userBlockService.blockUser(userId).subscribe(
+          (response) => {
+            console.log('User blocked successfully', response);
+            this.toastService.show('success', 'Success', 'User blocked successfully');
+            this.router.navigate(['/user-management']);
+            window.location.reload();
+          },
+          (error) => {
+            console.error('Error unblocking user:', error);
+            this.toastService.show('error', 'Error', 'Failed to block user. Please try again later');
+          }
+        );
       }
-    );
+    });
+
+
+
   }
 
   unblockUser(userId: string) {
-    this.userBlockService.unblockUser(userId).subscribe(
-      (response) => {
-        console.log('User unblocked successfully', response);
-        this.toastService.show('success', 'Success', 'User unblocked successfully');
-        this.router.navigate(['/user-management']);
-        window.location.reload();
-      },
-      (error) => {
-        console.error('Error unblocking user:', error);
-        this.toastService.show('error', 'Error', 'Failed to unblock user. Please try again later');
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to unblock this user !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userBlockService.unblockUser(userId).subscribe(
+          (response) => {
+            console.log('User unblocked successfully', response);
+            this.toastService.show('success', 'Success', 'User unblocked successfully');
+            this.router.navigate(['/user-management']);
+            window.location.reload();
+          },
+          (error) => {
+            console.error('Error unblocking user:', error);
+            this.toastService.show('error', 'Error', 'Failed to unblock user. Please try again later');
+          }
+        );
       }
-    );
+    });
+
   }
 
   onSubmit(): void {
+
     if (this.userForm.valid && this.selectedUserId) {
        const blockUntilDate = this.userForm.get('blockUntilDate')?.value;
 
