@@ -12,10 +12,7 @@
     <p><strong>CreatedAt:</strong> {{ comment.createdAt | date: "short" }}</p>
     <p><strong>UpdatedAt</strong> {{ comment.updatedAt | date: "short" }}</p>
     <br>
-    <h3>POI Details</h3>
-    <p><strong>ID:</strong> {{ comment.poi.titel }}</p>
-    <p><strong>Name:</strong> {{ comment.poi.titel }}</p>
 
-    <button class="button" (click)="goToUser(comment.commenter.id)">View Author</button>
-    <button class="button" (click)="goToPOI(comment.poi.id)">View POI</button>
+    <button class="button" (click)="goToUser(comment.commenter.id)">View User</button>
+    <!-- <button class="button" (click)="goToPOI(comment.poi.id)">View POI</button> -->
   </div>

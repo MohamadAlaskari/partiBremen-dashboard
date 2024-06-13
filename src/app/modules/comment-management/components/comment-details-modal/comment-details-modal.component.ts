@@ -37,7 +37,7 @@ export class CommentDetailsModalComponent implements OnInit {
     this.router.navigate(['/user-management/view-user', id]);
   }
 
-  goToPOI(poiId: string): void {
-    this.router.navigate(['poi-management/anzeige', poiId]);
-  }
+  // goToPOI(poiId: string): void {
+  //   this.router.navigate(['/poi-management/anzeige', poiId]);
+  // }
 }
