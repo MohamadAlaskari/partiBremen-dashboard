@@ -1,58 +1,58 @@
-// comment-management.component.scss
+/* comment-management.component.scss */
 
-.edit-comment-table {
+:root {
+  --search-bar-top-position: 185px;
+  --search-bar-right-margin: 20px;
+  --search-bar-padding: 5px 10px;
+  --search-bar-font-size: 14px;
+  --search-bar-border-radius: 4px;
+  --search-bar-border-color: gray;
+}
+
+div {
+  position: relative;
+}
+
+.search-container {
+  position: absolute;
+  right: var(--search-bar-right-margin);
+  top: var(--search-bar-top-position);
+  display: flex;
   align-items: center;
-  background-color: #FFFFFF;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: .25rem;
-  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
-  box-sizing: border-box;
-  color: rgba(0, 0, 0, 0.85);
-  cursor: pointer;
-  display: inline-flex;
-  font-family: system-ui,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  justify-content: center;
-  line-height: 1.25;
-  min-height: 2rem;
-  padding: calc(.5rem - 1px) calc(1.5rem - 1px);
-  text-decoration: none;
-  transition: all 250ms;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: baseline;
-  width: auto;
+  color: var(--light-font);
+  overflow: hidden;
+  border: 1px solid gray;
+  border-radius: 4px;
 }
 
-.edit-comment-table:hover,
-.edit-comment-table:focus {
-  border-color: rgba(0, 0, 0, 0.15);
-  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
-  color: rgba(0, 0, 0, 0.65);
+.search-input {
+  padding: var(--search-bar-padding);
+  font-size: var(--search-bar-font-size);
+  background-color: var(--search-area-bg);
+  color: var(--font-color-primary);
 }
 
-.edit-comment-table:hover {
-  transform: translateY(-1px);
+.search-input::placeholder {
+  color: var(--font-color-primary);
+  opacity: 0.6;
 }
 
-.edit-comment-table:active {
-  background-color: #F0F0F1;
-  border-color: rgba(0, 0, 0, 0.15);
-  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
-  color: rgba(0, 0, 0, 0.65);
-  transform: translateY(0);
+.feather.feather-search {
+  margin-right: 5px; /* Adjust for spacing between icon and input */
+  pointer-events: none; /* Makes sure the icon does not interfere with input events */
 }
 
-// Table styles
+/* Optionally style the rest of the table to ensure it adjusts to the search input positioning */
 table {
   width: 100%;
+  border-collapse: collapse;
+  margin-top: 50px;
 }
 
 th, td {
   text-align: center;
-  padding: 5px;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
 }
 
 .button {
@@ -66,14 +66,9 @@ th, td {
   line-height: 1.25rem;
   padding: .75rem 1rem;
   text-align: center;
-  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   cursor: pointer;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
-  -webkit-user-select: none;
-  -ms-touch-action: manipulation;
   touch-action: manipulation;
 }
 
@@ -86,10 +81,14 @@ th, td {
 }
 
 .button:focus-visible {
-  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
 .actualcomment {
   width: 20%;
+}
+
+.buttonColumn {
+  width: 1%;
+  text-align: center;
 }

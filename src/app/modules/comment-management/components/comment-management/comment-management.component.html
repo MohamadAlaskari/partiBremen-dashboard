@@ -3,28 +3,33 @@
 <div>
   <app-section-header [title]="title" time=""></app-section-header>
 
+  <div class="search-container">
+    <input class="search-input" type="text" placeholder="Search..." [(ngModel)]="searchTerm">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+        stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-search"
+        viewBox="0 0 24 24">
+      <defs></defs>
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="M21 21l-4.35-4.35"></path>
+    </svg>
+  </div>
+
   <table>
     <thead>
       <tr>
+        <th>Nr.</th>
         <th>Author</th>
         <th>Comment</th>
         <th>Created At</th>
         <th>Updated At</th>
-        <th>
-          <input class="search-input" type="text" placeholder="Search..." [(ngModel)]="searchTerm">
-
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
-               stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-search"
-               viewBox="0 0 24 24">
-            <defs></defs>
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="M21 21l-4.35-4.35"></path>
-          </svg>
+        <th class="buttonColumn"></th>
+        <th class="buttonColumn">
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let comment of filteredItems; trackBy: trackById">
+      <tr *ngFor="let comment of filteredItems; index as i; trackBy: trackById">
+        <td>{{ i + 1 }}</td>
         <td>{{ comment.commenter.name + " " + comment.commenter.surname }}</td>
         <td class="actualcomment">{{ comment.actualcomment }}</td>
         <td>{{ comment.createdAt | date: 'short' }}</td>
