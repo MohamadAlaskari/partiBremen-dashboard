@@ -67,12 +67,33 @@
 
 
       <div class="modal-header">
-        <div class="comment-box d-flex align-items-start p-2 w-100">
+        <div class=" d-flex align-items-start  w-100">
+          <div class="avatar bg-dark p-1 fw-bold small d-flex align-items-center justify-content-center rounded-circle">
+            @if(selectedPoi.creator.img){
+            <img [src]="selectedPoi.creator.img" alt="profile image">
+            }@else {
 
-          <h5 class="modal-title" id="poiModalLabel">{{ selectedPoi.creator.name }} {{ selectedPoi.creator.surname }} <a
-              class="replink" (click)="selectReport('user', selectedPoi.creator.id,selectedPoi.creator.name)"
-              [class.selected]="selectedReportType === 'user'">report user</a>
-          </h5>
+
+            <div class="initials text-white">
+              {{ getInitials(selectedPoi.creator.name, selectedPoi.creator.surname) }}
+            </div>
+            }
+          </div>
+
+
+          <div class="comment-content ps-2">
+            <h6 class="text-dark mb-0">{{selectedPoi.creator.name}} {{selectedPoi.creator.surname}} </h6>
+            <p class="small text-secondary">{{ selectedPoi.creator.role }}
+              <a class="replink" (click)="selectReport('user', selectedPoi.creator.id,selectedPoi.creator.name)"
+                [class.selected]="selectedReportType === 'user'">report user</a>
+            </p>
+          </div>
+
+
+
+
+
+
 
 
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -124,9 +145,6 @@
             </div>
 
 
-
-            <!--voting-->
-
           </div>
 
           <!-- Comments Section -->
@@ -136,11 +154,19 @@
               @for (comment of selectedPoi.comments; track comment.id) {
               <!--comments-->
               <div class="comment-box d-flex align-items-start p-2 w-100">
-                <div class="bg-dark p-1 fw-bold small d-flex align-items-center justify-content-center rounded-circle">
+                <div
+                  class="avatar bg-dark p-1 fw-bold small d-flex align-items-center justify-content-center rounded-circle">
+                  @if(comment.commenter.img){
+                  <img [src]="comment.commenter.img" alt="profile image">
+                  }@else {
+
+
                   <div class="initials text-white">
                     {{ getInitials(comment.commenter.name, comment.commenter.surname) }}
                   </div>
+                  }
                 </div>
+
                 <div class="comment-content ps-2">
                   <h6 class="text-dark mb-0">{{comment.commenter.name}} {{comment.commenter.surname}}</h6>
                   <p class="small">{{ comment.actualcomment }}</p>
@@ -170,6 +196,8 @@
                 </svg>
               </button>
             </div>
+
+            <!--report form-->
             <div class="reportform" *ngIf="selectedReportType">
               <form [formGroup]="reportForm" (ngSubmit)="Submitreport()">
                 <div class="inline-container">
