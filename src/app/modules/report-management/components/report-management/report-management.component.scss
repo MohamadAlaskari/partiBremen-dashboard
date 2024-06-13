@@ -611,3 +611,14 @@ margin-top: 20px;
 .comment-content small {
   color: #6c757d;
 }
+.widget-body {
+  cursor: pointer; /* Hand cursor on hover */
+  transition: background-color 0.2s ease; /* Smooth transition for background color */
+}
+
+.widget-body:active {
+  background-color: #e0e0e0; /* Change background color on click */
+}
+.widget-body:hover {
+  background-color: #f5f2f2; /* Change background color on click */
+}

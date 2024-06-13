@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, NgZone } from '@angular/core';
 import { ReportManagementService } from '../../services/report-management.service';
 import { Report, User ,Poi ,Comment } from '../../../../core/models/partiBremen.model';
 import { ActivatedRoute } from '@angular/router';
@@ -7,7 +7,7 @@ import { ToastService } from '../../../../shared/services/toast.service';
 import { UserManagementService } from '../../../user-management/services/user-management-service/user-management.service';
 import { CommentManagementService } from '../../../comment-management/services/comment-management.service';
 import { UserBlockService } from '../../../user-management/services/user-block/user-block.service';
-import { ChangeDetectorRef } from '@angular/core';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-report-management',
   templateUrl: './report-management.component.html',
@@ -50,7 +50,8 @@ export class ReportManagementComponent {
     private commentservice: CommentManagementService,
     private activateRoute: ActivatedRoute,
     private userBlockService: UserBlockService,
-    private cdr: ChangeDetectorRef,
+    private changeDetector: ChangeDetectorRef,
+    private ngZone: NgZone,
     private toastService: ToastService
   ) {}
   trackById(index: number, item: any): string {
@@ -59,10 +60,6 @@ export class ReportManagementComponent {
   ngOnInit() {
 
     this.extractIdFromRoute();
-    this.repcomment =null;
-    this.repuser =null;
-    this.reppoi =null;
-    this.Poi == null;
 
   }
   setuser(commentId: string, commenterId: string) {
@@ -78,6 +75,7 @@ export class ReportManagementComponent {
       this.activateRoute.paramMap.subscribe((params) => {
         this.id = params.get('id');
         if (this.id) {
+
           this.loadReport(this.id);
         }
       })
@@ -103,10 +101,14 @@ export class ReportManagementComponent {
   }
 
   private loadReport(reportId: string): void {
+
     this.subscriptions.add(
       this.reportService.getReportByReportId(reportId).subscribe({
         next: (report: Report) => {
           this.report = report;
+      if(this.report.status=='PENDING'){
+        this.updateReportStatusToReviewed(this.report);
+     }
           this.loadReporter(report.reporterId);
         },
         error: (error) => {
@@ -119,15 +121,33 @@ export class ReportManagementComponent {
         },
         complete: () => {
           if (this.report.reportedUserId) {
-            this.repcomment==null;
+
             this.loadReportsByReportedUserId(this.report.reportedUserId);
+            this.ngZone.run(() => {
+              this.repcomment = null;
+              this.reppoi= null;
+              this.changeDetector.detectChanges();
+            });
+            // Reset repcomment and ensure change detection picks it up
+
           }  if (this.report.reportedCommentId) {
+
             this.togglePoiSection();
             this.loadReportsByReportedCommentsId(this.report.reportedCommentId);
+            this.ngZone.run(() => {
+              this.reppoi = null;
+              this.changeDetector.detectChanges();
+            });
           }  if (this.report.reportedPoiId) {
+
             this.loadReportsByReportedPoiId(this.report.reportedPoiId, this.report.id);
             this.loadPoi(this.report.reportedPoiId);
             this.togglePoiSection();
+            this.ngZone.run(() => {
+              this.repcomment = null;
+              this.repuser= null;
+              this.changeDetector.detectChanges();
+            });
           }
         },
       })
@@ -153,13 +173,13 @@ export class ReportManagementComponent {
 
 
   private loadReportsByReportedUserId(reportedUserId: string) {
+
     this.repuser = reportedUserId;
-    this.cdr.detectChanges();
-    this.repuser = reportedUserId;
+
     this.subscriptions.add(
       this.reportService.getReportsByUserId(reportedUserId).subscribe({
         next: (reports: Report[]) => {
-          this.reports = reports;
+          this.reports = reports.filter(report => report.id !== this.report.id);
           // Toggle the reported section visibility here
           this.toggleReportedSection();
         },
@@ -213,7 +233,7 @@ this.reported =user;
     this.subscriptions.add(
       this.reportService.getReportsByCommentId(reportedCommentsId).subscribe({
         next: (reports: Report[]) => {
-          this.reports = reports;
+          this.reports = reports.filter(report => report.id !== this.report.id);;
           this.loadPoibycomment(reportedCommentsId);
         },
         error: (error) => {
@@ -263,6 +283,7 @@ this.reported =user;
             'Success',
             'Report status updated successfully'
           );
+          this.ngOnInit();
         },
         error: (error) => {
           console.log(
@@ -281,6 +302,7 @@ this.reported =user;
 
 
   updateReportStatusToReviewed(report: Report): void {
+
     if (report.status !== 'REVIEWED') {
       this.updateReportStatus(report.id, 'REVIEWED');
       this.reports.forEach(report => {
@@ -314,8 +336,14 @@ this.reported =user;
       this.reports.forEach(report => {
         if (report.status !== 'RESOLVED') {
           this.updateReportStatus(report.id, 'RESOLVED');
+
         }
       });
+      Swal.fire({
+        text: " Report RESOLVED successfully.",
+        icon: "success"
+      });
+
     }
   }
 
@@ -326,17 +354,36 @@ this.reported =user;
 
 
   blockuser(Id: string) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to block this user !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userBlockService.blockUser(Id).subscribe(
+          (response) => {
+            console.log('User blocked successfully', response);
 
-    this.userBlockService.blockUser(Id).subscribe(
-      (response) => {
-        console.log('User blocked successfully', response);
-        this.toastService.show('success', 'Success', 'User blocked successfully');
-      },
-      (error) => {
-        console.error('Error unblocking user:', error);
-        this.toastService.show('error', 'Error', 'Failed to block user. Please try again later');
+            this.toastService.show(
+              'success',
+              'Success',
+              'User blocked successfully.'
+            );
+            this.updateReportStatusToResolved(this.report);
+
+          },
+          (error) => {
+            this.toastService.show('error', 'Error', 'Failed to block user. Please try again later');
+          }
+        );
       }
-    );
+    });
+
+
 
 
   }
@@ -344,19 +391,35 @@ this.reported =user;
   throw new Error('Method not implemented.');
   }
   deletecomment(id: string) : void {
-    this.commentservice.deleteComment(id).subscribe({
-      next: () => {
-        this.toastService.show(
-          'success',
-          'Success',
-          'comment deleted successfully'
-        );
-
-      },
-      error: (err) => {
-        this.toastService.show('error', 'Error', 'Failed to delete comment');
-      },
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to delete this comment !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.commentservice.deleteComment(id).subscribe({
+          next: () => {
+            this.toastService.show(
+              'success',
+              'Success',
+              'comment deleted successfully'
+            );
+            this.updateReportStatusToResolved(this.report);
+          },
+          error: (err) => {
+            this.toastService.show('error', 'Error', 'Failed to delete comment');
+          },
+        });
+      }
     });
+
+
+
+
   }
 
 

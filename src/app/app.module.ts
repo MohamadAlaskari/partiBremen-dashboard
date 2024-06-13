@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import {
   BrowserModule,
   provideClientHydration,
 } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
@@ -28,6 +28,7 @@ import { HomeModule } from './modules/home/home.module';
     UserManagementModule,
     PoiManagementModule,
     ReportManagementModule,
+    SweetAlert2Module.forRoot(),
     HomeModule,
     MatIconModule,
     AppRoutingModule,
