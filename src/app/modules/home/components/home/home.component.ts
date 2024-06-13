@@ -1,6 +1,7 @@
 import {
   ChangeDetectorRef,
   Component,
+  HostListener,
   ElementRef,
   ViewChild,
 } from '@angular/core';
@@ -29,8 +30,10 @@ export class HomeComponent {
   selectedReportType: string = '';
   selectedReportItemId: any;
   pageTitle: string = 'Home';
+  dropdownOpen = false;
+  dropdowncommentOpen =false;
   title: string = '';
-  selectedPoi: Poi | null = null; // Initialize as null
+    selectedPoi: Poi | null = null; // Initialize as null
   @ViewChild('poiModal') poiModal!: ElementRef;
   @ViewChild('mapButton', { static: true })
   mapButton?: ElementRef<HTMLButtonElement>;
@@ -67,6 +70,54 @@ export class HomeComponent {
   goToPreviousStep(): void {
     this.currentStep--;
   }
+
+  dropdownStates: Map<string, boolean> = new Map(); // Initialize dropdown states map
+  lastOpenedCommentId: string | null = null; // Track the last opened comment ID
+
+  toggleDropdowncomment(comment: Comment): void {
+    const commentId = comment.id;
+    if (commentId) {
+      if (this.lastOpenedCommentId && this.lastOpenedCommentId !== commentId) {
+        this.dropdownStates.set(this.lastOpenedCommentId, false); // Close the previously opened dropdown
+      }
+      const currentState = this.dropdownStates.get(commentId) || false;
+      this.dropdownStates.set(commentId, !currentState);
+      this.lastOpenedCommentId = commentId; // Update last opened comment ID
+    }
+  }
+  @HostListener('document:click', ['$event'])
+closeDropdownIfNotClickedInside(event: MouseEvent): void {
+  let clickedInsideDropdown = false;
+
+  // Check if click is inside any dropdown
+  document.querySelectorAll('.dropdown').forEach(element => {
+    if (element.contains(event.target as Node)) {
+      clickedInsideDropdown = true;
+    }
+  });
+
+  // Close dropdowns if click is outside
+  if (!clickedInsideDropdown) {
+    this.dropdownStates.forEach((value, key) => {
+      if (value) {
+        this.dropdownStates.set(key, false);
+      }
+    });
+  }
+}
+
+
+
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (!event.target || !(event.target as HTMLElement).closest('.dropdown')) {
+      this.dropdownOpen = false;
+    }
+  }
+
 
   selectReport(type: string, id: any, title: string) {
     this.selectedReportType = type;

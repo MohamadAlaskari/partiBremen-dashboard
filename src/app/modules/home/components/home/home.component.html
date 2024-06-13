@@ -66,39 +66,45 @@
       @if (selectedPoi ) {
 
 
-      <div class="modal-header">
-        <div class=" d-flex align-items-start  w-100">
-          <div class="avatar bg-dark p-1 fw-bold small d-flex align-items-center justify-content-center rounded-circle">
-            @if(selectedPoi.creator.img){
-            <img [src]="selectedPoi.creator.img" alt="profile image">
-            }@else {
+        <div class="modal-header">
+          <div class="d-flex align-items-start w-100">
+              <div class="avatar bg-dark p-1 fw-bold small d-flex align-items-center justify-content-center rounded-circle">
+                  <ng-container *ngIf="selectedPoi.creator.img; else initialsTemplate">
+                      <img [src]="selectedPoi.creator.img" alt="profile image">
+                  </ng-container>
+                  <ng-template #initialsTemplate>
+                      <div class="initials text-white">
+                          {{ getInitials(selectedPoi.creator.name, selectedPoi.creator.surname) }}
+                      </div>
+                  </ng-template>
+              </div>
 
+              <div class="comment-content ps-2">
+                  <h6 class="text-dark mb-0">{{ selectedPoi.creator.name }} {{ selectedPoi.creator.surname }}</h6>
+                  <p class="small text-secondary">{{ selectedPoi.creator.role }}
 
-            <div class="initials text-white">
-              {{ getInitials(selectedPoi.creator.name, selectedPoi.creator.surname) }}
-            </div>
-            }
+                  </p>
+              </div>
+
+              <div class="ms-auto d-flex align-items-center">
+                  <!-- Custom Dropdown Menu for Reporting -->
+                  <div class="dropdown" [class.show]="dropdownOpen">
+                      <button class="dropdown-btn" type="button" (click)="toggleDropdown()">
+                          &#x22EE; <!-- This represents the three vertical dots -->
+                      </button>
+                      <div class="dropdown-content" *ngIf="dropdownOpen">
+                          <a (click)="selectReport('user', selectedPoi.creator.id, selectedPoi.creator.name)">Report User</a>
+                          <a  (click)="selectReport('poi', selectedPoi.id,selectedPoi.titel)"
+                          [class.selected]="selectedReportType === 'poi'">Report POI</a>
+                          <!-- Add more menu items here if needed -->
+                      </div>
+                  </div>
+
+                  <button type="button" class="btn-close ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
           </div>
-
-
-          <div class="comment-content ps-2">
-            <h6 class="text-dark mb-0">{{selectedPoi.creator.name}} {{selectedPoi.creator.surname}} </h6>
-            <p class="small text-secondary">{{ selectedPoi.creator.role }}
-              <a class="replink" (click)="selectReport('user', selectedPoi.creator.id,selectedPoi.creator.name)"
-                [class.selected]="selectedReportType === 'user'">report user</a>
-            </p>
-          </div>
-
-
-
-
-
-
-
-
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
       </div>
+
 
 
       <div class="modal-body">
@@ -111,10 +117,7 @@
             <h5 class="modal-title" id="poiModalLabel">{{ selectedPoi.titel }}</h5>
             <p>{{ selectedPoi.description }}</p>
             <p class="text-secondary small">{{ selectedPoi.createdAt | date:'dd MMM yyyy, HH:mm' }}</p>
-            <small class="text-secondary">
-              <a class="replink" (click)="selectReport('poi', selectedPoi.id,selectedPoi.titel)"
-                [class.selected]="selectedReportType === 'poi'">report poi</a>
-            </small>
+
 
             <!--Voting section-->
             <div class="d-flex justify-content-between border border-2 rounded-3">
@@ -151,37 +154,46 @@
           <div class="col-md-6">
             <h5>Comments</h5>
             <div class="comment-list overflow-auto" style="max-height: 400px;">
-              @for (comment of selectedPoi.comments; track comment.id) {
-              <!--comments-->
-              <div class="comment-box d-flex align-items-start p-2 w-100">
-                <div
-                  class="avatar bg-dark p-1 fw-bold small d-flex align-items-center justify-content-center rounded-circle">
-                  @if(comment.commenter.img){
-                  <img [src]="comment.commenter.img" alt="profile image">
-                  }@else {
+              <div class="d-flex flex-column align-items-center">
+                  @for (comment of selectedPoi.comments; track comment.id) {
+                  <!-- comments -->
+                  <div class="comment-box d-flex align-items-start p-2 w-100">
+                      <div class="avatar bg-dark p-1 fw-bold small d-flex align-items-center justify-content-center rounded-circle">
+                          @if (comment.commenter.img) {
+                          <img [src]="comment.commenter.img" alt="profile image">
+                          } @else {
+                          <div class="initials text-white">
+                              {{ getInitials(comment.commenter.name, comment.commenter.surname) }}
+                          </div>
+                          }
+                      </div>
+                      <div class="d-flex flex-grow-1 align-items-start">
+                        <div class="comment-content ps-2 flex-grow-1">
+                          <h6 class="text-dark mb-0">{{ comment.commenter.name }} {{ comment.commenter.surname }}</h6>
+                          <p class="small">{{ comment.actualcomment }}</p>
+                          <small class="text-secondary">{{ comment.createdAt | date:'dd MMM yyyy, HH:mm' }}</small>
+                        </div>
+                        <div class="ml-auto"> <!-- ml-auto pushes this div to the end of the container -->
+                          <div class="dropdown" [class.show]="dropdownStates.get(comment.id)">
+                            <button class="dropdown-btn" type="button" (click)="toggleDropdowncomment(comment)">
+                              &#x22EE; <!-- Three vertical dots icon -->
+                            </button>
+                            <div class="dropdown-content">
+                              <a (click)="selectReport('comment', comment.id, comment.commenter.name)"
+                                 [class.selected]="selectedReportItemId === comment.id">Report comment</a>
+                              <!-- Add more menu items here if needed -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
-
-                  <div class="initials text-white">
-                    {{ getInitials(comment.commenter.name, comment.commenter.surname) }}
                   </div>
+                  } @empty {
+                  <p class="opacity-50">no comments vorhanden yet!</p>
                   }
-                </div>
-
-                <div class="comment-content ps-2">
-                  <h6 class="text-dark mb-0">{{comment.commenter.name}} {{comment.commenter.surname}}</h6>
-                  <p class="small">{{ comment.actualcomment }}</p>
-                  <small class="text-secondary">{{ comment.createdAt | date:'dd MMM yyyy, HH:mm' }}</small>
-                  <small class="text-secondary">
-                    <a class="replink" (click)="selectReport('comment', comment.id,comment.commenter.name)"
-                      [class.selected]="selectedReportItemId === comment.id">report comment</a>
-                  </small>
-                </div>
               </div>
-              }@empty {
-              <p class="opacity-50">no comments vorhanden yet!</p>
-              }
+          </div>
 
-            </div>
 
             <!--add comment-->
             <div class="input-group mb-3">
