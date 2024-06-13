@@ -99,7 +99,8 @@ export class CommentManagementComponent implements OnInit, OnDestroy {
     return this.comments.filter(item =>
       Object.values(item).some((value: any) =>
         value !== null &&
-        value.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
+        (value.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) || 
+        (item.commenter.name + " " + item.commenter.surname).toString().toLowerCase().includes(this.searchTerm.toLowerCase()))
       )
     );
   }
