@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
@@ -31,6 +34,7 @@ import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
     CommentManagementModule,
     PoiManagementModule,
     ReportManagementModule,
+    SweetAlert2Module.forRoot(),
     HomeModule,
     MatIconModule,
     AppRoutingModule,

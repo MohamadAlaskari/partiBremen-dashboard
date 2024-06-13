@@ -113,7 +113,7 @@
 
         </article>
         <div class="contact-form article-comment" style="text-align: center;">
-          <h4>Action to make</h4>
+          <h4>Action to make to resolve the report</h4>
 <div *ngIf="report.status !== 'RESOLVED'">
 
 
@@ -132,20 +132,14 @@
           <div class="container mt-3">
 
             <div class="btn-group" role="group" aria-label="Report Actions">
-              <button type="button" class="blpx-btn theme" (click)="updateReportStatusToReviewed(report)"
-                *ngIf="report.status !== 'REVIEWED'">
-                Set Reports to Reviewed
-              </button>
+
 
               <button type="button" class="rdpx-btn theme" (click)="updateReportStatusToDismissed(report)"
                 *ngIf="report.status !== 'DISMISSED'">
                 Set Reports to Dismissed
               </button>
 
-              <button type="button" class="px-btn theme" (click)="updateReportStatusToResolved(report)"
-                *ngIf="report.status !== 'RESOLVED'">
-                Set Reports to Resolved
-              </button>
+
             </div>
 
 
@@ -203,7 +197,7 @@
 
 
 
-          <div class="widget-body" *ngFor="let rep of reports">
+          <div *ngFor="let rep of reports" class="widget-body" [routerLink]="['/report-management', rep.id]">
             <div class="media align-items-center">
               <div class="avatar">
                 <img
@@ -220,9 +214,9 @@
             <p><strong>Title:</strong> {{ rep.title }}</p>
             <p><strong>Comment:</strong> {{ rep.kommentar }}</p>
             <p><strong>Status:</strong> {{ rep.status }}</p>
-
             <p><strong>Created At:</strong> {{ rep.createdAt | date: 'short' }}</p>
           </div>
+
 
         </div>
 
