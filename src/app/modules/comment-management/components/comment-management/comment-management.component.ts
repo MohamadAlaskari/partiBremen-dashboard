@@ -20,6 +20,7 @@ export class CommentManagementComponent implements OnInit, OnDestroy {
   comments: Comment[] = [];
   dataSource = new MatTableDataSource<Comment>();
   dropdownStates: boolean[] = [];
+  searchTerm: string = "";
 
   private subscriptions: Subscription = new Subscription();
 
@@ -91,6 +92,15 @@ export class CommentManagementComponent implements OnInit, OnDestroy {
     // Optional: Close all other dropdowns
     this.dropdownStates = this.dropdownStates.map((state, i) =>
       i === index ? state : false
+    );
+  }
+
+  get filteredItems() {
+    return this.comments.filter(item =>
+      Object.values(item).some((value: any) =>
+        value !== null &&
+        value.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
+      )
     );
   }
 
