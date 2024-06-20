@@ -10,7 +10,19 @@
   width: 28px;
   height: 28px;
 }
-
+.dropdown-menu{
+  background-color: var(--bg-color-secondary);
+padding: 3px;
+  a{
+  color:  var(--font-color-primary);
+  width: 90%;
+  border-radius: 8px;
+  margin-bottom: 5px;
+&:hover{
+  background-color: var(--bg-color-primary);
+}
+}
+}
 .app {
   &-header {
     display: flex;
@@ -19,6 +31,7 @@
     // width: 100%;
     padding: 16px 24px;
     position: relative;
+    background-color: var(--bg-color-primary);
 
     &-left,
     &-right {
@@ -52,7 +65,6 @@
 .mode-switch,
 .add-btn,
 .notification-btn,
-.logout-btn,
 .home-btn,
 .messages-btn {
   color: var(--font-color-primary);
@@ -105,7 +117,9 @@
     font-size: 1rem;
   }
 }
-
+.logout-btn{
+  background-color: var(--link-color-active-bg);
+}
 @media screen and (max-width: 880px) {
   .messages-btn {
     display: flex;
@@ -115,8 +129,8 @@
 @media screen and (max-width: 720px) {
   .add-btn,
   .notification-btn,
-  .mode-switch,
-  .logout-btn {
+  .mode-switch
+ {
     width: 24px;
     height: 24px;
 

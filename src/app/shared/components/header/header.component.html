@@ -1,4 +1,4 @@
-<div class="app-header bg-light">
+<div class="app-header ">
 
   <div class="app-header-left">
     @if (currentUser?.role =='ADMIN' ||currentUser?.role =='MODERATOR' ) {
@@ -62,18 +62,17 @@
     <div class="profile-dropdown">
       <button class="profile-btn" (click)="toggleDropdown()">
         <span class="profile-name">{{ currentUser?.name }} {{ currentUser?.surname }}</span>
-        <mat-icon style="color: black;">expand_more</mat-icon>
+        <mat-icon style="color: var(--font-color-primary);">expand_more</mat-icon>
       </button>
       <div class="dropdown-menu" [class.show]="isDropdownOpen">
         <a class="dropdown-item" [routerLink]="['/user-management/view-user',currentUser?.id]">My Profile</a>
         <a class="dropdown-item" [routerLink]="['/user-management/update-user',currentUser?.id]">Edit Profile</a>
         <a class="dropdown-item" [routerLink]="['/user-management/delete-user',currentUser?.id]">Delete Account</a>
 
-        <button (click)="logout()" class="logout-btn" title="Logout">
+        <button (click)="logout()" class="logout-btn btn btn-dark col-10 my-2 btn-xs" title="Logout">
 
-          <mat-icon class="manage_accounts_icon" fontSet="material-icons-outlined">
-            logout
-          </mat-icon>
+
+          logout
         </button>
       </div>
     </div>

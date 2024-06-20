@@ -11,7 +11,7 @@
   </div>
   <!-- Profile Details -->
   <div class="profile-content ps-2">
-    <h5 class="fw-bold mb-0">{{ user.name }} {{ user.surname }}
+    <h5 class="name fw-bold mb-0">{{ user.name }} {{ user.surname }}
       <ng-container *ngIf="user.verified; else notVerified">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0040ff" class="bi bi-check-circle-fill"
           viewBox="0 0 16 16">
@@ -28,7 +28,7 @@
         </svg>
       </ng-template>
     </h5>
-    <h6 class="card-subtitle text-muted mb-2">{{ user.role }}</h6>
+    <h6 class="card-subtitle text-secondary mb-2">{{ user.role }}</h6>
     <p class="card-text text-secondary small mb-1">
       <span>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope"
