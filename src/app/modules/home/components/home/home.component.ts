@@ -38,6 +38,8 @@ export class HomeComponent {
   @ViewChild('poiModal') poiModal!: ElementRef;
   @ViewChild('mapButton', { static: true })
   mapButton?: ElementRef<HTMLButtonElement>;
+  @ViewChild('addPoiMap', { static: false }) addPoiMap?: ElementRef;
+
   currentStep: number = 1;
   dropdownStates: Map<string, boolean> = new Map();
   lastOpenedCommentId: string | null = null;
@@ -243,6 +245,23 @@ export class HomeComponent {
     }
 
     this.setupMapClickHandler();
+    this.setupAddPoiMap();
+  }
+  setupAddPoiMap(): void {
+    const addPoiModalElement = document.getElementById('addPoiModal');
+    if (addPoiModalElement) {
+      addPoiModalElement.addEventListener('shown.bs.modal', () => {
+        if (this.addPoiMap && this.addPoiMap.nativeElement) {
+          const center: [number, number] =  [8.8016936, 53.0792962]; // Beispielkoordinaten (BREMEN)
+          const zoom = 9; // Beispiel-Zoomstufe
+          this.mapboxService.initializeMap(
+            this.addPoiMap.nativeElement,
+           center,
+            zoom
+          );
+        }
+      });
+    }
   }
 
   private setupMapClickHandler(): void {
@@ -262,7 +281,7 @@ export class HomeComponent {
   }
 
   ngOnDestroy(): void {
-    // this.mapboxService.map?.remove();
+    this.mapboxService.map?.remove();
   }
 
   private loadPOIs() {
