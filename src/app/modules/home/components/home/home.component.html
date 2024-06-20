@@ -66,43 +66,45 @@
       @if (selectedPoi ) {
 
 
-        <div class="modal-header">
-          <div class="d-flex align-items-start w-100">
-              <div class="avatar bg-dark p-1 fw-bold small d-flex align-items-center justify-content-center rounded-circle">
-                  <ng-container *ngIf="selectedPoi.creator.img; else initialsTemplate">
-                      <img [src]="selectedPoi.creator.img" alt="profile image">
-                  </ng-container>
-                  <ng-template #initialsTemplate>
-                      <div class="initials text-white">
-                          {{ getInitials(selectedPoi.creator.name, selectedPoi.creator.surname) }}
-                      </div>
-                  </ng-template>
+      <div class="modal-header">
+        <div class="d-flex align-items-start w-100">
+          <div class="avatar bg-dark p-1 fw-bold small d-flex align-items-center justify-content-center rounded-circle">
+            <ng-container *ngIf="selectedPoi.creator.img; else initialsTemplate">
+              <img [src]="selectedPoi.creator.img" alt="profile image">
+            </ng-container>
+            <ng-template #initialsTemplate>
+              <div class="initials text-white">
+                {{ getInitials(selectedPoi.creator.name, selectedPoi.creator.surname) }}
               </div>
-
-              <div class="profile-name comment-content ps-2" [routerLink]="['/user-management/view-user',selectedPoi.creator.id] "data-bs-dismiss="modal" aria-label="Close">
-                  <h6 class="text-dark mb-0">{{ selectedPoi.creator.name }} {{ selectedPoi.creator.surname }}</h6>
-                  <p class="small text-secondary">{{ selectedPoi.creator.role }}
-
-                  </p>
-              </div>
-
-              <div class="ms-auto d-flex align-items-center">
-                  <!-- Custom Dropdown Menu for Reporting -->
-                  <div class="dropdown" [class.show]="dropdownOpen">
-                      <button class="dropdown-btn" type="button" (click)="toggleDropdown()">
-                          &#x22EE; <!-- This represents the three vertical dots -->
-                      </button>
-                      <div class="dropdown-content" *ngIf="dropdownOpen">
-                          <a (click)="selectReport('user', selectedPoi.creator.id, selectedPoi.creator.name)">Report User</a>
-                          <a  (click)="selectReport('poi', selectedPoi.id,selectedPoi.titel)"
-                          [class.selected]="selectedReportType === 'poi'">Report POI</a>
-                          <!-- Add more menu items here if needed -->
-                      </div>
-                  </div>
-
-                  <button type="button" class="btn-close ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
+            </ng-template>
           </div>
+
+          <div class="profile-name comment-content ps-2"
+            [routerLink]="['/user-management/view-user',selectedPoi.creator.id] " data-bs-dismiss="modal"
+            aria-label="Close">
+            <h6 class="text-dark mb-0">{{ selectedPoi.creator.name }} {{ selectedPoi.creator.surname }}</h6>
+            <p class="small text-secondary">{{ selectedPoi.creator.role }}
+
+            </p>
+          </div>
+
+          <div class="ms-auto d-flex align-items-center">
+            <!-- Custom Dropdown Menu for Reporting -->
+            <div class="dropdown" [class.show]="dropdownOpen">
+              <button class="dropdown-btn" type="button" (click)="toggleDropdown()">
+                &#x22EE; <!-- This represents the three vertical dots -->
+              </button>
+              <div class="dropdown-content" *ngIf="dropdownOpen">
+                <a (click)="selectReport('user', selectedPoi.creator.id, selectedPoi.creator.name)">Report User</a>
+                <a (click)="selectReport('poi', selectedPoi.id,selectedPoi.titel)"
+                  [class.selected]="selectedReportType === 'poi'">Report POI</a>
+                <!-- Add more menu items here if needed -->
+              </div>
+            </div>
+
+            <button type="button" class="btn-close ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+        </div>
       </div>
 
 
@@ -155,44 +157,47 @@
             <h5>Comments</h5>
             <div class="comment-list overflow-auto" style="max-height: 400px;">
               <div class="d-flex flex-column align-items-center">
-                  @for (comment of selectedPoi.comments; track comment.id) {
-                  <!-- comments -->
-                  <div class="comment-box d-flex align-items-start p-2 w-100">
-                      <div class="avatar bg-dark p-1 fw-bold small d-flex align-items-center justify-content-center rounded-circle">
-                          @if (comment.commenter.img) {
-                          <img [src]="comment.commenter.img" alt="profile image">
-                          } @else {
-                          <div class="initials text-white " >
-                              {{ getInitials(comment.commenter.name, comment.commenter.surname) }}
-                          </div>
-                          }
-                      </div>
-                      <div class="d-flex flex-grow-1 align-items-start">
-                        <div class="comment-content ps-2 flex-grow-1">
-                          <h6 class="text-dark mb-0 profile-name" [routerLink]="['/user-management/view-user',comment.commenter.id] "data-bs-dismiss="modal" aria-label="Close">{{ comment.commenter.name }} {{ comment.commenter.surname }}</h6>
-                          <p class="small">{{ comment.actualcomment }}</p>
-                          <small class="text-secondary">{{ comment.createdAt | date:'dd MMM yyyy, HH:mm' }}</small>
-                        </div>
-                        <div class="ml-auto"> <!-- ml-auto pushes this div to the end of the container -->
-                          <div class="dropdown" [class.show]="dropdownStates.get(comment.id)">
-                            <button class="dropdown-btn" type="button" (click)="toggleDropdowncomment(comment)">
-                              &#x22EE; <!-- Three vertical dots icon -->
-                            </button>
-                            <div class="dropdown-content">
-                              <a (click)="selectReport('comment', comment.id, comment.commenter.name)"
-                                 [class.selected]="selectedReportItemId === comment.id">Report comment</a>
-                              <!-- Add more menu items here if needed -->
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
+                @for (comment of selectedPoi.comments; track comment.id) {
+                <!-- comments -->
+                <div class="comment-box d-flex align-items-start p-2 w-100">
+                  <div
+                    class="avatar bg-dark p-1 fw-bold small d-flex align-items-center justify-content-center rounded-circle">
+                    @if (comment.commenter.img) {
+                    <img [src]="comment.commenter.img" alt="profile image">
+                    } @else {
+                    <div class="initials text-white ">
+                      {{ getInitials(comment.commenter.name, comment.commenter.surname) }}
+                    </div>
+                    }
                   </div>
-                  } @empty {
-                  <p class="opacity-50">no comments vorhanden yet!</p>
-                  }
+                  <div class="d-flex flex-grow-1 align-items-start">
+                    <div class="comment-content ps-2 flex-grow-1">
+                      <h6 class="text-dark mb-0 profile-name"
+                        [routerLink]="['/user-management/view-user',comment.commenter.id] " data-bs-dismiss="modal"
+                        aria-label="Close">{{ comment.commenter.name }} {{ comment.commenter.surname }}</h6>
+                      <p class="small">{{ comment.actualcomment }}</p>
+                      <small class="text-secondary">{{ comment.createdAt | date:'dd MMM yyyy, HH:mm' }}</small>
+                    </div>
+                    <div class="ml-auto"> <!-- ml-auto pushes this div to the end of the container -->
+                      <div class="dropdown" [class.show]="dropdownStates.get(comment.id)">
+                        <button class="dropdown-btn" type="button" (click)="toggleDropdowncomment(comment)">
+                          &#x22EE; <!-- Three vertical dots icon -->
+                        </button>
+                        <div class="dropdown-content">
+                          <a (click)="selectReport('comment', comment.id, comment.commenter.name)"
+                            [class.selected]="selectedReportItemId === comment.id">Report comment</a>
+                          <!-- Add more menu items here if needed -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                } @empty {
+                <p class="opacity-50">no comments vorhanden yet!</p>
+                }
               </div>
-          </div>
+            </div>
 
 
             <!--add comment-->
@@ -256,15 +261,17 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addPoiModalLabel">Create new POI</h5>
+        <h5 class="modal-title" id="addPoiModalLabel">Create New POI</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <!-- Step 1: Select Place -->
         <div *ngIf="currentStep === 1">
           <div #addPoiMap class="map-container" style="height: 400px;"></div>
+          <div class="modal-footer">
 
-          <button type="button" class="btn btn-primary mt-3" (click)="goToNextStep()">Next</button>
+            <button type="button" class="btn btn-dark btn-lg mx-auto col-12 " (click)="goToNextStep()">Next</button>
+          </div>
         </div>
         <!-- Step 2: Enter Details -->
         <div *ngIf="currentStep === 2">
@@ -295,16 +302,14 @@
                 </div>
               </div>
             </div>
+            <div class="modal-footer">
 
-            <button type="submit" class="btn btn-dark btn-lg mx-auto col-12 mt-3">Add new POI</button>
+              <button type="submit" class="btn btn-dark btn-lg mx-auto col-12">Add new POI</button>
+            </div>
           </form>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="goToPreviousStep()"
-          *ngIf="currentStep > 1">Back</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
+
     </div>
   </div>
 </div>

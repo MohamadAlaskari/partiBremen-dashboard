@@ -231,6 +231,7 @@ export class HomeComponent {
           next: (response) => {
             console.log('POI created:', response);
             window.location.reload();
+            this.currentStep = 1;
           },
           error: (error) => {
             console.error('Error creating POI:', error);
@@ -244,19 +245,19 @@ export class HomeComponent {
       this.mapButton.nativeElement.addEventListener('click', () => {});
     }
 
-    this.setupMapClickHandler();
     this.setupAddPoiMap();
+    this.setupMapClickHandler();
   }
   setupAddPoiMap(): void {
     const addPoiModalElement = document.getElementById('addPoiModal');
     if (addPoiModalElement) {
       addPoiModalElement.addEventListener('shown.bs.modal', () => {
         if (this.addPoiMap && this.addPoiMap.nativeElement) {
-          const center: [number, number] =  [8.8016936, 53.0792962]; // Beispielkoordinaten (BREMEN)
+          const center: [number, number] = [8.8016936, 53.0792962]; // Beispielkoordinaten (BREMEN)
           const zoom = 9; // Beispiel-Zoomstufe
           this.mapboxService.initializeMap(
             this.addPoiMap.nativeElement,
-           center,
+            center,
             zoom
           );
         }
