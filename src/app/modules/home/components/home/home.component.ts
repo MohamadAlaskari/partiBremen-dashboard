@@ -56,6 +56,7 @@ export class HomeComponent {
   ) {}
 
   ngOnInit() {
+
     this.loadPOIs();
     this.mapboxService.setOnMarkerClickCallback(this.onMarkerClick.bind(this));
     this.formData = this.formBuilder.group({
@@ -241,6 +242,8 @@ export class HomeComponent {
   }
 
   ngAfterViewInit(): void {
+   
+
     if (this.mapButton) {
       this.mapButton.nativeElement.addEventListener('click', () => {});
     }
@@ -282,7 +285,7 @@ export class HomeComponent {
   }
 
   ngOnDestroy(): void {
-    this.mapboxService.map?.remove();
+   // this.mapboxService.map?.remove();
   }
 
   private loadPOIs() {
