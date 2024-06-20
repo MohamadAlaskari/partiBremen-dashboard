@@ -38,6 +38,8 @@ export class HomeComponent {
   @ViewChild('mapButton', { static: true })
   mapButton?: ElementRef<HTMLButtonElement>;
   currentStep: number = 1;
+  dropdownStates: Map<string, boolean> = new Map(); // Initialize dropdown states map
+
   constructor(
     private mapboxService: MapboxService,
     private homeService: HomeService,
@@ -71,7 +73,6 @@ export class HomeComponent {
     this.currentStep--;
   }
 
-  dropdownStates: Map<string, boolean> = new Map(); // Initialize dropdown states map
   lastOpenedCommentId: string | null = null; // Track the last opened comment ID
 
   toggleDropdowncomment(comment: Comment): void {

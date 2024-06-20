@@ -20,7 +20,8 @@
 
 
     <app-login *ngIf="isLoginMode"></app-login>
-    <app-signup *ngIf="!isLoginMode"></app-signup>
+    <app-signup *ngIf="!isLoginMode" (signupSuccess)="switchToLoginMode()"></app-signup>
+
 
 
   </div>

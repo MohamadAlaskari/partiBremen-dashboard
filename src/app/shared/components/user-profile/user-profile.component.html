@@ -50,7 +50,7 @@
       </span>
       {{ user.dob | date:'dd MMM yyyy' }}
     </p>
-    @if (user.role =='ADMIN' || user.role =='MODERATOR') {
+    @if (currentUser?.role =='ADMIN' || currentUser?.role =='MODERATOR') {
 
     <p class="card-text text-secondary small mb-1">Created at: {{ user.createdAt | date:'dd MMM yyyy, HH:mm' }}</p>
     <p class="card-text text-secondary small mb-1">User ID: {{ user.id }}</p>

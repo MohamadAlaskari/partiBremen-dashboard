@@ -11,4 +11,7 @@ export class AuthComponent {
   toggleMode() {
     this.isLoginMode = !this.isLoginMode;
   }
+  switchToLoginMode() {
+    this.isLoginMode = true;
+  }
 }

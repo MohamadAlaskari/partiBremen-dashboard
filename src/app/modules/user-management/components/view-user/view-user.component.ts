@@ -2,6 +2,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  HostListener,
   NgZone,
   ViewChild,
 } from '@angular/core';
@@ -20,6 +21,8 @@ import {
 import { CounterState } from '../../../../shared/components/state-counter/state-counter.component';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Subscription } from 'rxjs';
+import { HomeService } from '../../../home/services/home.service';
+import { FormGroup, Validators } from '@angular/forms';
 declare var bootstrap: any;
 
 @Component({
@@ -39,6 +42,15 @@ export class ViewUserComponent {
   selectedPoi: Poi | null = null;
   poiClicked: boolean = false;
   private subscriptions: Subscription = new Subscription(); // To manage subscriptions
+  dropdownOpen = false;
+  selectedReportType: string = '';
+  selectedReportItemId: any;
+  currentUser: User | null = null;
+  reportForm!: FormGroup;
+  formBuilder: any;
+  dropdownStates: Map<string, boolean> = new Map(); // Initialize dropdown states map
+
+
 
   constructor(
     private route: ActivatedRoute,
@@ -46,18 +58,25 @@ export class ViewUserComponent {
     private toastService: ToastService,
     private authService: AuthService,
     private ngZone: NgZone, // Inject NgZone
-    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
+    private cdr: ChangeDetectorRef, // Inject ChangeDetectorRef
+    private homeService: HomeService
   ) {}
 
   ngOnInit(): void {
     this.ngZone.run(() => {
       this.extractIdFromRoute();
     });
+
+    this.reportForm = this.formBuilder.group({
+      title: ['', Validators.required],
+      kommentar: ['', Validators.required],
+    });
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe(); // Unsubscribe from all subscriptions
   }
+
 
   private extractIdFromRoute(): void {
     const sub = this.route.paramMap.subscribe((params) => {
@@ -97,21 +116,21 @@ export class ViewUserComponent {
 
   private loadPoiByPoiID(poiId: string): void {
     const sub = this.userService.getPoibyId(poiId).subscribe({
-        next: (poi: Poi) => {
-            this.ngZone.run(() => {
-                this.selectedPoi = poi;
-                poi.comments.sort(
-                    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-                );
-                console.log('selected poi:', this.selectedPoi);
-                this.cdr.detectChanges(); // Trigger change detection
-            });
-        },
-        error: () => {},
+      next: (poi: Poi) => {
+        this.ngZone.run(() => {
+          this.selectedPoi = poi;
+          poi.comments.sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
+          console.log('selected poi:', this.selectedPoi);
+          this.cdr.detectChanges(); // Trigger change detection
+        });
+      },
+      error: () => {},
     });
     this.subscriptions.add(sub);
-}
-
+  }
 
   addComment(
     poiId: string,
@@ -194,8 +213,8 @@ export class ViewUserComponent {
   updateCounters(): void {
     this.counters = [
       { count: this.userPois.length, label: 'POIs' },
-      { count: 20, label: 'Credit' },
-      { count: 100, label: 'Comments' },
+      { count: this.userPois.length * 3 - 5, label: 'Credit' },
+      { count: 65, label: 'Comments' },
     ];
   }
 

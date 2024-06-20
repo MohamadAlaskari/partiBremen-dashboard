@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { UserManagementService } from '../../../user-management/services/user-management-service/user-management.service';
@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrl: './signup.component.scss',
 })
 export class SignupComponent {
+  @Output() signupSuccess = new EventEmitter<void>();
   userForm!: FormGroup;
   step = 1; // Track the current step
 
@@ -58,7 +59,7 @@ export class SignupComponent {
             'Success',
             'User created successfully'
           );
-          this.router.navigate(['/auth/login']);
+          this.signupSuccess.emit(); // Emit the event
         },
         error: (error) => {
           console.error('Error creating user', error);
@@ -76,6 +77,6 @@ export class SignupComponent {
 
   onCancel(): void {
     this.userForm.reset();
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(['/auth']);
   }
 }

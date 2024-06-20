@@ -68,7 +68,7 @@ export class HeaderComponent {
             'User logedot successfully'
           );
 
-          this._router.navigate(['/login']);
+          this._router.navigate(['/auth']);
         },
         error: (error) => {
           console.error('Logout error:', error);
