@@ -79,7 +79,7 @@
                   </ng-template>
               </div>
 
-              <div class="comment-content ps-2">
+              <div class="profile-name comment-content ps-2" [routerLink]="['/user-management/view-user',selectedPoi.creator.id] "data-bs-dismiss="modal" aria-label="Close">
                   <h6 class="text-dark mb-0">{{ selectedPoi.creator.name }} {{ selectedPoi.creator.surname }}</h6>
                   <p class="small text-secondary">{{ selectedPoi.creator.role }}
 
@@ -162,14 +162,14 @@
                           @if (comment.commenter.img) {
                           <img [src]="comment.commenter.img" alt="profile image">
                           } @else {
-                          <div class="initials text-white">
+                          <div class="initials text-white " >
                               {{ getInitials(comment.commenter.name, comment.commenter.surname) }}
                           </div>
                           }
                       </div>
                       <div class="d-flex flex-grow-1 align-items-start">
                         <div class="comment-content ps-2 flex-grow-1">
-                          <h6 class="text-dark mb-0">{{ comment.commenter.name }} {{ comment.commenter.surname }}</h6>
+                          <h6 class="text-dark mb-0 profile-name" [routerLink]="['/user-management/view-user',comment.commenter.id] "data-bs-dismiss="modal" aria-label="Close">{{ comment.commenter.name }} {{ comment.commenter.surname }}</h6>
                           <p class="small">{{ comment.actualcomment }}</p>
                           <small class="text-secondary">{{ comment.createdAt | date:'dd MMM yyyy, HH:mm' }}</small>
                         </div>

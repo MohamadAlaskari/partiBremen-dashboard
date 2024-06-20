@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs';
 import { ToastService } from '../../../../shared/services/toast.service';
 
 declare var bootstrap: any;
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -31,14 +32,16 @@ export class HomeComponent {
   selectedReportItemId: any;
   pageTitle: string = 'Home';
   dropdownOpen = false;
-  dropdowncommentOpen =false;
+  dropdowncommentOpen = false;
   title: string = '';
-    selectedPoi: Poi | null = null; // Initialize as null
+  selectedPoi: Poi | null = null;
   @ViewChild('poiModal') poiModal!: ElementRef;
   @ViewChild('mapButton', { static: true })
   mapButton?: ElementRef<HTMLButtonElement>;
   currentStep: number = 1;
-  dropdownStates: Map<string, boolean> = new Map(); // Initialize dropdown states map
+  dropdownStates: Map<string, boolean> = new Map();
+  lastOpenedCommentId: string | null = null;
+  mapCursorEnabled: boolean = false;
 
   constructor(
     private mapboxService: MapboxService,
@@ -49,6 +52,7 @@ export class HomeComponent {
     private authService: AuthService,
     private userService: UserManagementService
   ) {}
+
   ngOnInit() {
     this.loadPOIs();
     this.mapboxService.setOnMarkerClickCallback(this.onMarkerClick.bind(this));
@@ -58,7 +62,6 @@ export class HomeComponent {
       latitude: ['', Validators.required],
       longitude: ['', Validators.required],
     });
-
     this.reportForm = this.formBuilder.group({
       title: ['', Validators.required],
       kommentar: ['', Validators.required],
@@ -73,52 +76,47 @@ export class HomeComponent {
     this.currentStep--;
   }
 
-  lastOpenedCommentId: string | null = null; // Track the last opened comment ID
-
   toggleDropdowncomment(comment: Comment): void {
     const commentId = comment.id;
     if (commentId) {
       if (this.lastOpenedCommentId && this.lastOpenedCommentId !== commentId) {
-        this.dropdownStates.set(this.lastOpenedCommentId, false); // Close the previously opened dropdown
+        this.dropdownStates.set(this.lastOpenedCommentId, false);
       }
       const currentState = this.dropdownStates.get(commentId) || false;
       this.dropdownStates.set(commentId, !currentState);
-      this.lastOpenedCommentId = commentId; // Update last opened comment ID
+      this.lastOpenedCommentId = commentId;
     }
   }
+
   @HostListener('document:click', ['$event'])
-closeDropdownIfNotClickedInside(event: MouseEvent): void {
-  let clickedInsideDropdown = false;
+  closeDropdownIfNotClickedInside(event: MouseEvent): void {
+    let clickedInsideDropdown = false;
 
-  // Check if click is inside any dropdown
-  document.querySelectorAll('.dropdown').forEach(element => {
-    if (element.contains(event.target as Node)) {
-      clickedInsideDropdown = true;
-    }
-  });
-
-  // Close dropdowns if click is outside
-  if (!clickedInsideDropdown) {
-    this.dropdownStates.forEach((value, key) => {
-      if (value) {
-        this.dropdownStates.set(key, false);
+    document.querySelectorAll('.dropdown').forEach((element) => {
+      if (element.contains(event.target as Node)) {
+        clickedInsideDropdown = true;
       }
     });
+
+    if (!clickedInsideDropdown) {
+      this.dropdownStates.forEach((value, key) => {
+        if (value) {
+          this.dropdownStates.set(key, false);
+        }
+      });
+    }
   }
-}
-
-
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     if (!event.target || !(event.target as HTMLElement).closest('.dropdown')) {
       this.dropdownOpen = false;
     }
   }
-
 
   selectReport(type: string, id: any, title: string) {
     this.selectedReportType = type;
@@ -130,6 +128,7 @@ closeDropdownIfNotClickedInside(event: MouseEvent): void {
     this.loadPoiByPoiID(poiId);
     this.openModal();
   }
+
   private loadPoiByPoiID(poiId: string): void {
     const sub = this.userService.getPoibyId(poiId).subscribe({
       next: (poi: Poi) => {
@@ -138,13 +137,13 @@ closeDropdownIfNotClickedInside(event: MouseEvent): void {
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
-        console.log('selected poi:', this.selectedPoi);
-        this.cdr.detectChanges(); // Trigger change detection
+        this.cdr.detectChanges();
       },
       error: () => {},
     });
     this.subscriptions.add(sub);
   }
+
   Submitreport() {
     this.currentUser = this.authService.getCurrentUser();
     const creatorId = this.currentUser?.id || '';
@@ -188,12 +187,10 @@ closeDropdownIfNotClickedInside(event: MouseEvent): void {
 
       reportObservable.subscribe({
         next: (response) => {
-          // Handle the response if needed
           console.log(`${this.selectedReportType} report created:`, response);
           window.location.reload();
         },
         error: (error) => {
-          // Handle any errors
           console.error(
             `Error creating ${this.selectedReportType} report:`,
             error
@@ -202,23 +199,22 @@ closeDropdownIfNotClickedInside(event: MouseEvent): void {
       });
     }
   }
+
   closeForm() {
     this.selectedReportType = '';
     this.selectedReportItemId = null;
-    // You can also reset other necessary variables here
   }
-  mapCursorEnabled: boolean = false;
 
   toggleMapCursor(): void {
     this.mapCursorEnabled = !this.mapCursorEnabled;
   }
+
   submitForm(): void {
     this.currentUser = this.authService.getCurrentUser();
 
     if (this.formData && this.formData.valid) {
       console.log('Form data:', this.formData.value);
 
-      // Ensure this.currentUser?.id is defined before using it
       const creatorId = this.currentUser?.id || '';
 
       this.homeService
@@ -231,12 +227,10 @@ closeDropdownIfNotClickedInside(event: MouseEvent): void {
         )
         .subscribe({
           next: (response) => {
-            // Handle the response if needed
             console.log('POI created:', response);
             window.location.reload();
           },
           error: (error) => {
-            // Handle any errors
             console.error('Error creating POI:', error);
           },
         });
@@ -253,7 +247,7 @@ closeDropdownIfNotClickedInside(event: MouseEvent): void {
 
   private setupMapClickHandler(): void {
     this.mapboxService.setOnMapClickCallback((coordinates) => {
-      console.log('Clicked coordinates:', coordinates); //
+      console.log('Clicked coordinates:', coordinates);
       this.formData.patchValue({ latitude: coordinates.latitude });
       this.formData.patchValue({ longitude: coordinates.longitude });
 
@@ -266,8 +260,9 @@ closeDropdownIfNotClickedInside(event: MouseEvent): void {
       this.mapButton.nativeElement.style.cursor = 'auto';
     }
   }
+
   ngOnDestroy(): void {
-    //this.mapboxService.map?.remove();
+    // this.mapboxService.map?.remove();
   }
 
   private loadPOIs() {
@@ -284,6 +279,7 @@ closeDropdownIfNotClickedInside(event: MouseEvent): void {
     this.selectedPoi = poi;
     this.openModal();
   }
+
   openModal(): void {
     const modalElement = this.poiModal.nativeElement;
     const bootstrapModal = new bootstrap.Modal(modalElement);
@@ -309,6 +305,7 @@ closeDropdownIfNotClickedInside(event: MouseEvent): void {
   trackById(index: number, poi: Poi): string {
     return poi.id;
   }
+
   addComment(
     poiId: string,
     commentText: string,
@@ -332,13 +329,12 @@ closeDropdownIfNotClickedInside(event: MouseEvent): void {
                 new Date(b.createdAt).getTime() -
                 new Date(a.createdAt).getTime()
             );
-            console.log('comments: ', poi.comments);
             if (this.selectedPoi?.id === poiId) {
               this.selectedPoi = { ...poi };
-              this.cdr.detectChanges(); // Trigger change detection
+              this.cdr.detectChanges();
             }
           }
-          commentInput.value = ''; // Clear the input field
+          commentInput.value = '';
           this.toastService.show(
             'success',
             'Success',
@@ -349,6 +345,7 @@ closeDropdownIfNotClickedInside(event: MouseEvent): void {
       });
     this.subscriptions.add(sub);
   }
+
   trackByCommentId(index: number, comment: any): number {
     return comment.id;
   }
